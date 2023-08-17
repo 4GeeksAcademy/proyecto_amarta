@@ -7,26 +7,47 @@
 */
 .title-home {
     font-family: 'Libre Bodoni', serif;
-    height: 222px;
-    width: 999px;
-    text-align: center;
+
+}
+
+.img-home{
+    background-image: url("../img/img293.jpg");
+    background-size:cover;
+}
+
+
+.btn-container{
+    display: inline-block;
+    position:relative
 }
 
 .btn-shop {
-    margin-top: -40rem;
+    /* margin-top: -80rem; */
     font-size: 30px;
-    color: white;
+    color: black;
     font-family: 'Libre Bodoni', serif;
+    background: transparent;
+    padding: 10px 20px;
+    border: none;
+    position: relative;
+    z-index: 2;
+    text-decoration: none;
+    color: white
 }
 
 .btn-shop::before {
     content: '';
-    border-top: 200px solid rgba(0,0,0,0.3);
-    border-left: 120px solid transparent;
-    border-right: 120px solid transparent;
     position: absolute;
-    top: 0;
+    bottom: -50px;
     left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
+    transform: translateX(-50%);
+    border-top: 120px solid rgba(255, 255, 255, 0.3);
+    border-left: 80px solid transparent;
+    border-right: 80px solid transparent; 
+    z-index: 1;
+}
+
+.btn-shop:hover{
+    text-decoration: underline;
+    color: black
 }
