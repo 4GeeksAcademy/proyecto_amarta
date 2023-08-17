@@ -42,7 +42,7 @@ export const Home = () => {
 			{/* //MAPEO DE IMAGENES */}
 			<div className="container-fluid p-0">
 				<div className="row img-fluid p-0 text-center m-1">
-					{images.map(item => <div className="col-sm-12 col-md-2 col-lg-2 m-0"> <img src={item} className="m-1 p-0 " alt="..." style={{ width: "100%", height: "100%" }} /> </div>)}
+					{images.map(item => <div className="col-sm-12 col-md-2 col-lg-2 m-0"> <img src={item} className="m-1 p-1 " alt="..." style={{ width: "100%", height: "100%" }} /> </div>)}
 				</div>
 			</div>
 
