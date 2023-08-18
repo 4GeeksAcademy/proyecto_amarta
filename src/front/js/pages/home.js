@@ -17,32 +17,34 @@ export const Home = () => {
 
 	return (
 		<div >
-		
 
-				<div className="img-home px-4 pt-5 my-5  border-bottom" style={{ backgroundImage: `url(${homeImageUrl})`, backgroundSize: "cover"}}>
-					{/* <img src={homeImageUrl} alt="..." className="img-fluid"  /> */}
-					<div className="col-lg-6 mx-auto">
-						
-							<h1 className="display-5  text-white mb-5 title-home "> Belleza
-								simplificada.
-								Solo el
-								mejor
-								producto natural
-								en
-								cada categoria
-								de belleza. Todo lo que
-								necessitas y nada que no.
-							</h1>
-						<div className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5 btn-container">
-							<Link to={"/catalogo"} type="button" className="btn-shop mb-2 text-center">Shop</Link>
-						</div>
+
+			<div className="img-home px-4 pt-5 my-5  border-bottom"
+			// style={{ backgroundImage: `url(${homeImageUrl})`, backgroundSize: "cover"}}
+			>
+				{/* <img src={homeImageUrl} alt="..." className="img-fluid"  /> */}
+				<div className="col-lg-6 mx-auto">
+
+					<h1 className="display-5  text-white mb-5 title-home "> Belleza
+						simplificada.
+						Solo el
+						mejor
+						producto natural
+						en
+						cada categoria
+						de belleza. Todo lo que
+						necessitas y nada que no.
+					</h1>
+					<div className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5 btn-container">
+						<Link to={"/catalogo"} type="button" className="btn-shop mb-2 text-center">Shop</Link>
 					</div>
-				</div>	
+				</div>
+			</div>
 
 			{/* //MAPEO DE IMAGENES */}
 			<div className="container-fluid p-0">
 				<div className="row img-fluid p-0 text-center m-1">
-					{images.map(item => <div className="col-sm-12 col-md-2 col-lg-2 m-0"> <img src={item} className="m-1 p-1 " alt="..." style={{ width: "100%", height: "100%" }} /> </div>)}
+					{images.map((item, index) => <div key={index} className="col-sm-12 col-md-2 col-lg-2 m-0"> <img src={item} className="m-1 p-1 " alt="..." style={{ width: "100%", height: "100%" }} /> </div>)}
 				</div>
 			</div>
 
