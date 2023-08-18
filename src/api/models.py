@@ -41,8 +41,11 @@ class Producto(db.Model):
         return{
             "id_producto": self.id,
             "nombre":self.nombre,
+            "descripcion":self.descripcion,
             "propiedes":self.propiedades,
+            "ingredientes tecnicos":self.ingredientes_tec,
             "ingredientes principales":self.ingredientes_prin,
+            "metodo utilizacion":self.metodo_utilizacion,
             "tamaño":self.tamanyo + self.medicion,
             "precio":self.precio
         }
