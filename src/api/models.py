@@ -46,8 +46,9 @@ class Producto(db.Model):
             "ingredientes tecnicos":self.ingredientes_tec,
             "ingredientes principales":self.ingredientes_prin,
             "metodo utilizacion":self.metodo_utilizacion,
-            "tamaño":self.tamanyo + self.medicion,
-            "precio":self.precio
+            "tamaño":str(self.tamanyo) + self.medicion,
+            "precio":self.precio,
+            "id_tipo": self.id_tipo
         }
 
 class Tipo_prod(db.Model):
