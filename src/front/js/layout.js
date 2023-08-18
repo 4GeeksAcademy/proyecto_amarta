@@ -6,6 +6,7 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import { Catalogo } from "./pages/catalogo";
 import injectContext from "./store/appContext";
 import { Carrito } from "./pages/carrito";
 import {Recuperar} from "./component/recuperar.js";
@@ -39,7 +40,8 @@ const Layout = () => {
             <Route element={<Carrito />} path="/carrito" />
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<Home/>} path='*'/>
-            <Route element={<Private/>} path="/private"/> 
+            <Route element={<Private/>} path="/private"/>
+            <Route element={<Catalogo />} path="/catalogo" /> 
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
