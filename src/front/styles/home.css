@@ -5,3 +5,48 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+.title-home {
+    font-family: 'Libre Bodoni', serif;
+
+}
+
+.img-home{
+    background-image: url("../img/img293.jpg");
+  
+}
+
+
+.btn-container{
+    display: inline-block;
+    position:relative
+}
+
+.btn-shop {
+    font-size: 30px;
+    color: black;
+    font-family: 'Libre Bodoni', serif;
+    background: transparent;
+    padding: 10px 20px;
+    border: none;
+    position: relative;
+    z-index: 2;
+    text-decoration: none;
+    color: white
+}
+
+.btn-shop::before {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top: 120px solid rgba(255, 255, 255, 0.3);
+    border-left: 80px solid transparent;
+    border-right: 80px solid transparent; 
+    z-index: 1;
+}
+
+.btn-shop:hover{
+    text-decoration: underline;
+    color: black
+}
