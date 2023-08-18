@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
+import homeImageUrl from "../img/img293.jpg";
 
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
@@ -9,9 +10,9 @@ import { Single } from "./pages/single";
 import { Catalogo } from "./pages/catalogo";
 import injectContext from "./store/appContext";
 import { Carrito } from "./pages/carrito";
-import {Recuperar} from "./component/recuperar.js";
+import { Recuperar } from "./component/recuperar.js";
 import { LoginyRegistro } from "./component/login&register";
-import {Private} from "./pages/private"
+import { Private } from "./pages/private"
 import { PrivateRoutes } from "./PrivateRoutes";
 
 
@@ -27,8 +28,18 @@ const Layout = () => {
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
     return <BackendURL />;
 
+
+  const myImageStyle = {
+    backgroundImage: `url(${homeImageUrl})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundAttachment: "fixed",
+    backgroundPosition: "50% 50%",
+    height: "100%"
+  }
+
   return (
-    <div>
+    <div className=" bg-image" style={myImageStyle}>
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <Navbar />
@@ -39,15 +50,15 @@ const Layout = () => {
             <Route element={<Recuperar />} path="/recuperar" />
             <Route element={<Carrito />} path="/carrito" />
             <Route element={<Single />} path="/single/:theid" />
-            <Route element={<Home/>} path='*'/>
-            <Route element={<Private/>} path="/private"/>
-            <Route element={<Catalogo />} path="/catalogo" /> 
+            <Route element={<Home />} path='*' />
+            <Route element={<Private />} path="/private" />
+            <Route element={<Catalogo />} path="/catalogo" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
         </ScrollToTop>
       </BrowserRouter>
-    </div>
+    </div >
   );
 };
 

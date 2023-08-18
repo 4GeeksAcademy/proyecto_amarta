@@ -5,6 +5,8 @@ import { Context } from "../store/appContext";
 import { LoginyRegistro } from "./login&register";
 import { Carrito } from "../pages/carrito";
 import { Contacto } from "./contacto";
+import amartaLogoNegro from "../../img/logoAMARTAnegro.png";
+import amartaLogoBlanco from "../../img/logoAMARTAblanco.png"
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -18,47 +20,54 @@ export const Navbar = () => {
     setMostrarLoginyRegistro(true);
   };
 
-	const handleMostrarContacto = () => {
+  const handleMostrarContacto = () => {
     setMostrarContacto(true);
   };
 
 
 
   return (
-	<div>
-    <nav className="navbar navbar-light bg-light">
-      <div className="container">
-        <div className="ml-auto d-flex">
-          <button
-            type="button"
-            className="btn btn-primary me-2"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            onClick={handleMostrarLoginyRegistro}
-          >
-            Ingresar o Registrarse
-          </button>
-          {<LoginyRegistro />}
-          <button
-            type="button"
-            className="btn btn-secondary me-2"
-            onClick={(e) => navigate("/carrito")}
-          >
-            Carrito
-          </button>
-		  <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={handleMostrarContacto}
-          >
-            Contacto
-          </button>
-		  
-        </div>
+    <nav className="navbar navbar-expand bg-body-tertiary bg-body bg-opacity-25 border-bottom border-3">
+      <div className="container-fluid row text-center">
+        <span className=" col-xl-3 col-sm-1 nav-item"></span>
+        <button
+          type="button"
+          className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-light"
+        >
+          Catálogo
+        </button>
+        <button
+          type="button"
+          className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-light"
+          onClick={handleMostrarContacto}
+        >
+          Contacto
+        </button>
+        <a class="nav-item col-md-2 col-lg-2 col-xl-2 col-sm-1" href="#">
+          <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
+        </a>
+        <button
+          type="button"
+          className="btn nav-item text-light col-xl-1 col-sm-2"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          onClick={handleMostrarLoginyRegistro}
+        >
+          cuenta
+        </button>
+
+        <button
+          type="button"
+          className="btn col-xl-1 col-sm-2 nav-item text-light"
+          onClick={(e) => navigate("/carrito")}
+        >
+          Carrito
+        </button>
+        {<LoginyRegistro />}
+        <span className="col-xl-3 col-sm-1"></span>
       </div>
+      {mostrarContacto && <Contacto />}
     </nav>
-	{mostrarContacto && <Contacto/>}
-	</div>
-	
+
   );
 };
