@@ -20,8 +20,8 @@ export const Home = () => {
 		< >
 		<div className="img-home px-4 pt-5 my-5">
 
-			// style={{ backgroundImage: `url(${homeImageUrl})`, backgroundSize: "cover"}}
-			
+			{/* style={{ backgroundImage: `url(${homeImageUrl})`, backgroundSize: "cover"}} */}
+
 				{/* <img src={homeImageUrl} alt="..." className="img-fluid"  /> */}
 				<div className="col-lg-6 mx-auto">
 
@@ -32,8 +32,7 @@ export const Home = () => {
 						producto natural
 						en
 						cada categoria
-						de belleza. Todo lo que
-						necessitas y nada que no.
+						de belleza.
 					</h1>
 					<div className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5 btn-container">
 						<Link to={"/catalogo"} type="button" className="btn-shop mb-2 text-center">Shop</Link>
