@@ -33,6 +33,7 @@ class Producto(db.Model):
     medicion = db.Column(db.String(5))
     precio = db.Column(db.Integer)
     id_tipo = db.Column(db.Integer,db.ForeignKey('tipo_prod.id'))
+    url_img = db.Column(db.String)
 
     def __repr__(self):
         return f'<producto: {self.nombre}>'
@@ -43,11 +44,13 @@ class Producto(db.Model):
             "nombre":self.nombre,
             "descripcion":self.descripcion,
             "propiedes":self.propiedades,
-            "ingredientes tecnicos":self.ingredientes_tec,
-            "ingredientes principales":self.ingredientes_prin,
-            "metodo utilizacion":self.metodo_utilizacion,
-            "tamaño":self.tamanyo + self.medicion,
-            "precio":self.precio
+            "ingredientes_tecnicos":self.ingredientes_tec,
+            "ingredientes_principales":self.ingredientes_prin,
+            "metodo_utilizacion":self.metodo_utilizacion,
+            "tamaño":str(self.tamanyo) + self.medicion,
+            "precio":self.precio,
+            "id_tipo": self.id_tipo,
+            "url_img": self.url_img
         }
 
 class Tipo_prod(db.Model):
