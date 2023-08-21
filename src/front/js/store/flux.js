@@ -121,6 +121,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({productos_carrito:listaDeCompras})
 			},
 
+			
+
 
 
 			
