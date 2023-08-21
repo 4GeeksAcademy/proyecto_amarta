@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "../../styles/producto-catalogo.css";
 
@@ -6,7 +7,7 @@ export const ProductoCatalogo = props => {
 
     return (
 
-        <div className="card col-12 col-md-6 col-lg-3 mx-3 border-0 pb-4 m-2" style={{ width: "18rem" }}>
+        <div className="card col-12 col-md-6 col-lg-3 mx-3 border-0 m-2 p-0" style={{ width: "18rem" }}>
             <img src={props.producto.url_img} className="card-img-top  rounded-0" alt="..." />
             <div className="card-body container">
                 <div className="d-flex ">
@@ -15,7 +16,9 @@ export const ProductoCatalogo = props => {
                 </div>
                 <p className="card-text">{props.producto.ingredientes_principales}</p>
                 <p className="card-text">{props.producto.propiedes}</p>
-                <a href="#" className="btn btn-outline-secondary btn-sm rounded-0">Mas información</a>
+                <Link to={"/producto"} type="button" className="btn btn-outline-secondary btn-sm rounded-0 mx-2">Mas información</Link>
+                <a href="#" className="btn btn-outline-secondary btn-sm rounded-0">Comprar</a>
+                
             </div>
         </div>
 
