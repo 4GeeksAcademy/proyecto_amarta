@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { ProductoCatalogo } from "../component/productoCatalogo";
+import { DetalleProducto } from "../component/detalleProducto";
 
 
-export const Producto= () => {
+export const Producto = () => {
 	const { store, actions } = useContext(Context);
 
 	// const [filter, setFilter] = useState("")
@@ -17,10 +17,10 @@ export const Producto= () => {
 	// }, [])
 
 	return (
-		<div className="">
-			Esto es un producto
-			
-
+		<div>
+			<DetalleProducto />
 		</div>
+
 	);
 };
+
