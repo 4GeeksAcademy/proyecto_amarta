@@ -7,7 +7,7 @@ export const ProductoCatalogo = props => {
     return (
 
         <div className="card col-12 col-md-6 col-lg-3 mx-3 border-0 pb-4 m-2" style={{ width: "18rem" }}>
-            <img src={props.producto.imagen} className="card-img-top  rounded-0" alt="..." />
+            <img src={props.producto.url_img} className="card-img-top  rounded-0" alt="..." />
             <div className="card-body container">
                 <div className="d-flex ">
                     <h5 className="card-title me-5 ">{props.producto.nombre}</h5>
