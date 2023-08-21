@@ -16,12 +16,12 @@ export const Home = () => {
 	const images = [img1, img2, img3, img4, img5, img6]
 
 	return (
+
 		< >
+		<div className="img-home px-4 pt-5 my-5">
 
-
-			<div className="img-home px-4 pt-5 my-5"
 			// style={{ backgroundImage: `url(${homeImageUrl})`, backgroundSize: "cover"}}
-			>
+			
 				{/* <img src={homeImageUrl} alt="..." className="img-fluid"  /> */}
 				<div className="col-lg-6 mx-auto">
 
@@ -45,6 +45,7 @@ export const Home = () => {
 			<div className="container-fluid">
 				<div className="row img-fluid text-center m-1">
 					{images.map((item, index) => <div key={index} className="col-sm-12 col-md-2 col-lg-2 m-0"> <img src={item} className="m-1 p-1" alt="..." style={{ width: "100%", height: "100%" }} /> </div>)}
+
 				</div>
 			</div>
 
