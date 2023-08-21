@@ -19,7 +19,7 @@ export const Catalogo = () => {
 
 	return (
 		<div className="">
-			<div className="container-fluid bg-secondary-subtle p-5">
+			<div className="container-fluid bg-secondary-subtle p-5 bg-white">
 				<h4 className="title-catalogo pb-2">Belleza simplificadad.</h4>
 				<h4 className="title-catalogo pb-2">Solo con el mejor producto natural en cada categoria de belleza.</h4>
 				<h4 className="title-catalogo pb-2">Todo lo que necessitas y nada que no.</h4>
