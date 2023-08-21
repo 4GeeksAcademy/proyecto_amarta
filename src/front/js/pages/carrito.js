@@ -7,7 +7,7 @@ export const Carrito = () => {
 	const { store, actions } = useContext(Context);
 
     return(
-        <div >
+        <div className="bg-white bg-opacity-75 w-75 justify-content-center" >
             <div className="container text-center pt-5 pb-2">
 {/* 1ER FILA CATÁLOGO ENCABEZADO  */}
                 <div className="row">

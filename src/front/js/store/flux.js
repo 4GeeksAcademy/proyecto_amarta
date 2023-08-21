@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			email: "",
 			productos: [],
 			tipo_producto: [],
+			productos_carrito: []
 
 		},
 		actions: {
@@ -116,10 +117,46 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
+			getProductosCarrito: listaDeCompras=>{
+				setStore({productos_carrito:listaDeCompras})
+			},
 
 
 
-
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			// Use getActions to call a function within a fuction
 			getMessage: async () => {
 				try {

@@ -20,7 +20,7 @@ export const Home = () => {
 		< >
 		<div className="img-home px-4 pt-5 my-5">
 
-			// style={{ backgroundImage: `url(${homeImageUrl})`, backgroundSize: "cover"}}
+			{/* // style={{ backgroundImage: `url(${homeImageUrl})`, backgroundSize: "cover"}} */}
 			
 				{/* <img src={homeImageUrl} alt="..." className="img-fluid"  /> */}
 				<div className="col-lg-6 mx-auto">
