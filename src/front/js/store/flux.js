@@ -12,6 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			productos: [],
 			tipo_producto: [],
 
+			favs: []
 		},
 		actions: {
 			login: async (email, password) => {
@@ -97,9 +98,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getProducts: async () => {
 				try {
 					let data = await axios.get(`${urlBack}/api/catalogo`)
-					setStore({productos: data.data});
+					setStore({ productos: data.data });
 					console.log(data);
-					
+
 				} catch (error) {
 					console.log(error);
 				}
@@ -109,13 +110,50 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getTipoProducto: async () => {
 				try {
 					let data = await axios.get(`${urlBack}/api/tipo_producto`)
-					setStore({tipo_producto: data.data});
-					
+					setStore({ tipo_producto: data.data });
+
 				} catch (error) {
 					console.log(error);
 				}
 
 			},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -133,6 +171,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+
+			logOut: () => {
+
+			},
+			addFav: async (user_id, prod_id) => {
+				try {
+					const data = await axios.post(`${urlBack}/api/signup`)
+				} catch (error) {
+
+				}
+			},
+			removeFav: () => {
+
+			}
 		}
 	};
 };
