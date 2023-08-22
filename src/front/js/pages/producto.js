@@ -10,15 +10,19 @@ export const Producto = () => {
 	// const [filter, setFilter] = useState("")
 
 
-	// useEffect(() => {
-	// 	actions.getTipoProducto()
-	// 	actions.getProducts()
+	useEffect(() => {
+		actions.getTipoProducto()
+		actions.getProducts()
 
-	// }, [])
+	}, [])
 
 	return (
 		<div>
-			<DetalleProducto />
+			{store.productos.map(item => (
+				<DetalleProducto 
+				key={item.id_producto}
+				producto={item} />
+			))}			
 		</div>
 
 	);

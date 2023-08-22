@@ -41,6 +41,3 @@ export const Catalogo = () => {
 	);
 };
 
-// Single.propTypes = {
-// 	match: PropTypes.object
-// };
