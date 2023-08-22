@@ -12,7 +12,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			productos: [],
 			tipo_producto: [],
 
-			favs: []
+			favs: [],
+			user: {}
 		},
 		actions: {
 			login: async (email, password) => {
@@ -23,7 +24,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					console.log(data);
 					localStorage.setItem("token", data.data.access_token)
-					setStore({ token: data.data.access_token, email: email })
+					setStore({ token: data.data.access_token, user: data.data.user })
+					await getActions().getFavs(data.data.user.id)
 					return true
 
 				} catch (error) {
@@ -118,7 +120,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			
+
 
 
 
@@ -177,16 +179,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logOut: () => {
 
 			},
-			addFav: async (user_id, prod_id) => {
+			getFavs: async (user_id) => {
 				try {
-					const data = await axios.post(`${urlBack}/api/signup`)
+					const data = await axios.get(`${urlBack}/api/favoritos/${getStore().user.id}`)
+					setStore({ favs: data.data.favoritos });
 				} catch (error) {
 
 				}
 			},
-			removeFav: () => {
+			toggleFav: async (prod_id) => {
+				try {
+					const data = await axios.post(`${urlBack}/api/favoritos/${getStore().user.id}/${prod_id}`)
+					console.log(data);
+				} catch (error) {
 
-			}
+				}
+			},
 		}
 	};
 };

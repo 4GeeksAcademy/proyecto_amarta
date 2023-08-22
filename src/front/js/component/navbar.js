@@ -33,6 +33,7 @@ export const Navbar = () => {
         <button
           type="button"
           className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-light"
+          onClick={() => navigate("/catalogo")}
         >
           Catálogo
         </button>
@@ -43,7 +44,7 @@ export const Navbar = () => {
         >
           Contacto
         </button>
-        <a class="nav-item col-md-2 col-lg-2 col-xl-2 col-sm-1" href="#">
+        <a className="nav-item col-md-2 col-lg-2 col-xl-2 col-sm-1" href="#" onClick={() => navigate("/")}>
           <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
         </a>
         <button
