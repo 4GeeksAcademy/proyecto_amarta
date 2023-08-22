@@ -98,9 +98,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getProducts: async () => {
 				try {
 					let data = await axios.get(`${urlBack}/api/catalogo`)
-					setStore({productos: data.data});
+					setStore({ productos: data.data });
 					console.log(data);
-					
+
 				} catch (error) {
 					console.log(error);
 				}
@@ -110,8 +110,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getTipoProducto: async () => {
 				try {
 					let data = await axios.get(`${urlBack}/api/tipo_producto`)
-					setStore({tipo_producto: data.data});
-					
+					setStore({ tipo_producto: data.data });
+
 				} catch (error) {
 					console.log(error);
 				}
@@ -121,14 +121,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getOneProduct: async (id_producto) => {
 				try {
 					let data = await axios.get(`${urlBack}/api/producto/${id_producto}`)
-					setStore({producto: data.data});
-					console.log(data);
-					
+					setStore({ producto: data.data.data });
+					return true
+
 				} catch (error) {
 					console.log(error);
+					return false
 				}
 
-			},			
+			},
 
 
 

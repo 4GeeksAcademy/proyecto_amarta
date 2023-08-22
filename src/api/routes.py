@@ -97,15 +97,15 @@ def get_tipo_producto():
     return jsonify(data), 200
 
 @api.route("/producto/<int:id_producto>", methods=["GET"])
-def get_uno_producto(id_producto):
-    producto = Producto.query.filter_by(id_producto = id_producto).first()
+def get_une_product(id_producto):
+    producto = Producto.query.filter_by(id = id_producto).first()
     print(producto.serialize())
-    # response_body = {
-    #     "msg": "ok",
-    #     "data": producto.serialize()
-    # }
+    response_body = {
+        "msg": "ok",
+        "data": producto.serialize()
+    }
 
-    return jsonify(), 200
+    return jsonify(response_body), 200
 
 
     
