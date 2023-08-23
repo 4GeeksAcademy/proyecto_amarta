@@ -11,7 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			email: "",
 			productos: [],
 			tipo_producto: [],
-
+			producto: {},
 
 			favs: [],
 			user: {}
@@ -121,6 +121,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
+
+			getOneProduct: async (id_producto) => {
+				try {
+					let data = await axios.get(`${urlBack}/api/producto/${id_producto}`)
+					setStore({ producto: data.data.data });
+					return true
+
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+
+			},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
