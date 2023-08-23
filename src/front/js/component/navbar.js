@@ -27,7 +27,7 @@ export const Navbar = () => {
 
 
   return (
-    <nav className="navbar navbar-expand bg-body-tertiary bg-body bg-opacity-25 border-bottom border-3">
+    <nav className="navbar navbar-expand bg-body-tertiary bg-body bg-opacity-25 border-bottom border-3 fixed-top">
       <div className="container-fluid row text-center">
         <span className=" col-xl-3 col-sm-1 nav-item"></span>
         <button

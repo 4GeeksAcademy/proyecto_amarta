@@ -27,9 +27,6 @@ def signup():
     email = request.json.get("email", None)
     
     #creacion de un registro en la tabla de user 
-    if "is_active" not in request_body:
-            request_body.update({"is_active":True})
-
     if "nombre" not in request_body:
         return jsonify({"msg": "You have to put your name"}), 404
     
@@ -47,7 +44,7 @@ def signup():
     if "password" not in request_body:
         return jsonify({"msg": "You have to put a password"}), 404
     
-    user = User(email=request_body["email"],password=request_body["password"],is_active=request_body["is_active"])
+    user = User(email=request_body["email"],password=request_body["password"],nombre=request_body["nombre"],apellidos=request_body["apellidos"])
 
     db.session.add(user)
     db.session.commit()
@@ -96,6 +93,17 @@ def get_tipo_producto():
     data = [tipo.serialize() for tipo in tipo_producto]
     return jsonify(data), 200
 
+
+
+
+
+
+
+
+
+
+
+
 @api.route("/favoritos/<int:user_id>/<int:prod_id>",methods = ["POST"])
 def add_favorite(user_id,prod_id):
     fav = Favorito.query.filter_by(id_user=user_id,id_prod=prod_id).first()
@@ -107,8 +115,7 @@ def add_favorite(user_id,prod_id):
     elif fav is not None:
         db.session.delete(fav)
         return jsonify({"msg":"ok - favorite deleted"}),200
-    
-    
+   
 @api.route("/favoritos/<int:user_id>",methods = ["GET"])
 def get_favorites(user_id):
     favs = Producto.query.join(Favorito).filter(Favorito.id_user == user_id).all()
@@ -119,10 +126,3 @@ def get_favorites(user_id):
     })
     response_body.headers.add('Access-Control-Allow-Origin', '*')
     return response_body,200
-    # userList = users.query\
-    # .join(friendships, users.id==friendships.user_id)\
-    # .add_columns(users.userId, users.name, users.email, friends.userId, friendId)\
-    # .filter(users.id == friendships.friend_id)\
-    # .filter(friendships.user_id == userID)\
-    # .paginate(page, 1, False)
-    # return jsonify(response_body),200

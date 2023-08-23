@@ -19,10 +19,6 @@ export const Home = () => {
 
 		<div className=" min-vh-100" >
 			<div className="img-home px-4 pt-5 my-5">
-
-				{/* style={{ backgroundImage: `url(${homeImageUrl})`, backgroundSize: "cover"}} */}
-
-				{/* <img src={homeImageUrl} alt="..." className="img-fluid"  /> */}
 				<div className="col-lg-6 mx-auto">
 
 					<h1 className="display-5  text-white mb-5 title-home "> Belleza

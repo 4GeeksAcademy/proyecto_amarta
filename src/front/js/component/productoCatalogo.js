@@ -31,6 +31,17 @@ export const ProductoCatalogo = props => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     // CODIGO A PARTIR DE AQUI JOSE
     function handleOnClickFav() {
         actions.toggleFav(props.producto.id_producto)
@@ -42,14 +53,6 @@ export const ProductoCatalogo = props => {
         }
 
     }
-
-
-
-
-
-
-
-
     useEffect(() => {
         console.log("useEffect");
         console.log(faved);
@@ -57,24 +60,6 @@ export const ProductoCatalogo = props => {
             setFaved(true)
         }
     }, [faved])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     return (
 
@@ -88,11 +73,6 @@ export const ProductoCatalogo = props => {
                 <p className="card-text">{props.producto.ingredientes_principales}</p>
                 <p className="card-text">{props.producto.propiedes}</p>
                 <Link to={"/producto"} type="button" className="btn btn-outline-secondary btn-sm rounded-0 mx-2">Mas información</Link>
-                <a href="#" className="btn btn-outline-secondary btn-sm rounded-0">Comprar</a>
-
-
-
-
 
                 {faved ?
                     <button className=" mx-2 bg-transparent border-0 position-absolute top-0" type="button" onClick={handleOnClickFav}>
@@ -106,12 +86,8 @@ export const ProductoCatalogo = props => {
                         </svg>
                     </button>
                 }
-
-
-
             </div>
         </div>
-
     );
 };
 

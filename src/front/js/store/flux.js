@@ -12,8 +12,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			productos: [],
 			tipo_producto: [],
 
+
 			favs: [],
 			user: {}
+
 		},
 		actions: {
 			login: async (email, password) => {
@@ -154,14 +156,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-
-
-
-
-
-
-
-
 			// Use getActions to call a function within a fuction
 			getMessage: async () => {
 				try {
@@ -176,9 +170,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			logOut: () => {
-
-			},
 			getFavs: async (user_id) => {
 				try {
 					const data = await axios.get(`${urlBack}/api/favoritos/${getStore().user.id}`)
@@ -192,9 +183,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await axios.post(`${urlBack}/api/favoritos/${getStore().user.id}/${prod_id}`)
 					console.log(data);
 				} catch (error) {
-
+					console.log(error);
 				}
 			},
+
 		}
 	};
 };
