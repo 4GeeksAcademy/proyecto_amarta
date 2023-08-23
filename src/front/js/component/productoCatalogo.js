@@ -3,9 +3,63 @@ import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import "../../styles/producto-catalogo.css";
 
+
 export const ProductoCatalogo = props => {
 
-    // const navigate = useNavigate()
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     return (
 
@@ -18,13 +72,22 @@ export const ProductoCatalogo = props => {
                 </div>
                 <p className="card-text">{props.producto.ingredientes_principales}</p>
                 <p className="card-text">{props.producto.propiedes}</p>
-                {/* <button type="button" className="btn btn-outline-secondary btn-sm rounded-0 mx-2">Mas información</button> */}
                 <Link to={`/producto/${props.producto.id_producto}`} type="button" className="btn btn-outline-secondary btn-sm rounded-0 mx-2">Mas información</Link>
-                <a href="#" className="btn btn-outline-secondary btn-sm rounded-0">Comprar</a>
                 
+
+
+
+
+
+
+
+
++
+
+
+
             </div>
         </div>
-
     );
 };
 

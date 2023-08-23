@@ -13,6 +13,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			tipo_producto: [],
 			producto: {},
 
+
+
+
 		},
 		actions: {
 			login: async (email, password) => {
@@ -23,7 +26,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					console.log(data);
 					localStorage.setItem("token", data.data.access_token)
-					setStore({ token: data.data.access_token, email: email })
+					setStore({ token: data.data.access_token, user: data.data.user })
+					await getActions().getFavs(data.data.user.id)
 					return true
 
 				} catch (error) {
@@ -134,6 +138,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
+
+
+
+
+
+
+
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			// Use getActions to call a function within a fuction
 			getMessage: async () => {
 				try {
@@ -147,6 +169,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+
 		}
 	};
 };

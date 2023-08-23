@@ -36,7 +36,6 @@ const Layout = () => {
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",
     backgroundPosition: "50% 50%",
-    height: "100%"
   }
 
   return (
