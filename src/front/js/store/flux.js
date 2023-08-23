@@ -5,10 +5,10 @@ const urlBack = process.env.BACKEND_URL
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			token: "",
+			token: null,
 			message: "",
 			validate: false,
-			email: "",
+			logded: false,
 			productos: [],
 			tipo_producto: [],
 			producto: {},
@@ -48,6 +48,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(data);
 					localStorage.setItem("token", data.data.access_token)
 					setStore({ token: data.data.access_token })
+
 					return true
 				}
 				catch (error) {
@@ -80,10 +81,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Authorization": `Bearer ${token}`,
 						}
 					})
-					console.log(data);
-					if (data.status === 200)
-
+					console.log(data.data);
+					if (data.status === 200) {
+						setStore({ user: data.data, logged: true })
 						return true;
+					}
 				} catch (error) {
 					console.log(error);
 					if (error.response.status === 401) {
@@ -215,7 +217,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				}
 			},
-
+			logOut: () => {
+				setStore({ logged: false, token: null })
+				localStorage.removeItem("token")
+			}
 		}
 	};
 };
