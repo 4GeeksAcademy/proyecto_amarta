@@ -11,6 +11,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			email: "",
 			productos: [],
 			tipo_producto: [],
+			producto: {},
+
+			favs: [],
+			user: {},
 
 			productos_carrito: []
 
@@ -26,6 +30,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					console.log(data);
 					localStorage.setItem("token", data.data.access_token)
+					setStore({ token: data.data.access_token, user: data.data.user })
+					await getActions().getFavs(data.data.user.id)
 					setStore({ token: data.data.access_token, user: data.data.user })
 					await getActions().getFavs(data.data.user.id)
 					return true
@@ -102,9 +108,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getProducts: async () => {
 				try {
 					let data = await axios.get(`${urlBack}/api/catalogo`)
-					setStore({productos: data.data});
+					setStore({ productos: data.data });
 					console.log(data);
-					
+
 				} catch (error) {
 					// console.log(error);
 				}
@@ -114,13 +120,71 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getTipoProducto: async () => {
 				try {
 					let data = await axios.get(`${urlBack}/api/tipo_producto`)
-					setStore({tipo_producto: data.data});
-					
+					setStore({ tipo_producto: data.data });
+
 				} catch (error) {
 					console.log(error);
 				}
 
 			},
+
+			getOneProduct: async (id_producto) => {
+				try {
+					let data = await axios.get(`${urlBack}/api/producto/${id_producto}`)
+					setStore({ producto: data.data.data });
+					return true
+
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+
+			},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -152,10 +216,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			
 			
-			
-			
-			
-			
+
+
+
+
 			// Use getActions to call a function within a fuction
 			getMessage: async () => {
 				try {
@@ -169,6 +233,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+
+			getFavs: async (user_id) => {
+				try {
+					const data = await axios.get(`${urlBack}/api/favoritos/${getStore().user.id}`)
+					setStore({ favs: data.data.favoritos });
+				} catch (error) {
+
+				}
+			},
+			toggleFav: async (prod_id) => {
+				try {
+					const data = await axios.post(`${urlBack}/api/favoritos/${getStore().user.id}/${prod_id}`)
+					console.log(data);
+				} catch (error) {
+					console.log(error);
+				}
+			},
+
 			
 
 

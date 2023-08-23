@@ -4,47 +4,47 @@ import "../../styles/home.css";
 import { Navigate, useNavigate } from "react-router-dom";
 
 export const Private = () => {
-    const {store,actions} = useContext(Context)
-    const [status,setStatus] = useState("checking")
+    const { store, actions } = useContext(Context)
+    const [status, setStatus] = useState("checking")
     const navigate = useNavigate()
 
-    useEffect(()=>{
-        const validate = async() => {
+    useEffect(() => {
+        const validate = async () => {
             let valid = await actions.validToken()
-            if(valid){
+            if (valid) {
                 setStatus("authorized")
                 return true
-            }else{
+            } else {
                 setStatus("un-authorized")
                 return false
             }
         }
         validate()
-    },[])
+    }, [])
 
-    if(status === "authorized"){
-        return(
+    if (status === "authorized") {
+        return (
             <>
                 <div className="text-center">
-                    <h1>Loggeado como {store.email}</h1>
+                    <h1>Loggeado como {store.user.email}</h1>
                 </div>
             </>
         )
     }
 
-    if (status === "un-authorized"){
-        return(
-            <Navigate to="/" replace/>
+    if (status === "un-authorized") {
+        return (
+            <Navigate to="/" replace />
         )
     }
 
-    return(
+    return (
         <>
             <div className="text-center">
                 <h1>Checking validation...</h1>
             </div>
         </>
     )
-    
-    
+
+
 }

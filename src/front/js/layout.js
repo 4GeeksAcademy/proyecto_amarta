@@ -8,7 +8,7 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Catalogo } from "./pages/catalogo";
-import {Producto} from  "./pages/producto"
+import { Producto } from "./pages/producto"
 import injectContext from "./store/appContext";
 import { Carrito } from "./pages/carrito";
 import { Recuperar } from "./component/recuperar.js";
@@ -33,13 +33,17 @@ const Layout = () => {
   const myImageStyle = {
     backgroundImage: `url(${homeImageUrl})`,
     backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
+    backgroundRepeat: "repeat",
     backgroundAttachment: "fixed",
+<<<<<<< HEAD
     backgroundPosition: "50% 50%",
+=======
+    backgroundPosition: "90% 50%",
+>>>>>>> 1c17d64d87ba790adf3811753ab307718bd1ce85
   }
 
   return (
-    <div className=" bg-image" style={myImageStyle}>
+    <div style={myImageStyle}>
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <Navbar />

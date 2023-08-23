@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Producto, Tipo_prod
+from api.models import db, User, Producto, Tipo_prod, Favorito
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -93,4 +93,39 @@ def get_tipo_producto():
     data = [tipo.serialize() for tipo in tipo_producto]
     return jsonify(data), 200
 
-    
+@api.route("/producto/<int:id_producto>", methods=["GET"])
+def get_une_product(id_producto):
+    producto = Producto.query.filter_by(id = id_producto).first()
+    print(producto.serialize())
+    response_body = {
+        "msg": "ok",
+        "data": producto.serialize()
+    }
+
+    return jsonify(response_body), 200
+
+
+
+
+@api.route("/favoritos/<int:user_id>/<int:prod_id>",methods = ["POST"])
+def add_favorite(user_id,prod_id):
+    fav = Favorito.query.filter_by(id_user=user_id,id_prod=prod_id).first()
+    if fav is None:
+        new_fav = Favorito(id_user = user_id,id_prod = prod_id)
+        db.session.add(new_fav)
+        db.session.commit()
+        return jsonify({"msg":"ok - new favorite"}),200
+    elif fav is not None:
+        db.session.delete(fav)
+        return jsonify({"msg":"ok - favorite deleted"}),200
+   
+@api.route("/favoritos/<int:user_id>",methods = ["GET"])
+def get_favorites(user_id):
+    favs = Producto.query.join(Favorito).filter(Favorito.id_user == user_id).all()
+    data = [fav.serialize() for fav in favs]
+    response_body = jsonify({
+        "msg":"ok - all favs",
+        "favoritos" : data
+    })
+    response_body.headers.add('Access-Control-Allow-Origin', '*')
+    return response_body,200
