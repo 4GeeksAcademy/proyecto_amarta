@@ -13,8 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			tipo_producto: [],
 			producto: {},
 
-
-
+			favs: [],
+			user: {}
 
 		},
 		actions: {
@@ -146,16 +146,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			// Use getActions to call a function within a fuction
 			getMessage: async () => {
 				try {
@@ -170,22 +199,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			getFavs: async (user_id) => {
+				try {
+					const data = await axios.get(`${urlBack}/api/favoritos/${getStore().user.id}`)
+					setStore({ favs: data.data.favoritos });
+				} catch (error) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			
+				}
+			},
+			toggleFav: async (prod_id) => {
+				try {
+					const data = await axios.post(`${urlBack}/api/favoritos/${getStore().user.id}/${prod_id}`)
+					console.log(data);
+				} catch (error) {
+					console.log(error);
+				}
+			},
 
 		}
 	};

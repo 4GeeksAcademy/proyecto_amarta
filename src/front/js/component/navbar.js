@@ -33,6 +33,7 @@ export const Navbar = () => {
         <button
           type="button"
           className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-light"
+          onClick={() => navigate("/catalogo")}
         >
           Catálogo
         </button>
