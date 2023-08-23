@@ -4,7 +4,8 @@ import { Context } from "../store/appContext";
 // import { Recuperar } from "./recuperar";
 import { LoginyRegistro } from "./login&register";
 import { Carrito } from "../pages/carrito";
-import { Contacto } from "./contacto";
+import { Contacto } from "../pages/contacto";
+import { Catalogo } from "../pages/catalogo";
 import amartaLogoNegro from "../../img/logoAMARTAnegro.png";
 import amartaLogoBlanco from "../../img/logoAMARTAblanco.png"
 
@@ -20,9 +21,9 @@ export const Navbar = () => {
     setMostrarLoginyRegistro(true);
   };
 
-  const handleMostrarContacto = () => {
-    setMostrarContacto(true);
-  };
+  // const handleMostrarContacto = () => {
+  //   setMostrarContacto(true);
+  // };
 
 
 
@@ -30,7 +31,7 @@ export const Navbar = () => {
     <nav className="navbar navbar-expand bg-body-tertiary bg-body bg-opacity-25 border-bottom border-3">
       <div className="container-fluid row text-center">
         <span className=" col-xl-3 col-sm-1 nav-item"></span>
-        <button
+        {/* <button
           type="button"
           className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-light"
           onClick={() => navigate("/catalogo")}
@@ -43,7 +44,9 @@ export const Navbar = () => {
           onClick={handleMostrarContacto}
         >
           Contacto
-        </button>
+        </button> */}
+        <Link to={"/catalogo"} type="button" className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-light">Catálogo</Link>
+        <Link to={"/contacto"} type="button" className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-light">Contacto</Link>
         <Link className="nav-item col-md-2 col-lg-2 col-xl-2 col-sm-1" to={"/"}>
           <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
         </Link>
