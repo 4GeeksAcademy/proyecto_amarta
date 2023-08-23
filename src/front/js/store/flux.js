@@ -11,8 +11,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			email: "",
 			productos: [],
 			tipo_producto: [],
+
 			productos_carrito: []
 
+
+			
 		},
 		actions: {
 			login: async (email, password) => {
@@ -23,7 +26,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					console.log(data);
 					localStorage.setItem("token", data.data.access_token)
-					setStore({ token: data.data.access_token, email: email })
+					setStore({ token: data.data.access_token, user: data.data.user })
+					await getActions().getFavs(data.data.user.id)
 					return true
 
 				} catch (error) {
@@ -102,7 +106,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(data);
 					
 				} catch (error) {
-					console.log(error);
+					// console.log(error);
 				}
 
 			},
@@ -117,6 +121,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
 			getProductosCarrito: listaDeCompras=>{
 				setStore({productos_carrito:listaDeCompras})
 			},
@@ -125,27 +143,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			
 			
@@ -172,6 +169,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
 		}
 	};
 };

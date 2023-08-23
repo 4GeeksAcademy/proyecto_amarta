@@ -1,9 +1,65 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "../../styles/producto-catalogo.css";
+import { Context } from "../store/appContext";
 
 export const ProductoCatalogo = props => {
+    const { store, actions } = useContext(Context)
+
+
+// Comenzar aqui
+//
+// const [compras,setCompras]=useState(false)
+// const handleComprar =e=>{
+//     e.preventDefault()
+//     let comprasClick=[...store.productos_carrito];
+//     setCompras(!compras)
+//     if(!compras=== true) {
+//         comprasClick.push ({
+//         name: props.name,
+//         id: props.id_tipo,
+//         precio:props.precio,
+//         url_img: props.url_img
+//     })
+
+// } else (
+//     comprasClick = comprasClick.filter((item) => item.name !== props.name)
+//     )
+
+// actions.getProductosCarrito(comprasClick)
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+// hasta aqui Laura sin incluir - Borrar comentario
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     return (
 
@@ -17,11 +73,21 @@ export const ProductoCatalogo = props => {
                 <p className="card-text">{props.producto.ingredientes_principales}</p>
                 <p className="card-text">{props.producto.propiedes}</p>
                 <Link to={"/producto"} type="button" className="btn btn-outline-secondary btn-sm rounded-0 mx-2">Mas información</Link>
-                <a href="#" className="btn btn-outline-secondary btn-sm rounded-0">Comprar</a>
-                
+                <a href="#" className="btn btn-outline-secondary btn-sm rounded-0" onClick={handleComprar}>Comprar</a>
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
         </div>
-
     );
 };
 
