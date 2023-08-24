@@ -16,8 +16,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favs: [],
 			user: {},
 
-			productos_carrito: []
-
+			carrito: [],
+			
 
 			
 		},
@@ -142,10 +142,52 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
+			// getProductosCarrito: async (user_id) => {
+			// 	try {
+			// 		const data = await axios.get(`${urlBack}/api/carrito/${getStore().user.id}`)
+			// 		setStore({ productos_carrito: data.data.compras });
+			// 	} catch (error) {
 
-
-
-
+			// 	}
+			// },
+			// carritoDeCompras: async (prod_id) => {
+			// 	try {
+			// 		const data = await axios.post(`${urlBack}/api/carrito/${getStore().user.id}/${prod_id}`)
+			// 		console.log(data);
+			// 	} catch (error) {
+			// 		console.log(error);
+			// 	}
+			// },
+			agregarAlCarrito: async (user_id, prod_id, cantidad)=> {
+				try {
+					let data = await axios.post(`${urlBack}/api/carrito/${user_id}/${prod_id}/${cantidad}`);
+					setStore({ carrito: data.data });
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+			},
+			eliminarDelCarrito: async(user_id, prod_id) =>{
+				try {
+				  let data = await axios.delete(`${urlBack}/api/carrito/${user_id}/${prod_id}`);
+				  setStore({ carrito: data.data });
+				  return true
+				} catch (error) {
+				  console.log(error);
+				  return false
+				}
+			  },
+			// agregarAlCarrito: (producto) => {
+			// 	const { carrito } = getStore();
+			// 	const nuevoCarrito = [...carrito, producto];
+			// 	setStore({ carrito: nuevoCarrito });
+			// },
+			// eliminarDelCarrito: (producto) => {
+			// 	const { carrito } = getStore();
+			// 	const nuevoCarrito = carrito.filter(item => item.id_producto !== producto.id_producto);
+			// 	setStore({ carrito: nuevoCarrito });
+			// },
 
 
 
@@ -199,9 +241,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 		
-			getProductosCarrito: listaDeCompras=>{
-				setStore({productos_carrito:listaDeCompras})
-			},
 
 			
 

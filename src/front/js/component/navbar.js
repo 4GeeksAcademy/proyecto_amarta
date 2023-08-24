@@ -44,11 +44,9 @@ export const Navbar = () => {
         >
           Contacto
         </button>
-<<<<<<< HEAD
-        <a className="nav-item col-md-2 col-lg-2 col-xl-2 col-sm-1" href="#">
-=======
+
         <Link className="nav-item col-md-2 col-lg-2 col-xl-2 col-sm-1" to={"/"}>
->>>>>>> 1c17d64d87ba790adf3811753ab307718bd1ce85
+
           <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
         </Link>
         <button

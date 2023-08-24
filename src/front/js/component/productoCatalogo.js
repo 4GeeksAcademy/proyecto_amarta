@@ -7,30 +7,18 @@ import { Context } from "../store/appContext";
 export const ProductoCatalogo = props => {
     const { store, actions } = useContext(Context)
     const [faved, setFaved] = useState()
+    const [compras,setCompras]=useState(false)
+
 
 
 // Comenzar aqui
-//
-// const [compras,setCompras]=useState(false)
-// const handleComprar =e=>{
-//     e.preventDefault()
-//     let comprasClick=[...store.productos_carrito];
-//     setCompras(!compras)
-//     if(!compras=== true) {
-//         comprasClick.push ({
-//         name: props.name,
-//         id: props.id_tipo,
-//         precio:props.precio,
-//         url_img: props.url_img
-//     })
 
-// } else (
-//     comprasClick = comprasClick.filter((item) => item.name !== props.name)
-//     )
-
-// actions.getProductosCarrito(comprasClick)
-
-// }
+function handleComprar() {
+    const id_user = store.user.id;
+    const id_producto = props.producto.id;
+    const cantidad = props.producto.cantidad;
+    actions.agregarAlCarrito(id_user, id_producto, cantidad);
+}
 
 
 
@@ -38,7 +26,34 @@ export const ProductoCatalogo = props => {
 
 
 
-    // CODIGO A PARTIR DE AQUI JOSE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // CODIGO A PARTIR DE AQUI JOSE (línea 41)
     function handleOnClickFav() {
         actions.toggleFav(props.producto.id_producto)
         if (faved) {
@@ -72,7 +87,7 @@ export const ProductoCatalogo = props => {
                 <p className="card-text">{props.producto.ingredientes_principales}</p>
                 <p className="card-text">{props.producto.propiedes}</p>
                 <Link to={"/producto"} type="button" className="btn btn-outline-secondary btn-sm rounded-0 mx-2">Mas información</Link>
-                <a href="#" className="btn btn-outline-secondary btn-sm rounded-0">Comprar</a>
+                <a href="#" className="btn btn-outline-secondary btn-sm rounded-0" onClick={() => handleComprar(props.producto)}>Comprar</a>
                 {faved ?
                     <button className=" mx-2 bg-transparent border-0 position-absolute top-0" type="button" onClick={handleOnClickFav}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fillRule="currentColor" className="bi bi-heart-fill" viewBox="0 0 16 16">
@@ -98,3 +113,5 @@ export const ProductoCatalogo = props => {
 ProductoCatalogo.propTypes = {
     producto: PropTypes.object
 };
+
+

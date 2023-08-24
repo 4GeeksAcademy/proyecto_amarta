@@ -6,15 +6,34 @@ import { Context } from "../store/appContext";
 export const Carrito = () => {
 	const { store, actions } = useContext(Context);
 
-	const handleDeleteProduct = (e, name) => {
-        e.stopPropagation();
-		const compras = store.productos_carrito.filter((item)=> item.name !== name)
-		actions.getProductosCarrito(compras)
+    const handleEliminarProducto = (id_prod) => {
+        actions.eliminarDelCarrito(id_prod);
     };
+    
+    const handleDeleteProduct = id_prod => {
+        actions.eliminarDelCarrito(store.user.id, id_prod);
+    }
+
 
     return(
         <div className="bg-white bg-opacity-75 justify-content-center" >
             <div className="container text-center pt-5 pb-2">
+            <div>
+            {store.carrito.length === 0 ? (
+                <p>El carrito está vacío</p>
+            ) : (
+                <ul>
+                    {store.carrito.map((item, index) => (
+                        <li key={item.id_prod}>
+                        <h3>{item.nombre}</h3>
+                        <p>Precio: {item.precio}</p>
+                        <button onClick={() => handleDeleteProduct(item.id_prod)}>Eliminar</button>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+
 {/* 1ER FILA CATÁLOGO ENCABEZADO  */}
                 <div className="row">
                     <div className="col-5">
@@ -23,7 +42,7 @@ export const Carrito = () => {
                     <div className="col-1">
                     <button
                         onClick={(e) =>handleDeleteProduct(
-                            e, productos_carrito.name)
+                            e, Carrito.name)
                                     }
                                 >
                                     <i className="fa-solid fa-trash "></i>
@@ -42,7 +61,7 @@ export const Carrito = () => {
 
 {/* condicion mostrar carrito */}
 {/* 
-const carrito= {store.productos_carrito.length === 0 ? (
+const carrito= {store.carrito.length === 0 ? (
                         <div className="row">
                         <div className="col-6">
                         El carrito se encuentra vacío
@@ -58,7 +77,7 @@ const carrito= {store.productos_carrito.length === 0 ? (
                         </div>
                     </div>
                     ) : (
-                        store.productos_carrito.map((listaCompras) => (
+                        store.carrito.map((listaCompras) => (
                             <div className="row">
                             <div className="col-5"> */}
                             {/* IMAGEN PRODUCTO */}
@@ -149,7 +168,7 @@ const carrito= {store.productos_carrito.length === 0 ? (
 {/* BOTON PARA DIRIGIR AL PAGO DE CARRITO */}
                 {/* <button type="button">Realizar Pago</button> */}
                 </div>
-        </div>
+    </div>
     );
 
 }

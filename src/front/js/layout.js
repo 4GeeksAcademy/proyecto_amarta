@@ -35,11 +35,7 @@ const Layout = () => {
     backgroundSize: "cover",
     backgroundRepeat: "repeat",
     backgroundAttachment: "fixed",
-<<<<<<< HEAD
     backgroundPosition: "50% 50%",
-=======
-    backgroundPosition: "90% 50%",
->>>>>>> 1c17d64d87ba790adf3811753ab307718bd1ce85
   }
 
   return (
@@ -58,6 +54,7 @@ const Layout = () => {
             <Route element={<Private />} path="/private" />
             <Route element={<Catalogo />} path="/catalogo" />
             <Route element={<Producto />} path="/producto/:id_producto" />
+            
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
