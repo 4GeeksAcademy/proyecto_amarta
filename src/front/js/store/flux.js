@@ -143,10 +143,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-			agregarAlCarrito: async (user_id, prod_id, cantidad)=> {
+			agregarAlCarrito: async (prod_id, cantidad)=> {
+				console.log(prod_id, cantidad)
 				try {
-					let data = await axios.post(`${urlBack}/api/carrito/${user_id}/${prod_id}/${cantidad}`);
-					setStore({ carrito: data.data });
+					let data = await axios.post(`${urlBack}/api/carrito/${getStore().user.id}`,{
+						producto:prod_id,
+						cantidad:1
+					});
+					console.log(data); 
+					// setStore({carrito: data.data });
 					return true
 				} catch (error) {
 					console.log(error);

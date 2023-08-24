@@ -143,12 +143,12 @@ def get_carrito(user_id):
     
     return jsonify({"msg": "OK - Productos en el carrito", "carrito": carrito_data}), 200
 
-@api.route('/api/carrito/<int:user_id>/<int:prod_id>/<int:cantidad>', methods=['POST'])
-def add_to_carrito(user_id, prod_id, cantidad):
+@api.route('/api/carrito/<int:user_id>', methods=['POST'])
+def add_to_carrito(user_id):
     user = User.query.get(user_id)
-    producto = Producto.query.get(prod_id)
+    # producto = Producto.query.get(prod_id)
     
-    if user is None or producto is None:
+    if user is None:
         return jsonify({"msg": "Usuario o producto no encontrado"}), 404
     
     carrito_item = Carrito.query.filter_by(user_id=user_id, prod_id=prod_id).first()

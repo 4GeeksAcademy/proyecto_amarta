@@ -8,16 +8,14 @@ export const ProductoCatalogo = props => {
     const { store, actions } = useContext(Context)
     const [faved, setFaved] = useState()
     const [compras,setCompras]=useState(false)
+    const [cantidad,setCantidad]=useState(1)
 
 
 
 // Comenzar aqui
 
 function handleComprar() {
-    const id_user = store.user.id;
-    const id_producto = props.producto.id;
-    const cantidad = props.producto.cantidad;
-    actions.agregarAlCarrito(id_user, id_producto, cantidad);
+    actions.agregarAlCarrito(props.producto.id_producto, cantidad);
 }
 
 
@@ -87,7 +85,7 @@ function handleComprar() {
                 <p className="card-text">{props.producto.ingredientes_principales}</p>
                 <p className="card-text">{props.producto.propiedes}</p>
                 <Link to={"/producto"} type="button" className="btn btn-outline-secondary btn-sm rounded-0 mx-2">Mas información</Link>
-                <a href="#" className="btn btn-outline-secondary btn-sm rounded-0" onClick={() => handleComprar(props.producto)}>Comprar</a>
+                <a href="#" className="btn btn-outline-secondary btn-sm rounded-0" onClick={handleComprar}>Comprar</a>
                 {faved ?
                     <button className=" mx-2 bg-transparent border-0 position-absolute top-0" type="button" onClick={handleOnClickFav}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fillRule="currentColor" className="bi bi-heart-fill" viewBox="0 0 16 16">
@@ -111,7 +109,8 @@ function handleComprar() {
  * your component's properties
  **/
 ProductoCatalogo.propTypes = {
-    producto: PropTypes.object
+    producto: PropTypes.object,
+    pedido: PropTypes.object
 };
 
 

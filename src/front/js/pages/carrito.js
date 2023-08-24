@@ -25,7 +25,7 @@ export const Carrito = () => {
                 <ul>
                     {store.carrito.map((item, index) => (
                         <li key={item.id_prod}>
-                        <h3>{item.nombre}</h3>
+                        <h3>Producto:{item.nombre}</h3>
                         <p>Precio: {item.precio}</p>
                         <button onClick={() => handleDeleteProduct(item.id_prod)}>Eliminar</button>
                         </li>
