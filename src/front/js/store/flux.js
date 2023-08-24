@@ -142,22 +142,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
-			// getProductosCarrito: async (user_id) => {
-			// 	try {
-			// 		const data = await axios.get(`${urlBack}/api/carrito/${getStore().user.id}`)
-			// 		setStore({ productos_carrito: data.data.compras });
-			// 	} catch (error) {
 
-			// 	}
-			// },
-			// carritoDeCompras: async (prod_id) => {
-			// 	try {
-			// 		const data = await axios.post(`${urlBack}/api/carrito/${getStore().user.id}/${prod_id}`)
-			// 		console.log(data);
-			// 	} catch (error) {
-			// 		console.log(error);
-			// 	}
-			// },
 			agregarAlCarrito: async (user_id, prod_id, cantidad)=> {
 				try {
 					let data = await axios.post(`${urlBack}/api/carrito/${user_id}/${prod_id}/${cantidad}`);
