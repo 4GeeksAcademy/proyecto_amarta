@@ -29,7 +29,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ token: data.data.access_token, user: data.data.user })
 					await getActions().getFavs(data.data.user.id)
 					return true
-
 				} catch (error) {
 					console.log(error);
 					return false
@@ -212,7 +211,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			toggleFav: async (prod_id) => {
 				try {
 					const data = await axios.post(`${urlBack}/api/favoritos/${getStore().user.id}/${prod_id}`)
+					getActions().getFavs(getStore().user.id)
 					console.log(data);
+
 				} catch (error) {
 					console.log(error);
 				}

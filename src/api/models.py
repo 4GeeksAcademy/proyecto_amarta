@@ -8,6 +8,7 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     nombre = db.Column(db.String)
     apellido = db.Column(db.String)
+    favoritos = db.relationship('Favorito',backref = 'user',lazy=True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -34,6 +35,7 @@ class Producto(db.Model):
     precio = db.Column(db.Integer)
     id_tipo = db.Column(db.Integer,db.ForeignKey('tipo_prod.id'))
     url_img = db.Column(db.String)
+    favorecidos = db.relationship('Favorito',backref = 'producto',lazy=True)
 
     def __repr__(self):
         return f'<producto: {self.nombre}>'
