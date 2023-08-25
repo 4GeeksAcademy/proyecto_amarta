@@ -7,7 +7,7 @@ import { Context } from "../store/appContext";
 
 export const ProductoCatalogo = props => {
     const { store, actions } = useContext(Context)
-    const [faved, setFaved] = useState()
+    const [faved, setFaved] = useState(false)
 
 
 
@@ -43,27 +43,33 @@ export const ProductoCatalogo = props => {
 
     // CODIGO A PARTIR DE AQUI JOSE
     function handleOnClickFav() {
-        actions.toggleFav(props.producto.id_producto)
-        if (faved) {
-            setFaved(false)
-        } else if (!faved) {
-            setFaved(true)
+        if (store.logged) {
+            actions.toggleFav(props.producto.id_producto)
+            if (faved) {
+                setFaved(false)
+            } else if (!faved) {
+                setFaved(true)
+            }
 
+        } else {
+            alert("No hay ningun usuario loggeado")
         }
+
 
     }
     useEffect(() => {
-        console.log("useEffect");
         console.log(faved);
-        if (props.producto.id_producto in store.favs) {
-            setFaved(true)
+        for (let index = 0; index < store.favs.lenght; index++) {
+            if (props.producto.id_producto === store.favs[index]) { break; } {
+                setFaved(true)
+            }
         }
     }, [faved])
 
     return (
 
         <div className="card col-12 col-md-6 col-lg-3 mx-3 border-0 m-2 p-0 position-relative" style={{ width: "18rem" }}>
-            <img src={props.producto.url_img} className="card-img-top  rounded-0" alt="..." />
+            <img src={props.producto.url_img} className="card-img-top" alt="..." />
             <div className="card-body container">
                 <div className="d-flex ">
                     <h5 className="card-title me-5 ">{props.producto.nombre}</h5>
@@ -72,7 +78,7 @@ export const ProductoCatalogo = props => {
                 <p className="card-text">{props.producto.ingredientes_principales}</p>
                 <p className="card-text">{props.producto.propiedes}</p>
                 <Link to={`/producto/${props.producto.id_producto}`} type="button" className="btn btn-outline-secondary btn-sm rounded-0 mx-2">Mas información</Link>
-
+                <button className="btn btn-outline-secondary btn-sm rounded-0">Comprar</button>
                 {faved ?
                     <button className=" mx-2 bg-transparent border-0 position-absolute top-0" type="button" onClick={handleOnClickFav}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fillRule="currentColor" className="bi bi-heart-fill" viewBox="0 0 16 16">

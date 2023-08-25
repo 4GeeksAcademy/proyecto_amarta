@@ -44,7 +44,7 @@ def signup():
     if "password" not in request_body:
         return jsonify({"msg": "You have to put a password"}), 404
     
-    user = User(email=request_body["email"],password=request_body["password"],nombre=request_body["nombre"],apellidos=request_body["apellidos"])
+    user = User(email=request_body["email"],password=request_body["password"],nombre=request_body["nombre"],apellido=request_body["apellidos"])
 
     db.session.add(user)
     db.session.commit()
@@ -117,6 +117,7 @@ def add_favorite(user_id,prod_id):
         return jsonify({"msg":"ok - new favorite"}),200
     elif fav is not None:
         db.session.delete(fav)
+        db.session.commit()
         return jsonify({"msg":"ok - favorite deleted"}),200
    
 @api.route("/favoritos/<int:user_id>",methods = ["GET"])
