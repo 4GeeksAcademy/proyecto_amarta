@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Contacto = () => {
-	// const { store, actions } = useContext(Context);
+	const {  actions } = useContext(Context);
 
 	// const [filter, setFilter] = useState("")
 
@@ -14,6 +14,19 @@ export const Contacto = () => {
 	// 	actions.getProducts()
 
 	// }, [])
+
+	const [email, setEmail] = useState("");
+	const [mensaje, setMensaje] = useState("");
+	const [nombre, setNombre] = useState("");
+	const [apellido, setApellido] = useState("");
+
+	// Crear estados donde se elmazenan la info de los inputs
+	const handleEnviarMensaje = (e) => {
+		e.preventDefault();
+		actions.enviarMensaje(nombre, apellido, email, mensaje)
+	}
+
+
 	const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 	const appendAlert = (message, type) => {
 		const wrapper = document.createElement('div')
@@ -48,25 +61,25 @@ export const Contacto = () => {
 						<div className="row">
 							<div className="col">
 								<label for="nombre" className="form-label">Nombre</label>
-								<input type="text" className="form-control" placeholder="Nombre" id="nombre" aria-label="Nombre" />
+								<input type="text" className="form-control" placeholder="Nombre" id="nombre" aria-label="Nombre" onChange={e => setNombre(e.target.value)} />
 							</div>
 							<div className="col">
 								<label for="apellidos" className="form-label">Apellidos</label>
-								<input type="text" className="form-control" placeholder="Apellidos" id="apellidos" aria-label="Apellidos" />
+								<input type="text" className="form-control" placeholder="Apellidos" id="apellidos" aria-label="Apellidos" onChange={e => setApellido(e.target.value)} />
 							</div>
 						</div>
 						<div className="row">
 							<div className="col">
 								<label for="email" className="form-label">Email</label>
-								<input type="text" className="form-control" id="email" placeholder="Email" aria-label="Email" />
+								<input type="text" className="form-control" id="email" placeholder="Email" aria-label="Email" onChange={e => setEmail(e.target.value)}  />
 							</div>
 						</div>
 						<div className="mb-3">
 							<label for="textArea" className="form-label">Mensaje</label>
-							<textarea className="form-control" id="textArea" rows="3"></textarea>
+							<textarea className="form-control" id="textArea" rows="3" onChange={e => setMensaje(e.target.value)} ></textarea>
 						</div>
 						<div id="liveAlertPlaceholder">
-							<button type="button" className="btn btn-dark me-md-2" id="liveAlertBtn">Enviar</button>
+							<button type="button" className="btn btn-dark me-md-2" id="liveAlertBtn" onClick={e => handleEnviarMensaje(e)}>Enviar</button>
 						</div>
 
 					</div>
