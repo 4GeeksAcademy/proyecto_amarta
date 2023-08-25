@@ -54,20 +54,6 @@ export const Navbar = () => {
     <nav className="navbar navbar-expand bg-body-tertiary bg-body bg-opacity-50 border-bottom border-3">
       <div className="container-fluid row text-center">
         <span className=" col-xl-3 col-sm-1 nav-item"></span>
-        {/* <button
-          type="button"
-          className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark"
-          onClick={() => navigate("/catalogo")}
-        >
-          Catálogo
-        </button>
-        <button
-          type="button"
-          className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark"
-          onClick={handleMostrarContacto}
-        >
-          Contacto
-        </button> */}
         <Link to={"/catalogo"} type="button" className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark fw-bold">Catálogo</Link>
         <Link to={"/contacto"} type="button" className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark fw-bold">Contacto</Link>
         <Link className="nav-item col-md-2 col-lg-2 col-xl-2 col-sm-1" to={"/"}>
