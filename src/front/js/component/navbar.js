@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { LoginyRegistro } from "./login&register";
 import { Carrito } from "../pages/carrito";
-import { Contacto } from "./contacto";
+import { Contacto } from "../pages/contacto";
+import { Catalogo } from "../pages/catalogo";
 import amartaLogoNegro from "../../img/logoAMARTAnegro.png";
 import amartaLogoBlanco from "../../img/logoAMARTAblanco.png"
 import { Modal } from "react-bootstrap";
@@ -24,9 +25,9 @@ export const Navbar = () => {
     setMostrarLoginyRegistro(true);
   };
 
-  const handleMostrarContacto = () => {
-    setMostrarContacto(true);
-  };
+  // const handleMostrarContacto = () => {
+  //   setMostrarContacto(true);
+  // };
 
   async function handleSubmitSignup(e) {
     e.preventDefault();
@@ -53,7 +54,7 @@ export const Navbar = () => {
     <nav className="navbar navbar-expand bg-body-tertiary bg-body bg-opacity-50 border-bottom border-3">
       <div className="container-fluid row text-center">
         <span className=" col-xl-3 col-sm-1 nav-item"></span>
-        <button
+        {/* <button
           type="button"
           className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark"
           onClick={() => navigate("/catalogo")}
@@ -66,12 +67,14 @@ export const Navbar = () => {
           onClick={handleMostrarContacto}
         >
           Contacto
-        </button>
+        </button> */}
+        <Link to={"/catalogo"} type="button" className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark fw-bold">Catálogo</Link>
+        <Link to={"/contacto"} type="button" className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark fw-bold">Contacto</Link>
         <Link className="nav-item col-md-2 col-lg-2 col-xl-2 col-sm-1" to={"/"}>
           <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
         </Link>
         {store.logged ? <div className="dropdown col-xl-1 col-sm-2">
-          <a className="btn text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a className="btn text-dark dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Cuenta
           </a>
 
@@ -85,7 +88,7 @@ export const Navbar = () => {
         </div>
           : <button
             type="button"
-            className="btn nav-item text-dark col-xl-1 col-sm-2"
+            className="btn nav-item text-dark col-xl-1 col-sm-2 fw-bold"
             data-bs-toggle="modal"
             onClick={handleMostrarLoginyRegistro}
           >
@@ -95,7 +98,7 @@ export const Navbar = () => {
         }
         <button
           type="button"
-          className="btn col-xl-1 col-sm-2 nav-item text-dark"
+          className="btn col-xl-1 col-sm-2 nav-item text-dark fw-bold"
           onClick={(e) => navigate("/carrito")}
         >
           Carrito
