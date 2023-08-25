@@ -7,19 +7,16 @@ import { Context } from "../store/appContext";
 export const ProductoCatalogo = props => {
     const { store, actions } = useContext(Context)
     const [faved, setFaved] = useState()
-    const [compras,setCompras]=useState(false)
-    const [cantidad,setCantidad]=useState(1)
+    const [compras, setCompras] = useState(false)
+    const [cantidad, setCantidad] = useState(1)
 
 
 
-// Comenzar aqui
+    // Comenzar aqui
 
-function handleComprar() {
-    actions.agregarAlCarrito(props.producto.id_producto, cantidad);
-}
-
-
-
+    function handleComprar() {
+        actions.agregarAlCarrito(props.producto.id_producto, cantidad);
+    }
 
 
 
@@ -53,20 +50,26 @@ function handleComprar() {
 
     // CODIGO A PARTIR DE AQUI JOSE (línea 41)
     function handleOnClickFav() {
-        actions.toggleFav(props.producto.id_producto)
-        if (faved) {
-            setFaved(false)
-        } else if (!faved) {
-            setFaved(true)
+        if (store.logged) {
+            actions.toggleFav(props.producto.id_producto)
+            if (faved) {
+                setFaved(false)
+            } else if (!faved) {
+                setFaved(true)
+            }
 
+        } else {
+            alert("No hay ningun usuario loggeado")
         }
+
 
     }
     useEffect(() => {
-        console.log("useEffect");
         console.log(faved);
-        if (props.producto.id_producto in store.favs) {
-            setFaved(true)
+        for (let index = 0; index < store.favs.lenght; index++) {
+            if (props.producto.id_producto === store.favs[index]) { break; } {
+                setFaved(true)
+            }
         }
     }, [faved])
 
@@ -76,7 +79,7 @@ function handleComprar() {
     return (
 
         <div className="card col-12 col-md-6 col-lg-3 mx-3 border-0 m-2 p-0 position-relative" style={{ width: "18rem" }}>
-            <img src={props.producto.url_img} className="card-img-top  rounded-0" alt="..." />
+            <img src={props.producto.url_img} className="card-img-top" alt="..." />
             <div className="card-body container">
                 <div className="d-flex ">
                     <h5 className="card-title me-5 ">{props.producto.nombre}</h5>
@@ -97,7 +100,7 @@ function handleComprar() {
                             <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
                         </svg>
                     </button>
-                }                
+                }
             </div>
         </div>
     );

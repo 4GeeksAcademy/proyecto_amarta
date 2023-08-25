@@ -5,10 +5,10 @@ const urlBack = process.env.BACKEND_URL
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			token: "",
+			token: null,
 			message: "",
 			validate: false,
-			email: "",
+			logded: false,
 			productos: [],
 			tipo_producto: [],
 			producto: {},
@@ -17,9 +17,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: {},
 
 			carrito: [],
-			
 
-			
+
+
 		},
 		actions: {
 			login: async (email, password) => {
@@ -35,7 +35,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ token: data.data.access_token, user: data.data.user })
 					await getActions().getFavs(data.data.user.id)
 					return true
-
 				} catch (error) {
 					console.log(error);
 					return false
@@ -54,6 +53,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(data);
 					localStorage.setItem("token", data.data.access_token)
 					setStore({ token: data.data.access_token })
+
 					return true
 				}
 				catch (error) {
@@ -86,10 +86,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Authorization": `Bearer ${token}`,
 						}
 					})
-					console.log(data);
-					if (data.status === 200)
-
+					console.log(data.data);
+					if (data.status === 200) {
+						setStore({ user: data.data, logged: true })
 						return true;
+					}
 				} catch (error) {
 					console.log(error);
 					if (error.response.status === 401) {
@@ -143,14 +144,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-			agregarAlCarrito: async (prod_id, cantidad)=> {
+			agregarAlCarrito: async (prod_id, cantidad) => {
 				console.log(prod_id, cantidad)
 				try {
-					let data = await axios.post(`${urlBack}/api/carrito/${getStore().user.id}`,{
-						producto:prod_id,
-						cantidad:1
+					let data = await axios.post(`${urlBack}/api/carrito/${getStore().user.id}`, {
+						producto: prod_id,
+						cantidad: 1
 					});
-					console.log(data); 
+					console.log(data);
 					// setStore({carrito: data.data });
 					return true
 				} catch (error) {
@@ -158,16 +159,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
-			eliminarDelCarrito: async(user_id, prod_id) =>{
+			eliminarDelCarrito: async (user_id, prod_id) => {
 				try {
-				  let data = await axios.delete(`${urlBack}/api/carrito/${user_id}/${prod_id}`);
-				  setStore({ carrito: data.data });
-				  return true
+					let data = await axios.delete(`${urlBack}/api/carrito/${user_id}/${prod_id}`);
+					setStore({ carrito: data.data });
+					return true
 				} catch (error) {
-				  console.log(error);
-				  return false
+					console.log(error);
+					return false
 				}
-			  },
+			},
 			// agregarAlCarrito: (producto) => {
 			// 	const { carrito } = getStore();
 			// 	const nuevoCarrito = [...carrito, producto];
@@ -230,21 +231,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-		
-
-			
 
 
 
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -274,32 +275,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			toggleFav: async (prod_id) => {
 				try {
 					const data = await axios.post(`${urlBack}/api/favoritos/${getStore().user.id}/${prod_id}`)
+					getActions().getFavs(getStore().user.id)
 					console.log(data);
+
 				} catch (error) {
 					console.log(error);
 				}
 			},
-
-			
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			
-		}
+			logOut: () => {
+				setStore({ logged: false, token: null })
+				localStorage.removeItem("token")
+			}
+		};
 	};
-};
 
-export default getState;
+	export default getState;

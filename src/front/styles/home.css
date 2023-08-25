@@ -5,44 +5,48 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
-.footer{
+.footer {
     background-color: rgb(61, 31, 10);
     color: white
 }
-#nav-iniciarID-tab, #nav-crearID-tab{
-    color:rgb(61, 31, 10);
-    
+
+#nav-iniciarID-tab,
+#nav-crearID-tab {
+    color: rgb(61, 31, 10);
+
 }
 
-#nav-iniciarID-tab:active , #nav-iniciarID-tab:hover, #nav-crearID-tab:hover, #nav-crearID-tab:active{
-    color:rgb(156, 59, 21);
+#nav-iniciarID-tab:active,
+#nav-iniciarID-tab:hover,
+#nav-crearID-tab:hover,
+#nav-crearID-tab:active {
+    color: rgb(156, 59, 21);
     text-decoration: underline;
-    
+
 }
-.fondoModal{
-    background-image: url(https://res.cloudinary.com/dgykuefoq/image/upload/v1692010052/amarta/im%C3%A1genes/cuerpo/crema_juptier_etgvz8.png)
-}
-.fondoRegistro{
+
+.fondoRegistro {
     background-image: url(https://res.cloudinary.com/dgykuefoq/image/upload/v1692010058/amarta/im%C3%A1genes/cara/crema_mar_vvrqwe.png)
 }
 
-.fondoContacto{
+.fondoContacto {
     background-image: url(https://res.cloudinary.com/dgykuefoq/image/upload/v1692010052/amarta/im%C3%A1genes/cuerpo/oli_mercuri_hki5dh.png)
 }
+
 .title-home {
     font-family: 'Libre Bodoni', serif;
 
 }
 
-.img-home{
+.img-home {
     background-image: url("../img/img293.jpg");
-  
+
 }
 
 
-.btn-container{
+.btn-container {
     display: inline-block;
-    position:relative
+    position: relative
 }
 
 .btn-shop {
@@ -66,11 +70,11 @@
     transform: translateX(-50%);
     border-top: 120px solid rgba(255, 255, 255, 0.3);
     border-left: 80px solid transparent;
-    border-right: 80px solid transparent; 
+    border-right: 80px solid transparent;
     z-index: 1;
 }
 
-.btn-shop:hover{
+.btn-shop:hover {
     text-decoration: underline;
     color: black
 }

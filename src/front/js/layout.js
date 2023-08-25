@@ -8,7 +8,8 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Catalogo } from "./pages/catalogo";
-import { Producto } from "./pages/producto"
+import { Producto } from "./pages/producto";
+import { Contacto } from "./pages/contacto";
 import injectContext from "./store/appContext";
 import { Carrito } from "./pages/carrito";
 import { Recuperar } from "./component/recuperar.js";
@@ -54,7 +55,7 @@ const Layout = () => {
             <Route element={<Private />} path="/private" />
             <Route element={<Catalogo />} path="/catalogo" />
             <Route element={<Producto />} path="/producto/:id_producto" />
-            
+            <Route element={<Contacto />} path="/contacto" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />

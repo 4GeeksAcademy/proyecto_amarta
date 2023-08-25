@@ -1,0 +1,10 @@
+.modal-content {
+    background-color: transparent;
+    border: none;
+    margin-top: 25%;
+}
+
+.fondoModal {
+    /* background-color: none; */
+    background-image: url(https://res.cloudinary.com/dgykuefoq/image/upload/v1692010052/amarta/im%C3%A1genes/cuerpo/crema_juptier_etgvz8.png)
+}
