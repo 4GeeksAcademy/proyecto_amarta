@@ -6,13 +6,25 @@ import { DetalleProducto } from "../component/detalleProducto";
 
 export const Producto = () => {
     const { store, actions } = useContext(Context);
-
     // const [filter, setFilter] = useState("")
     const params = useParams()
     const [loaded, setLoaded] = useState(false)
+    const [cantidad, setCantidad] = useState(1)
     const navigate = useNavigate()
 
+    async function handleAddCarrito() {
+        if (store.logged) {
+            const added = await actions.agregarAlCarrito(params.id_producto, cantidad)
+            if (added) {
+                console.log("added to carrito");
+            } else {
+                console.log("error");
+            }
+        } else {
+            alert("No se ha iniciado sesión aún")
+        }
 
+    }
     useEffect(() => {
         console.log("page producto", params.id_producto);
         async function loadProduct() {
@@ -36,7 +48,7 @@ export const Producto = () => {
 
     return (
 
-        <div className="container col-xxl-8 px-4 py-5 bg-white mt-5 mb-5">
+        <div className="container col-xxl-8 px-4 py-5 bg-white mt-5 mb-5 min-vh-100">
             <div className="row flex-lg-row align-items-center g-5 py-5">
                 <div className="col-10 col-sm-8 col-lg-6">
                     <img src={store.producto.url_img} className="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" loading="lazy" />
@@ -52,8 +64,11 @@ export const Producto = () => {
 
                     <div className="form-check">
                         <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                        <input value={cantidad} min={1} className=" form-control w-25" type="number" id="cantidad1" onChange={(e) => {
+                            setCantidad(e.target.value)
+                        }} />
                         <label className="form-check-label" htmlFor="flexRadioDefault1">
-                            1 unidad {store.producto.tamaño}
+                            unidad {store.producto.tamaño}
                         </label>
                     </div>
                     <hr />
@@ -68,7 +83,7 @@ export const Producto = () => {
 
                     <div className="d-grid gap-2 d-md-flex justify-content-md-start mt-5">
 
-                        <button type="button" className="btn btn-dark btn-lg px-4 me-md-2">Añadir al
+                        <button onClick={handleAddCarrito} type="button" className="btn btn-dark btn-lg px-4 me-md-2">Añadir al
                             carrito</button>
                         <Link to={"/catalogo"} type="button" className="btn btn-outline-secondary btn-lg px-4">Completar la rutina</Link>
                     </div>
@@ -79,4 +94,3 @@ export const Producto = () => {
 
     );
 };
-

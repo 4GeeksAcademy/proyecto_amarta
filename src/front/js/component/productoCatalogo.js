@@ -87,7 +87,7 @@ export const ProductoCatalogo = props => {
                 </div>
                 <p className="card-text">{props.producto.ingredientes_principales}</p>
                 <p className="card-text">{props.producto.propiedes}</p>
-                <Link to={"/producto"} type="button" className="btn btn-outline-secondary btn-sm rounded-0 mx-2">Mas información</Link>
+                <Link to={`/producto/${props.producto.id_producto}`} type="button" className="btn btn-outline-secondary btn-sm rounded-0 mx-2">Mas información</Link>
                 <a href="#" className="btn btn-outline-secondary btn-sm rounded-0" onClick={handleComprar}>Comprar</a>
                 {faved ?
                     <button className=" mx-2 bg-transparent border-0 position-absolute top-0" type="button" onClick={handleOnClickFav}>

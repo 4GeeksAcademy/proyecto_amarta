@@ -9,6 +9,7 @@ class User(db.Model):
     nombre = db.Column(db.String)
     apellido = db.Column(db.String)
     favoritos = db.relationship('Favorito',backref = 'user',lazy=True)
+    carrito = db.relationship('Carrito',backref = 'carrito',lazy=True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -36,6 +37,7 @@ class Producto(db.Model):
     id_tipo = db.Column(db.Integer,db.ForeignKey('tipo_prod.id'))
     url_img = db.Column(db.String)
     favorecidos = db.relationship('Favorito',backref = 'producto',lazy=True)
+    carritos = db.relationship('Carrito',backref = 'producto',lazy=True)
 
     def __repr__(self):
         return f'<producto: {self.nombre}>'
@@ -89,7 +91,7 @@ class Pedido(db.Model):
     cantidad = db.Column(db.Integer)
 
     def __repr__(self):
-        return f'<id_pedido: {self.id}, id_user: {self.id_user}, id_prod: {self.id_prod}, cantidad: {self.cantidad}'
+        return f'<id_pedido: {self.id}, id_user: {self.id_user}, id_prod: {self.id_prod}, cantidad: {self.cantidad}>'
     
     def serialize(self):
         return{
@@ -99,13 +101,18 @@ class Pedido(db.Model):
             "cantidad":self.cantidad
         }
 
-carrito_prods = db.Table('carrito_prods',
-                    db.Column('id_carrito',db.Integer,db.ForeignKey('carrito.id'),primary_key=True),
-                    db.Column('id_producto',db.Integer,db.ForeignKey('producto.id'),primary_key=True),)
-
 class Carrito(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
-    id_user = db.Column(db.Integer,db.ForeignKey('user.id'))
-    prods = db.relationship('Producto',secondary=carrito_prods,lazy='subquery',
-                            backref = db.backref('carritos',lazy=True))
+    id_user = db.Column(db.Integer,db.ForeignKey('user.id'),primary_key=True)
+    id_prod = db.Column(db.Integer,db.ForeignKey('producto.id'),primary_key=True)
+    cantidad = db.Column(db.Integer)
+
+    def __repr__(self):
+        return f'<id_user : {self.id_user}, id_producto: {self.id_prod}, cantidad: {self.cantidad}>'
+    
+    def serialize(self):
+        return{
+            "id_user" : self.id_user,
+            "id_producto": self.id_prod,
+            "cantidad": self.cantidad
+        }
     

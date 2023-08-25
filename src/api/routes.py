@@ -96,7 +96,7 @@ def get_tipo_producto():
 @api.route("/producto/<int:id_producto>", methods=["GET"])
 def get_une_product(id_producto):
     producto = Producto.query.filter_by(id = id_producto).first()
-    print(producto.serialize())
+    # print(producto.serialize())
     response_body = {
         "msg": "ok",
         "data": producto.serialize()
@@ -131,49 +131,49 @@ def get_favorites(user_id):
     response_body.headers.add('Access-Control-Allow-Origin', '*')
     return response_body,200
 
-@api.route('/api/carrito/<int:user_id>', methods=['GET'])
+@api.route('/carrito/<int:user_id>', methods=['GET'])
 def get_carrito(user_id):
-    user = User.query.get(user_id)
-    if user is None:
-        return jsonify({"msg": "Usuario no encontrado"}), 404
-    
-    carrito = user.carritos
-    carrito_data = []
-    for producto in carrito:
-        carrito_data.append(producto.serialize())
-    
-    return jsonify({"msg": "OK - Productos en el carrito", "carrito": carrito_data}), 200
+    print("entro al backend")
+    carrito = Producto.query.join(Carrito).filter(Carrito.id_user == user_id).all()
+    data = [item.serialize() for item in carrito]
+    response_body = jsonify({
+        "msg": "ok - carrito",
+        "carrito" : data
+    }) 
+    # response_body.headers.add('Access-Control-Allow-Origin', '*')
+    return response_body, 200
 
-@api.route('/api/carrito/<int:user_id>', methods=['POST'])
+@api.route('/carrito/<int:user_id>', methods=['POST'])
 def add_to_carrito(user_id):
-    user = User.query.get(user_id)
-    # producto = Producto.query.get(prod_id)
-    
-    if user is None:
-        return jsonify({"msg": "Usuario o producto no encontrado"}), 404
-    
-    carrito_item = Carrito.query.filter_by(user_id=user_id, prod_id=prod_id).first()
-    if carrito_item:
-        carrito_item.cantidad += cantidad
-    else:
-        carrito_item = Carrito(user_id=user_id, prod_id=prod_id, cantidad=cantidad)
-        db.session.add(carrito_item)
-    
-    db.session.commit()
-    return jsonify({"msg": "OK - Producto añadido al carrito"}), 200
-
-@api.route('/api/carrito/<int:user_id>/<int:prod_id>', methods=['DELETE'])
-def remove_from_carrito(user_id, prod_id):
-    user = User.query.get(user_id)
-    producto = Producto.query.get(prod_id)
-    
-    if user is None or producto is None:
-        return jsonify({"msg": "Usuario o producto no encontrado"}), 404
-    
-    carrito_item = Carrito.query.filter_by(user_id=user_id, prod_id=prod_id).first()
-    if carrito_item:
-        db.session.delete(carrito_item)
+    request_body = request.get_json(force=True)
+    inCarrito = Carrito.query.filter_by(id_user=user_id,id_prod=request_body["producto"]).first()
+    print(inCarrito)
+    if inCarrito is None:
+        newCarritoItem = Carrito(id_user = user_id,id_prod=request_body["producto"],cantidad=request_body["cantidad"])
+        print(newCarritoItem)
+        db.session.add(newCarritoItem)
         db.session.commit()
-        return jsonify({"msg": "OK - Producto eliminado del carrito"}), 200
-    else:
-        return jsonify({"msg": "Producto no encontrado en el carrito"}), 404
+        return jsonify({"msg": "ok - Added To carrito"})
+    elif inCarrito is not None:
+        inCarrito.cantidad += int(request_body["cantidad"])
+        db.session.commit()
+        return jsonify({"msg":"ok - Carrito updated",
+                        "cantidad":inCarrito.cantidad})
+    
+    return jsonify({"msg":"Error desconocido"}),200
+
+# @api.route('/carrito/<int:user_id>/<int:prod_id>', methods=['DELETE'])
+# def remove_from_carrito(user_id, prod_id):
+#     user = User.query.get(user_id)
+#     producto = Producto.query.get(prod_id)
+    
+#     if user is None or producto is None:
+#         return jsonify({"msg": "Usuario o producto no encontrado"}), 404
+    
+#     carrito_item = Carrito.query.filter_by(user_id=user_id, prod_id=prod_id).first()
+#     if carrito_item:
+#         db.session.delete(carrito_item)
+#         db.session.commit()
+#         return jsonify({"msg": "OK - Producto eliminado del carrito"}), 200
+#     else:
+#         return jsonify({"msg": "Producto no encontrado en el carrito"}), 404
