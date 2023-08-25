@@ -7,6 +7,7 @@ import { Contacto } from "./contacto";
 import amartaLogoNegro from "../../img/logoAMARTAnegro.png";
 import amartaLogoBlanco from "../../img/logoAMARTAblanco.png"
 import { Modal } from "react-bootstrap";
+import "../../styles/navbar.css"
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -49,19 +50,19 @@ export const Navbar = () => {
   }
 
   return (
-    <nav className="navbar navbar-expand bg-body-tertiary bg-body bg-opacity-25 border-bottom border-3">
+    <nav className="navbar navbar-expand bg-body-tertiary bg-body bg-opacity-50 border-bottom border-3">
       <div className="container-fluid row text-center">
         <span className=" col-xl-3 col-sm-1 nav-item"></span>
         <button
           type="button"
-          className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-light"
+          className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark"
           onClick={() => navigate("/catalogo")}
         >
           Catálogo
         </button>
         <button
           type="button"
-          className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-light"
+          className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark"
           onClick={handleMostrarContacto}
         >
           Contacto
@@ -70,12 +71,12 @@ export const Navbar = () => {
           <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
         </Link>
         {store.logged ? <div className="dropdown col-xl-1 col-sm-2">
-          <a className="btn text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a className="btn text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Cuenta
           </a>
 
           <ul className="dropdown-menu list-unstyled dropdown-menu-start">
-            <li><Link className="btn" to={"/private"}>perfil</Link></li>
+            <li><Link className="btn" to={"/private"}>Perfil</Link></li>
             <li><button className="btn" onClick={() => {
               actions.logOut()
               navigate("/")
@@ -84,17 +85,17 @@ export const Navbar = () => {
         </div>
           : <button
             type="button"
-            className="btn nav-item text-light col-xl-1 col-sm-2"
+            className="btn nav-item text-dark col-xl-1 col-sm-2"
             data-bs-toggle="modal"
             onClick={handleMostrarLoginyRegistro}
           >
-            cuenta
+            Cuenta
           </button>
 
         }
         <button
           type="button"
-          className="btn col-xl-1 col-sm-2 nav-item text-light"
+          className="btn col-xl-1 col-sm-2 nav-item text-dark"
           onClick={(e) => navigate("/carrito")}
         >
           Carrito
