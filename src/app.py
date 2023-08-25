@@ -13,7 +13,7 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
 #from models import Person
-from flask_mail import Mail 
+
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
@@ -37,20 +37,20 @@ app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 jwt = JWTManager(app)
 
 #CONFIGURACION EMAIL
-mail_settings = {
-    "MAIL_SERVER": 'smtp.gmail.com',
-    "MAIL_PORT":  465,
-    "MAIL_USE_TLS": False,
-    "MAIL_USE_SSL": True,
-    "MAIL_USERNAME":  'calle4cr2021@gmail.com', #ACA COLOQUEN EL CORREO DE LA APP DEL ALUMN
-    "MAIL_PASSWORD": 'C@lle42021$$', #PASSWORD DEL CORREO DE LA APP DEL ALUMNO
-    "MAIL_DEFAULT_SENDER": 'calle4cr2021@gmail.com'
-}
+# mail_settings = {
+#     "MAIL_SERVER": 'smtp.gmail.com',
+#     "MAIL_PORT":  465,
+#     "MAIL_USE_TLS": False,
+#     "MAIL_USE_SSL": True,
+#     "MAIL_USERNAME":  'calle4cr2021@gmail.com', #ACA COLOQUEN EL CORREO DE LA APP DEL ALUMN
+#     "MAIL_PASSWORD": 'C@lle42021$$', #PASSWORD DEL CORREO DE LA APP DEL ALUMNO
+#     "MAIL_DEFAULT_SENDER": 'calle4cr2021@gmail.com'
+# }
 
-app.config.update(mail_settings)
-mail = Mail(app)
+# app.config.update(mail_settings)
+# mail = Mail(app)
 #agregan mail a la app y se va llamar en routes.py como current_app
-app.mail= mail
+# app.mail= mail
 #FIN CONFIGURACION EMAIL
 
 

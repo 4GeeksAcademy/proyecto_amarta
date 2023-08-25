@@ -68,13 +68,13 @@ export const Navbar = () => {
         >
           Contacto
         </button> */}
-        <Link to={"/catalogo"} type="button" className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-light">Catálogo</Link>
-        <Link to={"/contacto"} type="button" className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-light">Contacto</Link>
+        <Link to={"/catalogo"} type="button" className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark fw-bold">Catálogo</Link>
+        <Link to={"/contacto"} type="button" className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark fw-bold">Contacto</Link>
         <Link className="nav-item col-md-2 col-lg-2 col-xl-2 col-sm-1" to={"/"}>
           <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
         </Link>
         {store.logged ? <div className="dropdown col-xl-1 col-sm-2">
-          <a className="btn text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a className="btn text-dark dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Cuenta
           </a>
 
@@ -88,7 +88,7 @@ export const Navbar = () => {
         </div>
           : <button
             type="button"
-            className="btn nav-item text-dark col-xl-1 col-sm-2"
+            className="btn nav-item text-dark col-xl-1 col-sm-2 fw-bold"
             data-bs-toggle="modal"
             onClick={handleMostrarLoginyRegistro}
           >
@@ -98,7 +98,7 @@ export const Navbar = () => {
         }
         <button
           type="button"
-          className="btn col-xl-1 col-sm-2 nav-item text-dark"
+          className="btn col-xl-1 col-sm-2 nav-item text-dark fw-bold"
           onClick={(e) => navigate("/carrito")}
         >
           Carrito
