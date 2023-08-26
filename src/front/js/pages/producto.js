@@ -47,9 +47,8 @@ export const Producto = () => {
     }
 
     return (
-
-        <div className="container col-xxl-8 px-4 py-5 bg-white mt-5 mb-5 min-vh-100">
-            <div className="row flex-lg-row align-items-center g-5 py-5">
+        <div className="container col-xxl-8 px-4 py-5 mt-5 mb-5 min-vh-100">
+            <div className="row flex-lg-row bg-white align-items-center g-5 py-5">
                 <div className="col-10 col-sm-8 col-lg-6">
                     <img src={store.producto.url_img} className="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" loading="lazy" />
                 </div>
@@ -62,9 +61,9 @@ export const Producto = () => {
 
                     <hr />
 
-                    <div className="form-check">
-                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                        <input value={cantidad} min={1} className=" form-control w-25" type="number" id="cantidad1" onChange={(e) => {
+                    <div className="form-check d-flex align-items-center">
+                        <input className=" me-2 form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                        <input value={cantidad} min={1} max={99} className=" form-control w-auto me-2" type="number" onChange={(e) => {
                             setCantidad(e.target.value)
                         }} />
                         <label className="form-check-label" htmlFor="flexRadioDefault1">
@@ -90,6 +89,7 @@ export const Producto = () => {
                 </div>
             </div>
         </div>
+
 
 
     );

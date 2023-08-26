@@ -28,7 +28,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						email: email,
 						password: password
 					})
-					console.log(data);
 					localStorage.setItem("token", data.data.access_token)
 					setStore({ token: data.data.access_token, user: data.data.user })
 					await getActions().getFavs(data.data.user.id)
@@ -49,7 +48,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						email: email,
 						password: password
 					})
-					console.log(data);
 					localStorage.setItem("token", data.data.access_token)
 					setStore({ token: data.data.access_token })
 					await getActions().getCarrito()
@@ -67,7 +65,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
 					}
 					let data = await axios.get(`${urlBack}/api/private`, getToken)
-					console.log(data);
 					return true
 				} catch (error) {
 					console.log(error);
@@ -85,7 +82,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Authorization": `Bearer ${token}`,
 						}
 					})
-					console.log(data.data);
 					if (data.status === 200) {
 						setStore({ user: data.data, logged: true })
 						return true;
@@ -109,7 +105,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					let data = await axios.get(`${urlBack}/api/catalogo`)
 					setStore({ productos: data.data });
-					console.log(data);
 
 				} catch (error) {
 					// console.log(error);
@@ -145,7 +140,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("en carrito");
 				try {
 					let data = await axios.get(`${urlBack}/api/carrito/${getStore().user.id}`)
-					console.log(data);
 					setStore({ carrito: data.data.carrito })
 					return true
 				} catch (error) {
@@ -155,14 +149,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			agregarAlCarrito: async (prod_id, cantidad) => {
-				console.log(prod_id, cantidad)
 				try {
 					let data = await axios.post(`${urlBack}/api/carrito/${getStore().user.id}`, {
 						producto: prod_id,
 						cantidad: cantidad
 					});
-					console.log(data);
-					// setStore({carrito: data.data });
 					await getActions().getCarrito()
 					return true
 				} catch (error) {
@@ -180,16 +171,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
-			// agregarAlCarrito: (producto) => {
-			// 	const { carrito } = getStore();
-			// 	const nuevoCarrito = [...carrito, producto];
-			// 	setStore({ carrito: nuevoCarrito });
-			// },
-			// eliminarDelCarrito: (producto) => {
-			// 	const { carrito } = getStore();
-			// 	const nuevoCarrito = carrito.filter(item => item.id_producto !== producto.id_producto);
-			// 	setStore({ carrito: nuevoCarrito });
-			// },
 
 
 
@@ -286,12 +267,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 			toggleFav: async (prod_id) => {
 				try {
 					const data = await axios.post(`${urlBack}/api/favoritos/${getStore().user.id}/${prod_id}`)
-					getActions().getFavs(getStore().user.id)
-					console.log(data);
-
+					await getActions().getFavs(getStore().user.id)
 				} catch (error) {
 					console.log(error);
 				}
+			},
+
+			prodIsFaved: (id_prod) => {
+				let favs = getStore().favs
+				for (let index = 0; index < parseInt(favs["length"]); index++) {
+					if (id_prod === favs[index]["id_producto"]) {
+						return true
+					}
+				} return false
 			},
 			logOut: () => {
 				setStore({ logged: false, token: null })

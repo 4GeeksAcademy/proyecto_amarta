@@ -65,11 +65,9 @@ export const ProductoCatalogo = props => {
 
     }
     useEffect(() => {
-        console.log(faved);
-        for (let index = 0; index < store.favs.lenght; index++) {
-            if (props.producto.id_producto === store.favs[index]) { break; } {
-                setFaved(true)
-            }
+        let isFaved = actions.prodIsFaved(props.producto.id_producto)
+        if (isFaved) {
+            setFaved(isFaved)
         }
     }, [faved])
 
@@ -79,7 +77,7 @@ export const ProductoCatalogo = props => {
     return (
 
         <div className="card col-12 col-md-6 col-lg-3 mx-3 border-0 m-2 p-0 position-relative" style={{ width: "18rem" }}>
-            <img src={props.producto.url_img} className="card-img-top" alt="..." />
+            <img src={props.producto.url_img} className="card-img-top max" alt="..." />
             <div className="card-body container">
                 <div className="d-flex ">
                     <h5 className="card-title me-5 ">{props.producto.nombre}</h5>
