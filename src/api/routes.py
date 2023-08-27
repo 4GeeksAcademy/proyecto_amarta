@@ -133,14 +133,22 @@ def get_favorites(user_id):
 
 @api.route('/carrito/<int:user_id>', methods=['GET'])
 def get_carrito(user_id):
-    print("entro al backend")
-    carrito = Producto.query.join(Carrito).filter(Carrito.id_user == user_id).all()
-    data = [item.serialize() for item in carrito]
+    carrito = db.session.query(Carrito.cantidad,Producto.id,Producto.nombre,Producto.precio,Producto.url_img).join(Producto).filter(Carrito.id_user==user_id).all()
+    data = []
+    for item in carrito:
+        producto = {
+            "id":item[1],
+            "nombre":item[2],
+            "precio":item[3],
+            "cantidad":item[0],
+            "img":item[4],
+            "total":int(item[3])*int(item[0])
+        }
+        data.append(producto)
     response_body = jsonify({
         "msg": "ok - carrito",
         "carrito" : data
-    }) 
-    # response_body.headers.add('Access-Control-Allow-Origin', '*')
+    })
     return response_body, 200
 
 @api.route('/carrito/<int:user_id>', methods=['POST'])
@@ -162,18 +170,23 @@ def add_to_carrito(user_id):
     
     return jsonify({"msg":"Error desconocido"}),200
 
-# @api.route('/carrito/<int:user_id>/<int:prod_id>', methods=['DELETE'])
-# def remove_from_carrito(user_id, prod_id):
-#     user = User.query.get(user_id)
-#     producto = Producto.query.get(prod_id)
+@api.route('/carrito/<int:user_id>/<int:prod_id>', methods=['DELETE'])
+def delete_from_carrito(user_id,prod_id):
+    item = Carrito.query.filter_by(id_user=user_id,id_prod=prod_id).first()
+    if item is None:
+        return jsonify({"msg":"No econtrado en el carrito"}),200
+    else:
+        db.session.delete(item)
+        db.session.commit()
+        return jsonify({"msg":"ok - Eliminado del carrito"}),200
     
-#     if user is None or producto is None:
-#         return jsonify({"msg": "Usuario o producto no encontrado"}), 404
-    
-#     carrito_item = Carrito.query.filter_by(user_id=user_id, prod_id=prod_id).first()
-#     if carrito_item:
-#         db.session.delete(carrito_item)
-#         db.session.commit()
-#         return jsonify({"msg": "OK - Producto eliminado del carrito"}), 200
-#     else:
-#         return jsonify({"msg": "Producto no encontrado en el carrito"}), 404
+@api.route('/carrito/<int:user_id>/<int:prod_id>', methods=['PUT'])
+def update_from_carrito(user_id,prod_id):
+    request_body = request.get_json(force=True)
+    item = Carrito.query.filter_by(id_user=user_id,id_prod=prod_id).first()
+    if item is None:
+        return jsonify({"msg":"No econtrado en el carrito"}),200
+    else:
+        item.cantidad = request_body["cantidad"]
+        db.session.commit()
+        return jsonify({"msg":"ok - Carrito actualizado","cantidad":request_body["cantidad"]}),200

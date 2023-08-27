@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import "../../styles/producto-catalogo.css";
 import { Context } from "../store/appContext";
+import "../../styles/carrito.css"
 
 export const ProductoCatalogo = props => {
     const { store, actions } = useContext(Context)
@@ -17,37 +18,6 @@ export const ProductoCatalogo = props => {
     function handleComprar() {
         actions.agregarAlCarrito(props.producto.id_producto, cantidad);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // CODIGO A PARTIR DE AQUI JOSE (línea 41)
     function handleOnClickFav() {
         if (store.logged) {

@@ -31,8 +31,6 @@ export const Navbar = () => {
 
   async function handleSubmitSignup(e) {
     e.preventDefault();
-    console.log(email, password);
-    // actions.signup(email, password);
     let signedin = await actions.signup(name, apellidos, email, password)
     if (signedin) {
       setMostrarLoginyRegistro(false)
@@ -42,7 +40,6 @@ export const Navbar = () => {
 
   async function handleSubmitLogin(e) {
     e.preventDefault();
-    console.log(email, password);
     let logged = await actions.login(email, password);
     if (logged) {
       setMostrarLoginyRegistro(false)

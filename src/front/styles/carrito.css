@@ -1,0 +1,35 @@
+.prodImg {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.deleteButton {
+    border-radius: 8px;
+}
+
+.itemCarritoDiv {
+    border-bottom: 20px;
+    border-top: 20px;
+    border-radius: 8px;
+    height: 90px;
+    /* border-color: red;
+    border-style: dotted; */
+}
+
+.emptyCarritoMsg {
+    border-radius: 8px;
+}
+
+.topGuideCarrito {
+    border-radius: 8px;
+    height: 50px;
+}
+
+/* 
+.itemCarritoDiv * {
+    border-style: dotted;
+    border-color: red;
+} */

@@ -150,7 +150,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			agregarAlCarrito: async (prod_id, cantidad) => {
 				try {
-					let data = await axios.post(`${urlBack}/api/carrito/${getStore().user.id}`, {
+					await axios.post(`${urlBack}/api/carrito/${getStore().user.id}`, {
 						producto: prod_id,
 						cantidad: cantidad
 					});
@@ -161,17 +161,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
-			eliminarDelCarrito: async (user_id, prod_id) => {
+			eliminarDelCarrito: async (prod_id) => {
 				try {
-					let data = await axios.delete(`${urlBack}/api/carrito/${user_id}/${prod_id}`);
-					setStore({ carrito: data.data });
+					await axios.delete(`${urlBack}/api/carrito/${getStore().user.id}/${prod_id}`);
+					await getActions().getCarrito()
 					return true
 				} catch (error) {
 					console.log(error);
 					return false
 				}
 			},
-
+			actualizarCarrito: async (prod_id, cantidad) => {
+				try {
+					const data = await axios.put(`${urlBack}/api/carrito/${getStore().user.id}/${prod_id}`, {
+						cantidad: cantidad
+					});
+					console.log(data);
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+			},
 
 
 
