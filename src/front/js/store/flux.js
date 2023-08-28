@@ -204,10 +204,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 						mensaje: mensaje
 					})
 					console.log(data);
+					return true
 				} catch (error) {
 					console.log(error);
+					return false
 				}
 
+			},
+
+			enviarEmailNL: async (email) => {
+				try {
+					let data = await axios.post(`${urlBack}/api/inscribirseNL`, {
+						email: email,
+					})
+					console.log(data);
+					return true					
+				} catch (error) {
+					console.log(error);
+					return false					
+				}
 			},
 
 
