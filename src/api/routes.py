@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, current_app
-from api.models import db, User, Producto, Tipo_prod, Favorito
+from api.models import db, User, Producto, Tipo_prod, Favorito, Pedido, Carrito
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -101,7 +101,7 @@ def get_tipo_producto():
 @api.route("/producto/<int:id_producto>", methods=["GET"])
 def get_une_product(id_producto):
     producto = Producto.query.filter_by(id = id_producto).first()
-    print(producto.serialize())
+    # print(producto.serialize())
     response_body = {
         "msg": "ok",
         "data": producto.serialize()
@@ -124,7 +124,7 @@ def add_favorite(user_id,prod_id):
         db.session.delete(fav)
         db.session.commit()
         return jsonify({"msg":"ok - favorite deleted"}),200
-   
+
 @api.route("/favoritos/<int:user_id>",methods = ["GET"])
 def get_favorites(user_id):
     favs = Producto.query.join(Favorito).filter(Favorito.id_user == user_id).all()
@@ -136,6 +136,65 @@ def get_favorites(user_id):
     response_body.headers.add('Access-Control-Allow-Origin', '*')
     return response_body,200
 
+@api.route('/carrito/<int:user_id>', methods=['GET'])
+def get_carrito(user_id):
+    carrito = db.session.query(Carrito.cantidad,Producto.id,Producto.nombre,Producto.precio,Producto.url_img).join(Producto).filter(Carrito.id_user==user_id).all()
+    data = []
+    for item in carrito:
+        producto = {
+            "id":item[1],
+            "nombre":item[2],
+            "precio":item[3],
+            "cantidad":item[0],
+            "img":item[4],
+            "total":int(item[3])*int(item[0])
+        }
+        data.append(producto)
+    response_body = jsonify({
+        "msg": "ok - carrito",
+        "carrito" : data
+    })
+    return response_body, 200
+
+@api.route('/carrito/<int:user_id>', methods=['POST'])
+def add_to_carrito(user_id):
+    request_body = request.get_json(force=True)
+    inCarrito = Carrito.query.filter_by(id_user=user_id,id_prod=request_body["producto"]).first()
+    print(inCarrito)
+    if inCarrito is None:
+        newCarritoItem = Carrito(id_user = user_id,id_prod=request_body["producto"],cantidad=request_body["cantidad"])
+        print(newCarritoItem)
+        db.session.add(newCarritoItem)
+        db.session.commit()
+        return jsonify({"msg": "ok - Added To carrito"})
+    elif inCarrito is not None:
+        inCarrito.cantidad += int(request_body["cantidad"])
+        db.session.commit()
+        return jsonify({"msg":"ok - Carrito updated",
+                        "cantidad":inCarrito.cantidad})
+    
+    return jsonify({"msg":"Error desconocido"}),200
+
+@api.route('/carrito/<int:user_id>/<int:prod_id>', methods=['DELETE'])
+def delete_from_carrito(user_id,prod_id):
+    item = Carrito.query.filter_by(id_user=user_id,id_prod=prod_id).first()
+    if item is None:
+        return jsonify({"msg":"No econtrado en el carrito"}),200
+    else:
+        db.session.delete(item)
+        db.session.commit()
+        return jsonify({"msg":"ok - Eliminado del carrito"}),200
+    
+@api.route('/carrito/<int:user_id>/<int:prod_id>', methods=['PUT'])
+def update_from_carrito(user_id,prod_id):
+    request_body = request.get_json(force=True)
+    item = Carrito.query.filter_by(id_user=user_id,id_prod=prod_id).first()
+    if item is None:
+        return jsonify({"msg":"No ha encontrado en el carrito"}),200
+    else:
+        item.cantidad = request_body["cantidad"]
+        db.session.commit()
+        return jsonify({"msg":"ok - Carrito actualizado","cantidad":request_body["cantidad"]}),200
 
 #RECUPERACION CONTRASEÑA OLVIDADA 
 @api.route("/forgotpassword", methods=["POST"])

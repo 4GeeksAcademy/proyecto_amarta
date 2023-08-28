@@ -16,6 +16,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favs: [],
 			user: {},
 
+			carrito: [],
+
+
 
 		},
 		actions: {
@@ -25,10 +28,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						email: email,
 						password: password
 					})
-					console.log(data);
 					localStorage.setItem("token", data.data.access_token)
 					setStore({ token: data.data.access_token, user: data.data.user })
 					await getActions().getFavs(data.data.user.id)
+					await getActions().getCarrito()
 					return true
 				} catch (error) {
 					console.log(error);
@@ -45,10 +48,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						email: email,
 						password: password
 					})
-					console.log(data);
 					localStorage.setItem("token", data.data.access_token)
 					setStore({ token: data.data.access_token })
-
+					await getActions().getCarrito()
 					return true
 				}
 				catch (error) {
@@ -63,7 +65,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
 					}
 					let data = await axios.get(`${urlBack}/api/private`, getToken)
-					console.log(data);
 					return true
 				} catch (error) {
 					console.log(error);
@@ -81,7 +82,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Authorization": `Bearer ${token}`,
 						}
 					})
-					console.log(data.data);
 					if (data.status === 200) {
 						setStore({ user: data.data, logged: true })
 						return true;
@@ -105,10 +105,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					let data = await axios.get(`${urlBack}/api/catalogo`)
 					setStore({ productos: data.data });
-					console.log(data);
 
 				} catch (error) {
-					console.log(error);
+					// console.log(error);
 				}
 
 			},
@@ -136,7 +135,54 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
+			getCarrito: async () => {
+				console.log("en carrito");
+				try {
+					let data = await axios.get(`${urlBack}/api/carrito/${getStore().user.id}`)
+					setStore({ carrito: data.data.carrito })
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+			},
 
+			agregarAlCarrito: async (prod_id, cantidad) => {
+				try {
+					await axios.post(`${urlBack}/api/carrito/${getStore().user.id}`, {
+						producto: prod_id,
+						cantidad: cantidad
+					});
+					await getActions().getCarrito()
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+			},
+			eliminarDelCarrito: async (prod_id) => {
+				try {
+					await axios.delete(`${urlBack}/api/carrito/${getStore().user.id}/${prod_id}`);
+					await getActions().getCarrito()
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+			},
+			actualizarCarrito: async (prod_id, cantidad) => {
+				try {
+					const data = await axios.put(`${urlBack}/api/carrito/${getStore().user.id}/${prod_id}`, {
+						cantidad: cantidad
+					});
+					console.log(data);
+					await getActions().getCarrito()
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+			},
 			getContrasenya: async (email) => {
 				try {
 					let data = await axios.post(`${urlBack}/api/forgotpassword`, {
@@ -165,54 +211,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			// Use getActions to call a function within a fuction
 			getMessage: async () => {
 				try {
@@ -238,12 +236,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 			toggleFav: async (prod_id) => {
 				try {
 					const data = await axios.post(`${urlBack}/api/favoritos/${getStore().user.id}/${prod_id}`)
-					getActions().getFavs(getStore().user.id)
-					console.log(data);
-
+					await getActions().getFavs(getStore().user.id)
 				} catch (error) {
 					console.log(error);
 				}
+			},
+
+			prodIsFaved: (id_prod) => {
+				let favs = getStore().favs
+				for (let index = 0; index < parseInt(favs["length"]); index++) {
+					if (id_prod === favs[index]["id_producto"]) {
+						return true
+					}
+				} return false
 			},
 			logOut: () => {
 				setStore({ logged: false, token: null })
@@ -251,6 +256,5 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 		}
 	};
-};
-
+}
 export default getState;

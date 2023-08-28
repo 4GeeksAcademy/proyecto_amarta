@@ -3,45 +3,22 @@ import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import "../../styles/producto-catalogo.css";
 import { Context } from "../store/appContext";
-
+import "../../styles/carrito.css"
 
 export const ProductoCatalogo = props => {
     const { store, actions } = useContext(Context)
-    const [faved, setFaved] = useState(false)
+    const [faved, setFaved] = useState()
+    const [compras, setCompras] = useState(false)
+    const [cantidad, setCantidad] = useState(1)
 
 
 
+    // Comenzar aqui
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // CODIGO A PARTIR DE AQUI JOSE
+    function handleComprar() {
+        actions.agregarAlCarrito(props.producto.id_producto, cantidad);
+    }
+    // CODIGO A PARTIR DE AQUI JOSE (línea 41)
     function handleOnClickFav() {
         if (store.logged) {
             actions.toggleFav(props.producto.id_producto)
@@ -58,18 +35,19 @@ export const ProductoCatalogo = props => {
 
     }
     useEffect(() => {
-        console.log(faved);
-        for (let index = 0; index < store.favs.lenght; index++) {
-            if (props.producto.id_producto === store.favs[index]) { break; } {
-                setFaved(true)
-            }
+        let isFaved = actions.prodIsFaved(props.producto.id_producto)
+        if (isFaved) {
+            setFaved(isFaved)
         }
     }, [faved])
+
+
+
 
     return (
 
         <div className="card col-12 col-md-6 col-lg-3 mx-3 border-0 m-2 p-0 position-relative" style={{ width: "18rem" }}>
-            <img src={props.producto.url_img} className="card-img-top" alt="..." />
+            <img src={props.producto.url_img} className="card-img-top max" alt="..." />
             <div className="card-body container">
                 <div className="d-flex ">
                     <h5 className="card-title me-5 ">{props.producto.nombre}</h5>
@@ -78,7 +56,7 @@ export const ProductoCatalogo = props => {
                 <p className="card-text">{props.producto.ingredientes_principales}</p>
                 <p className="card-text">{props.producto.propiedes}</p>
                 <Link to={`/producto/${props.producto.id_producto}`} type="button" className="btn btn-outline-secondary btn-sm rounded-0 mx-2">Mas información</Link>
-                <button className="btn btn-outline-secondary btn-sm rounded-0">Comprar</button>
+                <a href="#" className="btn btn-outline-secondary btn-sm rounded-0" onClick={handleComprar}>Comprar</a>
                 {faved ?
                     <button className=" mx-2 bg-transparent border-0 position-absolute top-0" type="button" onClick={handleOnClickFav}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fillRule="currentColor" className="bi bi-heart-fill" viewBox="0 0 16 16">
@@ -102,5 +80,8 @@ export const ProductoCatalogo = props => {
  * your component's properties
  **/
 ProductoCatalogo.propTypes = {
-    producto: PropTypes.object
+    producto: PropTypes.object,
+    pedido: PropTypes.object
 };
+
+

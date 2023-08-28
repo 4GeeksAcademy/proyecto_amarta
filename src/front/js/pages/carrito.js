@@ -1,79 +1,54 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link , useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { ProductoCarrito } from "../component/productoCarrito";
 
 
 export const Carrito = () => {
-	const { store, actions } = useContext(Context);
+    const { store, actions } = useContext(Context);
 
-    return(
-        <div >
-            <div className="container text-center pt-5 pb-2">
-{/* 1ER FILA CATÁLOGO ENCABEZADO  */}
-                <div className="row">
-                    <div className="col-5">
-                    PRODUCTO
+    const handleEliminarProducto = (id_prod) => {
+        actions.eliminarDelCarrito(id_prod);
+    };
+
+    const handleDeleteProduct = id_prod => {
+        actions.eliminarDelCarrito(store.user.id, id_prod);
+    }
+
+
+    return (
+        <div className="min-vh-100" >
+            <div className="container text-center pt-5 pb-2 ">
+                <div className="d-flex align-items-center bg-white bg-opacity-75 w-75 topGuideCarrito" >
+                    <span className="w-25 bg-transparent"></span>
+                    <div className="w-25">
+                        Producto
                     </div>
-                    <div className="col-1">
+                    <div className="w-25">
+                        Precio
                     </div>
-                    <div className="col-2">
-                    PRECIO
+                    <div className="w-25">
+                        Cantidad
                     </div>
-                    <div className="col-2">
-                    UNIDADES
-                    </div>
-                    <div className="col-2">
-                    TOTAL
-                    </div>
-                </div>
-{/* 2DA FILA CATÁLOGO LISTA DE PRODUCTOS  */}
-                <div className="row">
-                    <div className="col-5">
-                    {/* IMAGEN PRODUCTO */}
-                    </div>
-                    <div className="col-1">
-                    {/* CESTA ELIMINAR PRODUCTOS */}
-                    </div>
-                    <div className="col-2">
-                    {/* PRECIO */}
-                    </div>
-                    <div className="col-2">
-                    {/* CANTIDAD DE UNIDADES */}
-                    </div>
-                    <div className="col-2">
-                    {/* TOTAL € POR PRODUCTO */}
+                    <div className="w-25">
+                        Total
                     </div>
                 </div>
-{/* 3ERA MOSTRAR CARRITO VACÍO + BOTON CATALOGO */}
-                <div className="row">
-                    <div className="col-6">
-                    {/* CARRITO VACIO */}
-                    </div>
-                    <div className="col-6">
-                    {/* BOTON CARRITO */}
-                    </div>
-                </div>
-{/* 4TA FILA SUBTOTAL*/}
-                <div className="row">
-                    <div className="col-12">
-                    {/* SUBTOTAL */}
-                    </div>
-                </div>
-{/* 5TA FILA IMPUESTOS*/}
-                <div className="row-12">
-                    <div className="col">
-                    {/* SUBTOTAL */}
-                    </div>
-                </div>
-{/* 6TA FILA TOTAL*/}
-                <div className="row">
-                    <div className="col-12">
-                    {/* TOTAL */}
-                    </div>
-                </div>
-{/* BOTON PARA DIRIGIR AL PAGO DE CARRITO */}
+                {/* BOTON PARA DIRIGIR AL PAGO DE CARRITO */}
                 {/* <button type="button">Realizar Pago</button> */}
+                <div>
+                    {store.carrito.length === 0 ? (
+                        <div className="p-2 bg-white bg-opacity-50 emptyCarritoMsg text-center my-5">
+                            <h5 className="text-center">El carrito está vacío</h5>
+                        </div>
+                    ) : (
+                        <div>
+                            {store.carrito.map((item, index) => (<ProductoCarrito key={index} item={item}></ProductoCarrito>))}
+                        </div>
+                    )}
                 </div>
+            </div>
+
         </div>
     );
 

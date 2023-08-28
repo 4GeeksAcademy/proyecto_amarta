@@ -18,7 +18,8 @@ export const Home = () => {
 	return (
 
 		<div className=" min-vh-100" >
-			<div className="img-home px-4 pt-5 my-5">
+		<div className="img-home px-4 pt-5 my-5">
+
 				<div className="col-lg-6 mx-auto">
 
 					<h1 className="display-5  text-white mb-5 title-home "> Belleza
