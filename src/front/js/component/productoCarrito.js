@@ -6,7 +6,7 @@ import "../../styles/carrito.css"
 
 export const ProductoCarrito = (props) => {
     const { store, actions } = useContext(Context)
-    const [cantidad, setCantidad] = useState(props.item.cantidad)
+    const [cantidad, setCantidad] = useState(parseInt(props.item.cantidad))
     // style={{ "max-width": 540 + "px" }}
     function handleEliminar() {
         actions.eliminarDelCarrito(props.item.id)

@@ -176,6 +176,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						cantidad: cantidad
 					});
 					console.log(data);
+					await getActions().getCarrito()
 					return true
 				} catch (error) {
 					console.log(error);

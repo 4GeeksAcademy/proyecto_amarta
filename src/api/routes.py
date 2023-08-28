@@ -190,7 +190,7 @@ def update_from_carrito(user_id,prod_id):
     request_body = request.get_json(force=True)
     item = Carrito.query.filter_by(id_user=user_id,id_prod=prod_id).first()
     if item is None:
-        return jsonify({"msg":"No econtrado en el carrito"}),200
+        return jsonify({"msg":"No ha encontrado en el carrito"}),200
     else:
         item.cantidad = request_body["cantidad"]
         db.session.commit()
