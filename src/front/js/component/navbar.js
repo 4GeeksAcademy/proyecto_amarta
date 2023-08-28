@@ -47,6 +47,11 @@ export const Navbar = () => {
     }
   }
 
+  const handleRecuperar = (e) => {
+    e.preventDefault();
+    actions.getContrasenya(email)
+  }
+
   return (
     <nav className="navbar navbar-expand bg-body-tertiary bg-body bg-opacity-50 border-bottom border-3">
       <div className="container-fluid row text-center">
@@ -170,7 +175,7 @@ export const Navbar = () => {
 
                 <button
                   className="btn btn-dark mt-2"
-                // onClick={handleMostrarRecuperar}
+                 onClick={e=> handleRecuperar(e)}
                 >
                   Recuperar contraseña
                 </button>

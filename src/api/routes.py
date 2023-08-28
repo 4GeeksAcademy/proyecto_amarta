@@ -1,12 +1,17 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app
 from api.models import db, User, Producto, Tipo_prod, Favorito, Pedido, Carrito
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+#importamos Message() de flask_mail
+from flask_mail import Message 
+#importamos ramdom y string para generar una clave aleatoria nueva
+import random
+import string
 
 
 api= Blueprint('api', __name__)
@@ -190,3 +195,34 @@ def update_from_carrito(user_id,prod_id):
         item.cantidad = request_body["cantidad"]
         db.session.commit()
         return jsonify({"msg":"ok - Carrito actualizado","cantidad":request_body["cantidad"]}),200
+
+#RECUPERACION CONTRASEÑA OLVIDADA 
+@api.route("/forgotpassword", methods=["POST"])
+def forgotpassword():
+    recover_email = request.json['email']
+    recover_password = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(8)) #clave aleatoria nueva
+    
+    if not recover_email:
+        return jsonify({"msg": "Debe ingresar el correo"}), 401
+	#busco si el correo existe en mi base de datos
+    user = User.query.filter_by(email=recover_email).first()
+    if recover_email != user.email:
+        return jsonify({"msg": "El correo ingresado no existe en nuestros registros"}), 400
+    #si existe guardo la nueva contraseña aleatoria
+    user.password = recover_password
+    db.session.commit()
+	#luego se la envio al usuario por correo para que pueda ingresar
+    msg = Message("Hi", recipients=[recover_email])
+    msg.html = f"""<h1>Su nueva contraseña es: {recover_password}</h1>"""
+    current_app.mail.send(msg)
+    return jsonify({"msg": "Su nueva clave ha sido enviada al correo electrónico ingresado"}), 200
+
+#ENVIAR MENSAJE A TIENDA
+@api.route("/enviarmensaje", methods=["POST"])
+def enviarmensaje():
+    data = request.json
+    msg = Message("Nuevo mensaje", recipients=["info@amarta.com"])
+    msg.html = f"""<h1>Contacto de: {data["nombre"]} {data["apellido"]} {data["email"]}</h1> <p>Mensaje: {data["mensaje"]}</p>"""
+    current_app.mail.send(msg)
+    return jsonify({"msg": "Mensaje enviado correctamente"}), 200
+    

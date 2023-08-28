@@ -135,7 +135,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
-
 			getCarrito: async () => {
 				console.log("en carrito");
 				try {
@@ -183,74 +182,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			getContrasenya: async (email) => {
+				try {
+					let data = await axios.post(`${urlBack}/api/forgotpassword`, {
+						email: email,
+					})
+					console.log(data);
+				} catch (error) {
+					console.log(error);
+				}
+
+			},
+
+			enviarMensaje: async (nombre, apellido, email, mensaje) => {
+				try {
+					let data = await axios.post(`${urlBack}/api/enviarmensaje`, {
+						email: email,
+						nombre: nombre,
+						apellido: apellido,
+						mensaje: mensaje
+					})
+					console.log(data);
+				} catch (error) {
+					console.log(error);
+				}
+
+			},
 
 
 			// Use getActions to call a function within a fuction
