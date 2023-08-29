@@ -114,7 +114,7 @@ export const Navbar = () => {
           className="seleccionado col-xl-1 col-sm-2 nav-item text-dark fw-bold  border-0 bg-transparent "
           onClick={(e) => navigate("/carrito")}
         >
-          Carrito
+          Carrito ({store.carrito.length === 0 ? "0": store.carrito.length})
         </button>
         {<LoginyRegistro />}
         <span className="col-xl-3 col-sm-1"></span>
