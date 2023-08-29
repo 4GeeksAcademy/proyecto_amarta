@@ -86,17 +86,17 @@ export const Navbar = () => {
 
           <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
         </Link>
-        {store.logged ? <div className="dropdown col-xl-1 col-sm-2">
+        {store.logged ? <div className="dropdown dropdown-center col-xl-1 col-sm-2">
           <a className=" text-dark dropdown-toggle fw-bold active border-0 " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Cuenta
           </a>
 
           <ul className="dropdown-menu list-unstyled dropdown-menu-start">
-            <li><Link className="btn" to={"/private"}>Perfil</Link></li>
-            <li><button className="btn" onClick={() => {
+            <li><Link className="btn dropdown-item " to={"/private"}><i className="d-flex float-start  align-items-end fa-solid fa-user pt-1 mb-1"></i><p className="d-flex ps-3 mt-0">Perfil</p></Link></li>
+            <li><button className="btn dropdown-item" onClick={() => {
               actions.logOut()
               navigate("/")
-            }}>Log Out</button></li>
+            }}><i className="d-flex float-start align-items-end fa-solid fa-arrow-right-from-bracket pt-1"></i><p className="d-flex ps-3 mt-0 mb-1">Log Out</p></button></li>
           </ul>
         </div>
           : <button
@@ -237,8 +237,8 @@ export const Navbar = () => {
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label>Email</label>
+                <div className="form-group ">
+                  <label className="text-white">Email</label>
                   <input
                     type="email"
                     onChange={(e) => setEmail(e.target.value)}
@@ -248,7 +248,7 @@ export const Navbar = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Contraseña</label>
+                  <label className="text-white">Contraseña</label>
                   <input
                     type="password"
                     onChange={(e) => setPassword(e.target.value)}
