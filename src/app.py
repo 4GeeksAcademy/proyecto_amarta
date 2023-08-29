@@ -15,6 +15,14 @@ from flask_jwt_extended import JWTManager
 #from models import Person
 #IMPORTAR LA FUNCION Mail() de flask_mail
 from flask_mail import Mail
+import stripe
+
+stripe_keys = {
+    "secret_key": os.environ["STRIPE_SECRET_KEY"],
+    "publishable_key": os.environ["STRIPE_PUBLISHABLE_KEY"],
+}
+
+stripe.api_key = stripe_keys["secret_key"]
 
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -85,6 +93,8 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0 # avoid cache memory
     return response
+
+@app.route('/config')
 
 
 # this only runs if `$ python src/main.py` is executed
