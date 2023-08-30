@@ -104,12 +104,20 @@ def stripe_payment():
     print(request_body)
     base_url = "https://literate-zebra-5jrq4v6gwgw37pvj-3000.preview.app.github.dev"
     data = []
+    # total = 0
     for item in request_body["carrito"]:
+        # total += (int(item["precio"])*int(item["cantidad"]))
         data.append({
             "price":item["id_precio"],
             "quantity":item["cantidad"],
 
         })
+    # print(total)
+    # payment_intent = stripe.PaymentIntent.create(
+    #     amount = total,
+    #     currency = "eur",
+    #     payment_method_types=['"card']
+    # )
     checkout_session = stripe.checkout.Session.create(
         success_url=base_url+"/payment_ok",
         cancel_url = base_url+"/payment_canceled",

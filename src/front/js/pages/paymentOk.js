@@ -6,12 +6,15 @@ import axios from "axios";
 
 export const PaymentOk = () => {
     const { store, actions } = useContext(Context)
-    const [stripePromise, setStripePromise] = useState(null)
-    const [clientSecret, setClientSecret] = useState(null)
     const navigate = useNavigate()
+    // const [logged, setLogged] = useState(false)
 
     useEffect(() => {
-        actions.eliminarCarrito()
+        async function checkLogIn() {
+            const valid = await actions.validToken()
+            if (valid) { actions.eliminarCarrito() }
+        }
+        checkLogIn()
     }, [])
 
     return (

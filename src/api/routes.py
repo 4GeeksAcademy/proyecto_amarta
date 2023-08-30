@@ -178,10 +178,11 @@ def add_to_carrito(user_id):
 
 @api.route('/carrito/<int:user_id>',methods=['DELETE'])
 def delete_carrito(user_id):
-    carrito = Carrito.query.filter_by(id_user=user_id).first()
+    carrito = Carrito.query.filter_by(id_user=user_id).all()
     if carrito is None:
         return jsonify({"msg":"Carrito no existe"}),200
-    db.session.delete(carrito)
+    for item in carrito:
+        db.session.delete(item)
     db.session.commit()
     return jsonify({"msg":"ok - Carrito eliminado"})
 

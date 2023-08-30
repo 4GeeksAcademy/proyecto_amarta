@@ -33,7 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					await getActions().getFavs(data.data.user.id)
 					await getActions().getCarrito()
 					console.log("Usuario logueado correctamente")
-					return { success: true};
+					return { success: true };
 				} catch (error) {
 					console.log(error);
 					return { success: false, errorMsg: "Usuario no registrado o contraseña no válida." };
@@ -54,9 +54,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					await getActions().getCarrito()
 					console.log("Usuario registrado correctamente")
 					return { success: true };
-				}catch (error) {
+				} catch (error) {
 					console.log(error);
-      				return { success: false, errorMsg: "Error al registrarse, completa todos los datos." };	
+					return { success: false, errorMsg: "Error al registrarse, completa todos los datos." };
 				}
 			},
 
@@ -163,6 +163,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			eliminarDelCarrito: async (prod_id) => {
 				try {
+					console.log(getStore().user);
 					await axios.delete(`${urlBack}/api/carrito/${getStore().user.id}/${prod_id}`);
 					await getActions().getCarrito()
 					return true
@@ -219,10 +220,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						email: email,
 					})
 					console.log(data);
-					return true					
+					return true
 				} catch (error) {
 					console.log(error);
-					return false					
+					return false
 				}
 			},
 
@@ -286,6 +287,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await axios.post(`${urlBack}/payment`, {
 						carrito: getStore().carrito
 					})
+					console.log(data);
 					return stripe.redirectToCheckout({ sessionId: data.data.sessionId });
 				} catch (error) {
 					console.log(error);

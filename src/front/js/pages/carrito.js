@@ -19,8 +19,7 @@ export const Carrito = () => {
         async function setUpStripe() {
 
             if (store.logged) {
-                const listo = await actions.getStripePublicKey()
-                console.log(store.stripePublicKey);
+                await actions.getStripePublicKey()
             } else {
                 navigate("/")
                 alert("No se ha iniciado sesión")
