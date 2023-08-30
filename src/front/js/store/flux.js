@@ -32,10 +32,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ token: data.data.access_token, user: data.data.user })
 					await getActions().getFavs(data.data.user.id)
 					await getActions().getCarrito()
-					return true
+					console.log("Usuario logueado correctamente")
+					return { success: true};
 				} catch (error) {
 					console.log(error);
-					return false
+					return { success: false, errorMsg: "Usuario no registrado o contraseña no válida." };
 				}
 
 			},
@@ -51,11 +52,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					localStorage.setItem("token", data.data.access_token)
 					setStore({ token: data.data.access_token })
 					await getActions().getCarrito()
-					return true
-				}
-				catch (error) {
-
-					return false
+					console.log("Usuario registrado correctamente")
+					return { success: true };
+				}catch (error) {
+					console.log(error);
+      				return { success: false, errorMsg: "Error al registrarse, completa todos los datos." };	
 				}
 			},
 
