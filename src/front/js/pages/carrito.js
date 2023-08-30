@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { ProductoCarrito } from "../component/productoCarrito";
 
-
 export const Carrito = () => {
     const { store, actions } = useContext(Context);
+    const navigate = useNavigate()
 
     const handleEliminarProducto = (id_prod) => {
         actions.eliminarDelCarrito(id_prod);
@@ -15,6 +15,19 @@ export const Carrito = () => {
         actions.eliminarDelCarrito(store.user.id, id_prod);
     }
 
+    useEffect(() => {
+        async function setUpStripe() {
+
+            if (store.logged) {
+                const listo = await actions.getStripePublicKey()
+                console.log(store.stripePublicKey);
+            } else {
+                navigate("/")
+                alert("No se ha iniciado sesión")
+            }
+        }
+        setUpStripe()
+    }, [])
 
     return (
         <div className="min-vh-100" >
@@ -47,6 +60,7 @@ export const Carrito = () => {
                         </div>
                     )}
                 </div>
+                <button className="btn btn-primary" onClick={() => actions.processPayment()}>Finalizar Compra</button>
             </div>
 
         </div>

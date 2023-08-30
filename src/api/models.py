@@ -34,6 +34,7 @@ class Producto(db.Model):
     tamanyo = db.Column(db.Integer)
     medicion = db.Column(db.String(5))
     precio = db.Column(db.Integer)
+    id_precio = db.Column(db.String)
     id_tipo = db.Column(db.Integer,db.ForeignKey('tipo_prod.id'))
     url_img = db.Column(db.String)
     favorecidos = db.relationship('Favorito',backref = 'producto',lazy=True)

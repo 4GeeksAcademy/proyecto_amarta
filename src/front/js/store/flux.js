@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { loadStripe } from '@stripe/stripe-js';
 
 const urlBack = process.env.BACKEND_URL
 
@@ -12,10 +13,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			productos: [],
 			tipo_producto: [],
 			producto: {},
-
+			stripePublicKey: null,
 			favs: [],
 			user: {},
-
 			carrito: [],
 
 
@@ -253,6 +253,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logOut: () => {
 				setStore({ logged: false, token: null })
 				localStorage.removeItem("token")
+			},
+			getStripePublicKey: async () => {
+				try {
+					const data = await axios.get(`${urlBack}/config`)
+					setStore({ stripePublicKey: data.data.publicKey });
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+			},
+			processPayment: async () => {
+				const stripe = await loadStripe(getStore().stripePublicKey)
+				try {
+					const data = await axios.post(`${urlBack}/payment`, {
+						carrito: getStore().carrito
+					})
+					return stripe.redirectToCheckout({ sessionId: data.data.sessionId });
+				} catch (error) {
+					console.log(error);
+				}
+			},
+			eliminarCarrito: async () => {
+				const data = await axios.delete(`${urlBack}/api/carrito/${getStore().user.id}`)
 			}
 		}
 	};

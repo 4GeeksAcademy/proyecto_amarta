@@ -16,10 +16,11 @@ import { Recuperar } from "./component/recuperar.js";
 import { LoginyRegistro } from "./component/login&register";
 import { Private } from "./pages/private"
 import { PrivateRoutes } from "./PrivateRoutes";
-
-
+import { PaymentNotOk } from "./pages/paymentCanceled";
+import { PaymentOk } from "./pages/paymentOk";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { PagoStripe } from "./pages/stripe";
 
 //create your first component
 const Layout = () => {
@@ -57,6 +58,9 @@ const Layout = () => {
             <Route element={<Producto />} path="/producto/:id_producto" />
             <Route element={<Contacto />} path="/contacto" />
             <Route element={<h1>Not found!</h1>} />
+            <Route element={<PaymentOk />} path="/payment_ok" />
+            <Route element={<PaymentNotOk />} path="/payment_canceled" />
+
           </Routes>
           <Footer />
         </ScrollToTop>
