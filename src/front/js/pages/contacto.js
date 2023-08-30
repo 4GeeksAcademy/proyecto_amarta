@@ -23,8 +23,6 @@ export const Contacto = () => {
 	const [alertType, setAlertType] = useState('');
 	const [alertNL, setAlertNL] = useState('');
 	const [alertTypeNL, setAlertTypeNL] = useState('');
-	const [subscripcion, setSubscripcion] = useState("")
-
 
 	const enviarMsg = async (nombre, apellido, email, mensaje) => {
 		const msg = actions.enviarMensaje(nombre, apellido, email, mensaje)
@@ -69,7 +67,9 @@ export const Contacto = () => {
 		onSubmit: values => {
 				enviarMsg(values.nombre, values.apellido, values.email, values.mensaje)
 				if (enviarMsg) {
-					handleAlertMensaje('Mensaje enviado! Te responderemos lo antes posible', 'dark')
+					handleAlertMensaje('Mensaje enviado! Te responderemos lo antes posible', 'dark');
+					//Reseteando el formulario una vez enviada la información
+					formik.resetForm();
 				} else {
 					handleAlertMensaje('Error al enviar el mensaje', 'danger')
 				}
@@ -88,9 +88,12 @@ export const Contacto = () => {
 				enviarEmailNL(values.emailNL)
 				if (enviarEmailNL) {
 					handleAlertNL('Subscrito correctamente a la newsletter!', 'dark');
+					//Reseteando el input del email una vez enviada la información
+					formikNL.resetForm();
 				} else {
 					handleAlertNL('Error al enviar el mensaje', 'danger')
 				}
+				
 		}
 	});
 
@@ -105,10 +108,10 @@ export const Contacto = () => {
 						<p className="h5 pb-2">correoelectronico@ejemplo.com</p>
 						<p className="h5 ">555-5555</p>
 					</div>
-					<form className="col" onSubmit={formik.handleSubmit} onReset={formikProps.handleReset}>
+					<form className="col" onSubmit={formik.handleSubmit}>
 						<div className="row">
 							<div className="col pb-2">
-								<input className="form-control" placeholder="Escribre tu nombre" id="nombre"
+								<input className="form-control" placeholder="Escribe tu nombre" id="nombre"
 									name="nombre" onChange={formik.handleChange} value={formik.values.nombre} />
 								{formik.errors.nombre ? <div>{formik.errors.nombre}</div> : null}
 							</div>
@@ -128,7 +131,7 @@ export const Contacto = () => {
 							{formik.errors.mensaje ? <div>{formik.errors.mensaje}</div> : null}
 						</div>
 
-						<button type="submit" className="btn btn-dark me-md-2 mb-3" >Enviar</button>
+						<button type="submit" className="btn btn-dark me-md-2 mb-3">Enviar</button>
 						{alertMessage && (
 							<div className={`alert alert-${alertType} alert-dismissible`} role="alert">
 								<div>{alertMessage}</div>
@@ -143,7 +146,7 @@ export const Contacto = () => {
 						<p className="fs-6 mb-0 fw-bold">Regístrate y sé la primera persona en enterarte de los descuentos!</p>
 						<p className="fs-6 fw-bold">Recibe los consejos y todo lo que ofrece AMARTA.</p>
 					</div>
-					<form className="col "  onSubmit={formikNL.handleSubmit} onReset={formikNL.handleReset}>
+					<form className="col "  onSubmit={formikNL.handleSubmit}>
 						<input name="emailNL" className="form-control mb-3" placeholder="Correo electrónico" onChange={formikNL.handleChange} value={formikNL.values.emailNL}  />
 						{formikNL.errors.emailNL ? <div>{formikNL.errors.emailNL}</div> : null}
 						<button type="submit" className="btn btn-dark  me-md-2">Subscribirse</button>
