@@ -2,12 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 export const Contacto = () => {
 	const { actions } = useContext(Context);
-
-	// const [filter, setFilter] = useState("")
-
 
 	// useEffect(() => {
 	// 	actions.getTipoProducto()
@@ -15,65 +14,92 @@ export const Contacto = () => {
 
 	// }, [])
 
+	// Crear estados donde se elmazenan la info de los inputs	
 	const [email, setEmail] = useState("");
 	const [mensaje, setMensaje] = useState("");
 	const [nombre, setNombre] = useState("");
 	const [apellido, setApellido] = useState("");
+	const [alertMessage, setAlertMessage] = useState('');
+	const [alertType, setAlertType] = useState('');
+	const [alertNL, setAlertNL] = useState('');
+	const [alertTypeNL, setAlertTypeNL] = useState('');
 
-	// Crear estados donde se elmazenan la info de los inputs
-	const handleEnviarMensaje = (e) => {
-		e.preventDefault();
-		actions.enviarMensaje(nombre, apellido, email, mensaje)
+	const enviarMsg = async (nombre, apellido, email, mensaje) => {
+		const msg = actions.enviarMensaje(nombre, apellido, email, mensaje)
+		return msg
 	}
 
-	//Alert de los boton de enviar formulario
-	const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-	const appendAlert = (message, type) => {
-		const wrapper = document.createElement('div')
-		wrapper.innerHTML = [
-			`<div class="alert alert-${type} alert-dismissible mt-3" role="alert">`,
-			`   <div>${message}</div>`,
-			'   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-			'</div>'
-		].join('')
-
-		alertPlaceholder.append(wrapper)
+	const enviarEmailNL = async (subscripcion) => {
+		const msg = actions.enviarEmailNL(subscripcion)
+		return msg
 	}
 
-	const alertTrigger = document.getElementById('liveAlertBtn')
-	if (alertTrigger) {
-		alertTrigger.addEventListener('click', () => {
-			appendAlert('Mensaje enviado!', 'dark')
-		})
-	}
+	const handleAlertMensaje = (message, type) => {
+		setAlertMessage(message);
+		setAlertType(type);
+	};
 
-	//Alert de los boton de subscribirse a la NL
-	const alertPlaceholderNL = document.getElementById('liveAlertPlaceholderNL')
+	const handleAlertNL = (message, type) => {
+		setAlertNL(message);
+		setAlertTypeNL(type);
+	};
 
-	const appendAlertNL = (message, type) => {
-		const wrapper = document.createElement('div')
-		wrapper.innerHTML = [
-			`<div class="alert alert-${type} alert-dismissible mt-3" role="alert">`,
-			`   <div>${message}</div>`,
-			'   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-			'</div>'
-		].join('')
+	//Validaciones enviar formulario contacto
+	const formik = useFormik({
+		initialValues: {
+			nombre: '',
+			apellido: '',
+			email: '',
+			mensaje: '',
+		},
+		validationSchema: Yup.object({
+			nombre: Yup.string()
+				.max(20, 'Debe tener máximo 20 caracteres o menos')
+				.required('(Campo obligatorio)'),
+			apellido: Yup.string()
+				.max(20, 'Debe tener máximo 15 caracteres o menos')
+				.required('(Campo obligatorio)'),
+			email: Yup.string().email('Correo electronico no valido').required('(Campo obligatorio)'),
+			mensaje: Yup.string()
+				.max(500, 'Máximo 500 caracteres')
+				.required('(Campo obligatorio)'),
+		}),
+		onSubmit: values => {
+				enviarMsg(values.nombre, values.apellido, values.email, values.mensaje)
+				if (enviarMsg) {
+					handleAlertMensaje('Mensaje enviado! Te responderemos lo antes posible', 'dark');
+					//Reseteando el formulario una vez enviada la información
+					formik.resetForm();
+				} else {
+					handleAlertMensaje('Error al enviar el mensaje', 'danger')
+				}
+		}
+	});
 
-		alertPlaceholderNL.append(wrapper)
-	}
-
-	const alertTiggerNL = document.getElementById('livealertBtnNL')
-	if(alertTiggerNL){
-		alertTiggerNL.addEventListener('click', () => {
-			appendAlertNL('Subscrito con éxito!', 'dark')
-	
-		})
-	}
-
+	//Validaciones subscribirse a la NL
+	const formikNL = useFormik({
+		initialValues: {
+			emailNL: ''
+		},
+		validationSchema: Yup.object({
+			emailNL: Yup.string().email('Correo electronico no valido').required('(Campo obligatorio)'),
+		}),
+		onSubmit: values => {
+				enviarEmailNL(values.emailNL)
+				if (enviarEmailNL) {
+					handleAlertNL('Subscrito correctamente a la newsletter!', 'dark');
+					//Reseteando el input del email una vez enviada la información
+					formikNL.resetForm();
+				} else {
+					handleAlertNL('Error al enviar el mensaje', 'danger')
+				}
+				
+		}
+	});
 
 
 	return (
-		<div className="min-vh-100">
+		<div className="min-vh-100 mt-5">
 			<div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50">
 				<div className="container-fluid row mb-5">
 					<div className="col">
@@ -82,32 +108,37 @@ export const Contacto = () => {
 						<p className="h5 pb-2">correoelectronico@ejemplo.com</p>
 						<p className="h5 ">555-5555</p>
 					</div>
-					<div className="col">
+					<form className="col" onSubmit={formik.handleSubmit}>
 						<div className="row">
 							<div className="col pb-2">
-								<label for="nombre" className="form-label">Nombre</label>
-								<input type="text" className="form-control" placeholder="Nombre" id="nombre" aria-label="Nombre" onChange={e => setNombre(e.target.value)} />
+								<input className="form-control" placeholder="Escribe tu nombre" id="nombre"
+									name="nombre" onChange={formik.handleChange} value={formik.values.nombre} />
+								{formik.errors.nombre ? <div>{formik.errors.nombre}</div> : null}
 							</div>
 							<div className="col">
-								<label for="apellidos" className="form-label">Apellidos</label>
-								<input type="text" className="form-control" placeholder="Apellidos" id="apellidos" aria-label="Apellidos" onChange={e => setApellido(e.target.value)} />
+								<input className="form-control" placeholder="Escribe tus apellidos" id="apellidos" name="apellido" onChange={formik.handleChange} value={formik.values.apellido} />
+								{formik.errors.apellido ? <div>{formik.errors.apellido}</div> : null}
 							</div>
 						</div>
 						<div className="row">
 							<div className="col pb-2">
-								<label for="email" className="form-label">Email</label>
-								<input type="text" className="form-control" id="email" placeholder="Email" aria-label="Email" onChange={e => setEmail(e.target.value)} />
+								<input className="form-control" id="email" placeholder="Dejanos un correo electrónico" name="email" onChange={formik.handleChange} value={formik.values.email} />
+								{formik.errors.email ? <div>{formik.errors.email}</div> : null}
 							</div>
 						</div>
 						<div className="mb-3">
-							<label for="textArea" className="form-label">Mensaje</label>
-							<textarea className="form-control" id="textArea" rows="3" placeholder="¿En qué te podemos ayudar?" onChange={e => setMensaje(e.target.value)} ></textarea>
-						</div>
-						<div id="liveAlertPlaceholder">
-							<button type="button" className="btn btn-dark me-md-2" id="liveAlertBtn" onClick={e => handleEnviarMensaje(e)}>Enviar</button>
+							<textarea className="form-control" id="textArea" rows="3" placeholder="Te escuchamos! ¿Qué nos quieres contar?" name="mensaje" onChange={formik.handleChange} value={formik.values.mensaje} ></textarea>
+							{formik.errors.mensaje ? <div>{formik.errors.mensaje}</div> : null}
 						</div>
 
-					</div>
+						<button type="submit" className="btn btn-dark me-md-2 mb-3">Enviar</button>
+						{alertMessage && (
+							<div className={`alert alert-${alertType} alert-dismissible`} role="alert">
+								<div>{alertMessage}</div>
+								<button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+							</div>
+						)}
+					</form>
 				</div>
 				<div className="container-fluid row ">
 					<div className="col">
@@ -115,13 +146,22 @@ export const Contacto = () => {
 						<p className="fs-6 mb-0 fw-bold">Regístrate y sé la primera persona en enterarte de los descuentos!</p>
 						<p className="fs-6 fw-bold">Recibe los consejos y todo lo que ofrece AMARTA.</p>
 					</div>
-					<div className="col" id="liveAlertPlaceholderNL">
-						<input type="password" className="form-control mb-3" placeholder="Correo electronico" />
-						<button type="submit" className="btn btn-dark  me-md-2" id="livealertBtnNL">Subscribirse</button>
+					<form className="col "  onSubmit={formikNL.handleSubmit}>
+						<input name="emailNL" className="form-control mb-3" placeholder="Correo electrónico" onChange={formikNL.handleChange} value={formikNL.values.emailNL}  />
+						{formikNL.errors.emailNL ? <div>{formikNL.errors.emailNL}</div> : null}
+						<button type="submit" className="btn btn-dark  me-md-2">Subscribirse</button>
+					</form>
+				</div>
+				<div className="container-fluid row">
+					<div className="col"></div>
+					<div className="col">
+						{alertNL && (
+							<div className={`alert alert-${alertTypeNL} alert-dismissible`} role="alert">
+								<div>{alertNL}</div>
+								<button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+							</div>
+						)}
 					</div>
-
-
-
 				</div>
 			</div>
 		</div>
