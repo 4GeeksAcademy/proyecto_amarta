@@ -36,7 +36,8 @@ export const Private = () => {
                     <hr></hr>
                     <h3 className="d-flex justify-content-center mt-2 mb-2"><h3>Correo de registro: </h3> <h3 className="fst-italic fw-bolder ms-1"> {store.user.email}</h3></h3>
                     <div  id="arrayFavoritos">
-                    <h4 className="d-block">Tus favoritos: ({store.favs.length}) </h4>
+                    <h4 className="d-flex">Tus favoritos: ({store.favs.length}) </h4>
+                    <div className="d-flex"> 
                         {store.favs.length === 0 ? (
                             <h5  className="d-block ms-5 mt-2 mb-2">Aún no tienes favoritos.
                             
@@ -46,6 +47,7 @@ export const Private = () => {
                                 <ProductoCatalogo key={item.id_producto} producto={item}></ProductoCatalogo>
                             ))
                         )}
+                        </div>
                     </div>
                 </div>
             </div>
