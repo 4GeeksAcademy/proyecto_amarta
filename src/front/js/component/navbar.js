@@ -9,6 +9,7 @@ import amartaLogoNegro from "../../img/logoAMARTAnegro.png";
 import amartaLogoBlanco from "../../img/logoAMARTAblanco.png"
 import { Modal } from "react-bootstrap";
 import "../../styles/navbar.css"
+import Swal from 'sweetalert2'
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -20,6 +21,9 @@ export const Navbar = () => {
   const [apellidos, setApellidos] = useState("");
   const [mostrarLoginyRegistro, setMostrarLoginyRegistro] = useState(false);
   const [mostrarContacto, setMostrarContacto] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
+  const Swal = require('sweetalert2')
 
   const handleMostrarLoginyRegistro = () => {
     setMostrarLoginyRegistro(true);
@@ -31,53 +35,73 @@ export const Navbar = () => {
 
   async function handleSubmitSignup(e) {
     e.preventDefault();
-    let signedin = await actions.signup(name, apellidos, email, password)
-    if (signedin) {
-      setMostrarLoginyRegistro(false)
-      navigate('/private')
+    console.log(email, password);
+  
+    let response = await actions.signup(name, apellidos, email, password);
+  
+    if (response.success) {
+      setMostrarLoginyRegistro(false);
+      navigate('/private');
+    } else {
+      setAlertMessage(response.errorMsg);
+      setAlertType("danger");
     }
   }
-
+  
   async function handleSubmitLogin(e) {
     e.preventDefault();
-    let logged = await actions.login(email, password);
-    if (logged) {
-      setMostrarLoginyRegistro(false)
+    console.log(email, password);
+  
+    let response = await actions.login(email, password);
+  
+    if (response.success) {
+      setMostrarLoginyRegistro(false);
       navigate("/private");
+    } else {
+      setAlertMessage(response.errorMsg);
+      setAlertType("danger");
     }
   }
 
   const handleRecuperar = (e) => {
     e.preventDefault();
     actions.getContrasenya(email)
+    Swal.fire('Revisa tu correo con la nueva contraseña')
   }
+  useEffect(() => {
+    if (mostrarLoginyRegistro) {
+      setAlertMessage(""); 
+      setAlertType("");  
+    }
+  }, [mostrarLoginyRegistro]);
+
 
   return (
     <nav className="navbar navbar-expand bg-body-tertiary bg-body bg-opacity-50 border-bottom border-3">
       <div className="container-fluid row text-center">
         <span className=" col-xl-3 col-sm-1 nav-item"></span>
-        <Link to={"/catalogo"} type="button" className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark fw-bold">Catálogo</Link>
-        <Link to={"/contacto"} type="button" className="btn bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark fw-bold">Contacto</Link>
+        <Link to={"/catalogo"} type="button" className="seleccionado bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark fw-bold ">Catálogo</Link>
+        <Link to={"/contacto"} type="button" className="seleccionado bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark fw-bold ">Contacto</Link>
         <Link className="nav-item col-md-2 col-lg-2 col-xl-2 col-sm-1" to={"/"}>
 
           <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
         </Link>
-        {store.logged ? <div className="dropdown col-xl-1 col-sm-2">
-          <a className="btn text-dark dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        {store.logged ? <div className="dropdown dropdown-center col-xl-1 col-sm-2">
+          <a className=" text-dark dropdown-toggle fw-bold active border-0 " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Cuenta
           </a>
 
           <ul className="dropdown-menu list-unstyled dropdown-menu-start">
-            <li><Link className="btn" to={"/private"}>Perfil</Link></li>
-            <li><button className="btn" onClick={() => {
+            <li><Link className="btn dropdown-item " to={"/private"}><i className="d-flex float-start  align-items-end fa-solid fa-user pt-1 mb-1"></i><p className="d-flex ps-3 mt-0">Perfil</p></Link></li>
+            <li><button className="btn dropdown-item" onClick={() => {
               actions.logOut()
               navigate("/")
-            }}>Log Out</button></li>
+            }}><i className="d-flex float-start align-items-end fa-solid fa-arrow-right-from-bracket pt-1"></i><p className="d-flex ps-3 mt-0 mb-1">Log Out</p></button></li>
           </ul>
         </div>
           : <button
             type="button"
-            className="btn nav-item text-dark col-xl-1 col-sm-2 fw-bold"
+            className="seleccionado nav-item text-dark col-xl-1 col-sm-2 fw-bold border-0 bg-transparent "
             data-bs-toggle="modal"
             onClick={handleMostrarLoginyRegistro}
           >
@@ -87,10 +111,10 @@ export const Navbar = () => {
         }
         <button
           type="button"
-          className="btn col-xl-1 col-sm-2 nav-item text-dark fw-bold"
+          className="seleccionado col-xl-1 col-sm-2 nav-item text-dark fw-bold  border-0 bg-transparent "
           onClick={(e) => navigate("/carrito")}
         >
-          Carrito
+          Carrito ({store.carrito.length === 0 ? "0": store.carrito.length})
         </button>
         {<LoginyRegistro />}
         <span className="col-xl-3 col-sm-1"></span>
@@ -109,7 +133,7 @@ export const Navbar = () => {
               >
                 <button
                   type="button"
-                  className="nav-link justify-content-center border-0 ms-5 me-5"
+                  className="nav-link justify-content-center border-0 ms-5 me-5 bg-transparent"
                   id="nav-iniciarID-tab"
                   data-bs-toggle="tab"
                   data-bs-target="#nav-inicioSesion"
@@ -121,7 +145,7 @@ export const Navbar = () => {
                 </button>
                 <button
                   type="button"
-                  className="nav-link justify-content-center border-0 ms-5 "
+                  className="nav-link justify-content-center border-0 ms-5 bg-transparent"
                   id="nav-crearID-tab"
                   data-bs-toggle="tab"
                   data-bs-target="#nav-crearCuenta"
@@ -157,6 +181,7 @@ export const Navbar = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     className="form-control"
                     placeholder="Ingresa tu correo"
+                    required 
                   />
                 </div>
                 <div className="form-group">
@@ -166,6 +191,7 @@ export const Navbar = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     className="form-control"
                     placeholder="Ingresa tu contraseña"
+                    required 
                   />
                 </div>
                 <button className="btn btn-dark mt-2 me-2">
@@ -198,6 +224,7 @@ export const Navbar = () => {
                     onChange={(e) => setName(e.target.value)}
                     className="form-control"
                     placeholder="Ingresa tu nombre"
+                    required
                   />
                 </div>
                 <div className="form-group">
@@ -207,30 +234,39 @@ export const Navbar = () => {
                     onChange={(e) => setApellidos(e.target.value)}
                     className="form-control"
                     placeholder="Ingresa tus apellidos"
+                    required
                   />
                 </div>
-                <div className="form-group">
-                  <label>Email</label>
+                <div className="form-group ">
+                  <label className="text-white">Email</label>
                   <input
                     type="email"
                     onChange={(e) => setEmail(e.target.value)}
                     className="form-control"
                     placeholder="Ingresa tu correo"
+                    required
                   />
                 </div>
                 <div className="form-group">
-                  <label>Contraseña</label>
+                  <label className="text-white">Contraseña</label>
                   <input
                     type="password"
                     onChange={(e) => setPassword(e.target.value)}
                     className="form-control"
                     placeholder="Ingresa tu contraseña"
+                    required
                   />
                 </div>
                 <button type="submit" className="btn btn-dark mt-2">Crear cuenta</button>
               </form>
+              
             </div>
+            
           </div>
+          <div className={`alert alert-${alertType} mt-3`} role="alert">
+                  {alertMessage}
+                </div>
+              
         </nav>
         {/* {mostrarRecuperar && <Recuperar />} */}
       </Modal>
