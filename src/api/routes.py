@@ -227,4 +227,14 @@ def enviarmensaje():
     msg.html = f"""<h1>Contacto de: {data["nombre"]} {data["apellido"]} {data["email"]}</h1> <p>Mensaje: {data["mensaje"]}</p>"""
     current_app.mail.send(msg)
     return jsonify({"msg": "Mensaje enviado correctamente"}), 200
+
+
+#INSCRIBIRSE A NL
+@api.route("/inscribirseNL", methods=["POST"])
+def inscribirsenewsletter():
+    data = request.json
+    msg = Message("Nuevo alta de email", recipients=["info@amarta.com"])
+    msg.html = f"""<h1>Nueva alta de email: {data["email"]}</h1>"""
+    current_app.mail.send(msg)
+    return jsonify({"msg": "Inscrito correctamente"}), 200
     
