@@ -63,11 +63,33 @@ export const Navbar = () => {
     }
   }
 
-  const handleRecuperar = (e) => {
-    e.preventDefault();
-    actions.getContrasenya(email)
-    Swal.fire('Revisa tu correo con la nueva contraseña')
+async function handleRecuperar(e) {
+  e.preventDefault();
+  try {
+    await actions.getContrasenya(email)
+    const comprobacion = store.correo_para_verificacion;
+
+      if (comprobacion.msg ===  'La contraseña ha sido enviada') {
+        Swal.fire('Revisa tu correo con la nueva contraseña');
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'El correo no se encuentra registrado',
+          text: 'Vuelve a intentarlo o regístrate.',
+        });
+      }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Ha ocurrido un error. Por favor, intenta de nuevo.',
+    });
   }
+}
+
+
+
   useEffect(() => {
     if (mostrarLoginyRegistro) {
       setAlertMessage(""); 
@@ -114,7 +136,7 @@ export const Navbar = () => {
           className="seleccionado col-xl-1 col-sm-2 nav-item text-dark fw-bold  border-0 bg-transparent "
           onClick={(e) => navigate("/carrito")}
         >
-          Carrito ({store.carrito.length === 0 ? "0": store.carrito.length})
+          Carrito
         </button>
         {<LoginyRegistro />}
         <span className="col-xl-3 col-sm-1"></span>
