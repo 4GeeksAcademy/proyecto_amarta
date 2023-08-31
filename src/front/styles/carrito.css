@@ -2,21 +2,28 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 5px;
+    filter: drop-shadow(0 0 0.15rem black);
+}
+
+.imgDiv {
+    height: 100%;
+    width: clamp(150px, 40%, 200px);
 }
 
 .deleteButton {
     border-radius: 8px;
+    background-color: transparent;
+    border: 0;
 }
 
 .itemCarritoDiv {
+    display: flex;
     border-bottom: 20px;
     border-top: 20px;
-    border-radius: 8px;
-    height: 90px;
-    /* border-color: red;
-    border-style: dotted; */
+    height: 200px;
+    width: 100%;
 }
 
 .emptyCarritoMsg {
@@ -28,8 +35,59 @@
     height: 50px;
 }
 
-/* 
-.itemCarritoDiv * {
-    border-style: dotted;
-    border-color: red;
-} */
+.prodDiv {
+    padding-left: 2%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    text-align: start;
+}
+
+.detailsDiv {
+    padding-right: 5%;
+    width: 50%;
+    display: flex;
+    justify-content: end;
+    justify-items: start;
+    align-items: center;
+}
+
+.qtyDiv {
+    display: flex;
+    width: 25%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.qtyField {
+    background-color: #f2f0bd;
+    text-align: center;
+    height: 30px;
+    width: 30px;
+    border: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.topBar {
+    display: flex;
+    padding-top: 5%;
+
+    border-bottom: solid 1px;
+    border-color: lightgray;
+}
+
+.checkOutDiv {
+    width: min(35%, 270px);
+    display: block;
+    text-align: center;
+    margin-right: 5%;
+}
+
+.checkOutField {
+    display: flex;
+    justify-content: space-between;
+}

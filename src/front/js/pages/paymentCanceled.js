@@ -15,6 +15,7 @@ export const PaymentNotOk = () => {
     return (
         <div className=" min-vh-100 ">
             <h1 className=" bg-white">PAGO NOT OK</h1>
+            <Link to={"/"} className="btn btn-success">Volver a home</Link>
         </div>
     )
 }

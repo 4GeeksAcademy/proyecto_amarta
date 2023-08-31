@@ -140,6 +140,7 @@ def get_favorites(user_id):
 def get_carrito(user_id):
     carrito = db.session.query(Carrito.cantidad,Producto.id,Producto.nombre,Producto.precio,Producto.url_img,Producto.id_precio).join(Producto).filter(Carrito.id_user==user_id).all()
     data = []
+    total = 0
     for item in carrito:
         producto = {
             "id":item[1],
@@ -150,10 +151,12 @@ def get_carrito(user_id):
             "img":item[4],
             "total":int(item[3])*int(item[0])
         }
+        total += producto['total']
         data.append(producto)
     response_body = jsonify({
         "msg": "ok - carrito",
-        "carrito" : data
+        "carrito" : data,
+        "total":total
     })
     return response_body, 200
 

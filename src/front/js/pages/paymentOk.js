@@ -7,14 +7,9 @@ import axios from "axios";
 export const PaymentOk = () => {
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
-    // const [logged, setLogged] = useState(false)
 
     useEffect(() => {
-        async function checkLogIn() {
-            const valid = await actions.validToken()
-            if (valid) { actions.eliminarCarrito() }
-        }
-        checkLogIn()
+        actions.eliminarCarrito()
     }, [])
 
     return (

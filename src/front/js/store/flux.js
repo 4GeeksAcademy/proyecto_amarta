@@ -17,6 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favs: [],
 			user: {},
 			carrito: [],
+			totalCarrito: 0
 
 
 
@@ -85,6 +86,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					if (data.status === 200) {
 						setStore({ user: data.data, logged: true })
+						await getActions().getCarrito()
+						await getActions().getFavs()
 						return true;
 					}
 				} catch (error) {
@@ -141,6 +144,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					let data = await axios.get(`${urlBack}/api/carrito/${getStore().user.id}`)
 					setStore({ carrito: data.data.carrito })
+					setStore({ totalCarrito: data.data.total })
 					return true
 				} catch (error) {
 					console.log(error);
@@ -288,7 +292,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						carrito: getStore().carrito
 					})
 					console.log(data);
-					return stripe.redirectToCheckout({ sessionId: data.data.sessionId });
+					console.log(stripe.redirectToCheckout({ sessionId: data.data.sessionId }));
 				} catch (error) {
 					console.log(error);
 				}

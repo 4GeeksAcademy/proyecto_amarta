@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { LoginyRegistro } from "./login&register";
+// import { LoginyRegistro } from "./login&register";
 import { Carrito } from "../pages/carrito";
 import { Contacto } from "../pages/contacto";
 import { Catalogo } from "../pages/catalogo";
@@ -36,9 +36,9 @@ export const Navbar = () => {
   async function handleSubmitSignup(e) {
     e.preventDefault();
     console.log(email, password);
-  
+
     let response = await actions.signup(name, apellidos, email, password);
-  
+
     if (response.success) {
       setMostrarLoginyRegistro(false);
       navigate('/private');
@@ -47,13 +47,13 @@ export const Navbar = () => {
       setAlertType("danger");
     }
   }
-  
+
   async function handleSubmitLogin(e) {
     e.preventDefault();
     console.log(email, password);
-  
+
     let response = await actions.login(email, password);
-  
+
     if (response.success) {
       setMostrarLoginyRegistro(false);
       navigate("/private");
@@ -70,14 +70,14 @@ export const Navbar = () => {
   }
   useEffect(() => {
     if (mostrarLoginyRegistro) {
-      setAlertMessage(""); 
-      setAlertType("");  
+      setAlertMessage("");
+      setAlertType("");
     }
   }, [mostrarLoginyRegistro]);
 
 
   return (
-    <nav className="navbar navbar-expand bg-body-tertiary bg-body bg-opacity-50 border-bottom border-3">
+    <nav className="navbar navbar-expand bg-body-tertiary bg-light bg-opacity-50 border-bottom border-3 sticky-top">
       <div className="container-fluid row text-center">
         <span className=" col-xl-3 col-sm-1 nav-item"></span>
         <Link to={"/catalogo"} type="button" className="seleccionado bg-transparent rounded col-xl-1 col-sm-2 nav-item text-dark fw-bold ">Catálogo</Link>
@@ -114,9 +114,9 @@ export const Navbar = () => {
           className="seleccionado col-xl-1 col-sm-2 nav-item text-dark fw-bold  border-0 bg-transparent "
           onClick={(e) => navigate("/carrito")}
         >
-          Carrito ({store.carrito.length === 0 ? "0": store.carrito.length})
+          Carrito ({store.carrito.length === 0 ? "0" : store.carrito.length})
         </button>
-        {<LoginyRegistro />}
+
         <span className="col-xl-3 col-sm-1"></span>
       </div>
       {mostrarContacto && <Contacto />}
@@ -181,7 +181,7 @@ export const Navbar = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     className="form-control"
                     placeholder="Ingresa tu correo"
-                    required 
+                    required
                   />
                 </div>
                 <div className="form-group">
@@ -191,7 +191,7 @@ export const Navbar = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     className="form-control"
                     placeholder="Ingresa tu contraseña"
-                    required 
+                    required
                   />
                 </div>
                 <button className="btn btn-dark mt-2 me-2">
@@ -201,7 +201,7 @@ export const Navbar = () => {
 
                 <button
                   className="btn btn-dark mt-2"
-                 onClick={e=> handleRecuperar(e)}
+                  onClick={e => handleRecuperar(e)}
                 >
                   Recuperar contraseña
                 </button>
@@ -259,14 +259,14 @@ export const Navbar = () => {
                 </div>
                 <button type="submit" className="btn btn-dark mt-2">Crear cuenta</button>
               </form>
-              
+
             </div>
-            
+
           </div>
           <div className={`alert alert-${alertType} mt-3`} role="alert">
-                  {alertMessage}
-                </div>
-              
+            {alertMessage}
+          </div>
+
         </nav>
         {/* {mostrarRecuperar && <Recuperar />} */}
       </Modal>
