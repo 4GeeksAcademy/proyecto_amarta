@@ -13,9 +13,20 @@ export const PaymentNotOk = () => {
 
 
     return (
-        <div className=" min-vh-100 ">
-            <h1 className=" bg-white">PAGO NOT OK</h1>
-            <Link to={"/"} className="btn btn-success">Volver a home</Link>
+        <div className="d-flex h-100 justify-content-center text-bg-dark bg-white">
+            <div className=" min-vh-100 mt-5 text-center">
+                <div className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column text-center">
+
+                    <main className="px-3">
+                        <h1>Ops ha habído un error con el pago!</h1>
+                        <p className="lead">Revisa tus datos y vuelva a intentarlo de nuevo! Gracias</p>
+                        <p className="lead">
+                            <Link to={"/"} className="btn btn-lg btn-secondary fw-bold border-white bg-dark">Volver al incio</Link>
+                        </p>
+                    </main>
+                </div>
+            </div>
         </div>
+
     )
 }
