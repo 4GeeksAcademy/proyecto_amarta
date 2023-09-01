@@ -165,7 +165,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			eliminarDelCarrito: async (prod_id) => {
 				try {
-					console.log(getStore().user);
 					await axios.delete(`${urlBack}/api/carrito/${getStore().user.id}/${prod_id}`);
 					await getActions().getCarrito()
 					return true

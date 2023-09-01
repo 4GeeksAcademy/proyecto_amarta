@@ -11,12 +11,6 @@ export const ProductoCarrito = (props) => {
     function handleEliminar() {
         actions.eliminarDelCarrito(props.item.id)
     }
-    function handleInc() {
-        setCantidad(cantidad + 1)
-    }
-    function handleDec() {
-        setCantidad(cantidad - 1)
-    }
     useEffect(() => {
         actions.actualizarCarrito(props.item.id, cantidad)
     }, [cantidad])
@@ -40,9 +34,17 @@ export const ProductoCarrito = (props) => {
                         <p className="w-100 m-0">{props.item.precio},00€</p>
                     </div>
                     <div className="qtyDiv w-25">
-                        <input onClick={handleDec} type="button" className="qtyField" value="-" />
-                        <input value={cantidad} className="qtyField" readOnly />
-                        <input onClick={handleInc} type="button" className="qtyField" value="+" />
+                        <input onClick={() => {
+                            if (cantidad > 1) {
+                                setCantidad(cantidad - 1)
+                            } else { setCantidad(99) }
+                        }} type="button" className="qtyField" value="-" />
+                        <input value={cantidad} min={1} max={99} className="qtyField" readOnly />
+                        <input onClick={() => {
+                            if (cantidad < 99) {
+                                setCantidad(cantidad + 1)
+                            } else { setCantidad(1) }
+                        }} type="button" className="qtyField" value="+" />
                     </div>
                     <div className="w-25 h-100 d-flex align-items-center text-center">
                         <p className="w-100 m-0">{props.item.total},00€</p>

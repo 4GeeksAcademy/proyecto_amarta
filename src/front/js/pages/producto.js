@@ -3,7 +3,6 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 
-
 export const Producto = () => {
     const { store, actions } = useContext(Context);
     // const [filter, setFilter] = useState("")
