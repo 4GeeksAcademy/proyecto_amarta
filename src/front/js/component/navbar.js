@@ -63,11 +63,41 @@ export const Navbar = () => {
     }
   }
 
-  const handleRecuperar = (e) => {
-    e.preventDefault();
-    actions.getContrasenya(email)
+async function handleRecuperar(e) {
+  e.preventDefault();
+  try {
+    await actions.getContrasenya(email)
     Swal.fire('Revisa tu correo con la nueva contraseña')
+    const comprobacion = store.correo_para_verificacion;
+
+      if (comprobacion.msg ===  'La contraseña ha sido enviada') {
+        Swal.fire('Revisa tu correo con la nueva contraseña');
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'El correo no se encuentra registrado',
+          text: 'Vuelve a intentarlo o regístrate.',
+        });
+      }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Ha ocurrido un error. Por favor, intenta de nuevo.',
+    });
   }
+  useEffect(() => {
+    if (mostrarLoginyRegistro) {
+      setAlertMessage(""); 
+      setAlertType("");  
+    }
+  }, [mostrarLoginyRegistro]);
+
+}
+
+
+
   useEffect(() => {
     if (mostrarLoginyRegistro) {
       setAlertMessage(""); 
