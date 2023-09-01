@@ -37,13 +37,13 @@ export const ProductoCarrito = (props) => {
                         <input onClick={() => {
                             if (cantidad > 1) {
                                 setCantidad(cantidad - 1)
-                            }
+                            } else { setCantidad(99) }
                         }} type="button" className="qtyField" value="-" />
                         <input value={cantidad} min={1} max={99} className="qtyField" readOnly />
                         <input onClick={() => {
                             if (cantidad < 99) {
                                 setCantidad(cantidad + 1)
-                            }
+                            } else { setCantidad(1) }
                         }} type="button" className="qtyField" value="+" />
                     </div>
                     <div className="w-25 h-100 d-flex align-items-center text-center">
