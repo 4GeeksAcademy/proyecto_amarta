@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { DetalleProducto } from "../component/detalleProducto";
+
 
 
 export const Producto = () => {
@@ -57,7 +57,7 @@ export const Producto = () => {
                     <p>{store.producto.propiedes}</p>
                     <p className="lead">{store.producto.descripcion}</p>
                     <p>{store.producto.metodo_utilizacion}</p>
-                    <p><strong>Tamaños: </strong>{store.producto.tamaño}</p>
+                    <p><strong>Tamaño: </strong>{store.producto.tamaño}</p>
 
                     <hr />
 
@@ -68,14 +68,6 @@ export const Producto = () => {
                         }} />
                         <label className="form-check-label" htmlFor="flexRadioDefault1">
                             unidad {store.producto.tamaño}
-                        </label>
-                    </div>
-                    <hr />
-
-                    <div className="form-check">
-                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                        <label className="form-check-label" htmlFor="flexRadioDefault2">
-                            1 unidad {store.producto.tamaño}
                         </label>
                     </div>
                     <hr />

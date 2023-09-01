@@ -103,7 +103,7 @@ def get_publishable_key():
 def stripe_payment():
     request_body = request.get_json(force=True)
     print(request_body)
-    base_url = "https://literate-zebra-5jrq4v6gwgw37pvj-3000.preview.app.github.dev"
+    base_url = os.getenv('FRONTEND_URL')
     data = []
    
     for item in request_body["carrito"]:
