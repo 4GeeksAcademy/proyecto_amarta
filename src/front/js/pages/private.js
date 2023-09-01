@@ -31,24 +31,24 @@ export const Private = () => {
     if (status === "authorized") {
         return (
             <div className=" min-vh-100">
-			    <div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50 vh-100">
+                <div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50 vh-100">
                     <h1>Mi perfil</h1>
                     <hr></hr>
                     <h3 className="d-flex justify-content-center mt-2 mb-2">
-                        <p className="d-inline-block">Correo de registro: </p> 
+                        <p className="d-inline-block">Correo de registro: </p>
                         <p className="fst-italic fw-bolder ms-1 d-inline-block"> {store.user.email}</p></h3>
-                    <div  id="arrayFavoritos">
-                    <h4 className="d-flex">Tus favoritos: ({store.favs.length}) </h4>
-                    <div className="d-flex"> 
-                        {store.favs.length === 0 ? (
+                    <div id="arrayFavoritos">
+                        <h4 className="d-flex">Tus favoritos: ({store.favs.length}) </h4>
+                        <div className="d-flex">
+                            {store.favs.length === 0 ? (
 
-                            <h5  className="d-block ms-5 mt-2 mb-2">Aún no tienes favoritos.
-                            <Link to={"/catalogo"} type="button" className=" h-50 w-100 d-block w-25 btn btn btn-dark btn-lg px-4 mt-3">Ir al catálogo</Link></h5>
-                        ) : (
-                            store.favs.map(item => (
-                                <ProductoCatalogo className="d-flex" key={item.id_producto} producto={item}></ProductoCatalogo>
-                            ))
-                        )}
+                                <h5 className="d-block ms-5 mt-2 mb-2">Aún no tienes favoritos.
+                                    <Link to={"/catalogo"} type="button" className=" h-50 w-100 d-block w-25 btn btn btn-dark btn-lg px-4 mt-3">Ir al catálogo</Link></h5>
+                            ) : (
+                                store.favs.map(item => (
+                                    <ProductoCatalogo className="d-flex" key={item.id_producto} producto={item}></ProductoCatalogo>
+                                ))
+                            )}
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@ export const Private = () => {
                 <div className="spinner-border text-dark" role="status">
                 </div>
             </div>
-            
+
         </>
     )
 

@@ -140,21 +140,25 @@ def get_favorites(user_id):
 
 @api.route('/carrito/<int:user_id>', methods=['GET'])
 def get_carrito(user_id):
-    carrito = db.session.query(Carrito.cantidad,Producto.id,Producto.nombre,Producto.precio,Producto.url_img).join(Producto).filter(Carrito.id_user==user_id).all()
+    carrito = db.session.query(Carrito.cantidad,Producto.id,Producto.nombre,Producto.precio,Producto.url_img,Producto.id_precio).join(Producto).filter(Carrito.id_user==user_id).all()
     data = []
+    total = 0
     for item in carrito:
         producto = {
             "id":item[1],
             "nombre":item[2],
             "precio":item[3],
+            "id_precio":item[5],
             "cantidad":item[0],
             "img":item[4],
             "total":int(item[3])*int(item[0])
         }
+        total += producto['total']
         data.append(producto)
     response_body = jsonify({
         "msg": "ok - carrito",
-        "carrito" : data
+        "carrito" : data,
+        "total":total
     })
     return response_body, 200
 
@@ -168,7 +172,7 @@ def add_to_carrito(user_id):
         print(newCarritoItem)
         db.session.add(newCarritoItem)
         db.session.commit()
-        return jsonify({"msg": "ok - Added To carrito"})
+        return jsonify({"msg": "ok - Added To carrito"}),200
     elif inCarrito is not None:
         inCarrito.cantidad += int(request_body["cantidad"])
         db.session.commit()
@@ -176,6 +180,16 @@ def add_to_carrito(user_id):
                         "cantidad":inCarrito.cantidad})
     
     return jsonify({"msg":"Error desconocido"}),200
+
+@api.route('/carrito/<int:user_id>',methods=['DELETE'])
+def delete_carrito(user_id):
+    carrito = Carrito.query.filter_by(id_user=user_id).all()
+    if carrito is None:
+        return jsonify({"msg":"Carrito no existe"}),200
+    for item in carrito:
+        db.session.delete(item)
+    db.session.commit()
+    return jsonify({"msg":"ok - Carrito eliminado"})
 
 @api.route('/carrito/<int:user_id>/<int:prod_id>', methods=['DELETE'])
 def delete_from_carrito(user_id,prod_id):

@@ -15,7 +15,14 @@ from flask_jwt_extended import JWTManager
 #from models import Person
 #IMPORTAR LA FUNCION Mail() de flask_mail
 from flask_mail import Mail
+import stripe
 
+stripe_keys = {
+    "secret_key": os.environ["STRIPE_SECRET_KEY"],
+    "publishable_key": os.environ["STRIPE_PUBLISHABLE_KEY"],
+}
+
+stripe.api_key = stripe_keys["secret_key"]
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
@@ -86,6 +93,35 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0 # avoid cache memory
     return response
+
+@app.route('/config',methods = ['GET'])
+def get_publishable_key():
+    stripe_config = {"publicKey": stripe_keys["publishable_key"]}
+    return jsonify(stripe_config)
+
+@app.route('/payment',methods = ['POST'])
+def stripe_payment():
+    request_body = request.get_json(force=True)
+    print(request_body)
+    base_url = "https://literate-zebra-5jrq4v6gwgw37pvj-3000.preview.app.github.dev"
+    data = []
+   
+    for item in request_body["carrito"]:
+       
+        data.append({
+            "price":item["id_precio"],
+            "quantity":item["cantidad"],
+
+        })
+    checkout_session = stripe.checkout.Session.create(
+        success_url=base_url+"/payment_ok",
+        cancel_url = base_url+"/payment_canceled",
+        payment_method_types=["card"],
+        mode="payment",
+        line_items=data
+    )
+    
+    return jsonify({"sessionId":checkout_session["id"]}),200
 
 
 # this only runs if `$ python src/main.py` is executed

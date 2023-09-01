@@ -13,11 +13,11 @@ import { Contacto } from "./pages/contacto";
 import injectContext from "./store/appContext";
 import { Carrito } from "./pages/carrito";
 import { Recuperar } from "./component/recuperar.js";
-import { LoginyRegistro } from "./component/login&register";
+
 import { Private } from "./pages/private"
 import { PrivateRoutes } from "./PrivateRoutes";
-
-
+import { PaymentNotOk } from "./pages/paymentCanceled";
+import { PaymentOk } from "./pages/paymentOk";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
@@ -47,7 +47,7 @@ const Layout = () => {
           <Routes>
             <Route element={<Home />} path="/" />
             <Route element={<Demo />} path="/demo" />
-            <Route element={<LoginyRegistro />} path="/login" />
+            {/* <Route element={<LoginyRegistro />} path="/login" /> */}
             <Route element={<Recuperar />} path="/recuperar" />
             <Route element={<Carrito />} path="/carrito" />
             <Route element={<Single />} path="/single/:theid" />
@@ -57,6 +57,9 @@ const Layout = () => {
             <Route element={<Producto />} path="/producto/:id_producto" />
             <Route element={<Contacto />} path="/contacto" />
             <Route element={<h1>Not found!</h1>} />
+            <Route element={<PaymentOk />} path="/payment_ok" />
+            <Route element={<PaymentNotOk />} path="/payment_canceled" />
+
           </Routes>
           <Footer />
         </ScrollToTop>

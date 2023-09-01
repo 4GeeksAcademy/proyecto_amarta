@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { loadStripe } from '@stripe/stripe-js';
 
 const urlBack = process.env.BACKEND_URL
 
@@ -12,10 +13,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			productos: [],
 			tipo_producto: [],
 			producto: {},
+			stripePublicKey: null,
 			favs: [],
 			user: {},
 			carrito: [],
-			correo_para_verificacion:"",
+			totalCarrito: 0,
+			correo_para_verificacion: "",
 		},
 		actions: {
 			login: async (email, password) => {
@@ -29,7 +32,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					await getActions().getFavs(data.data.user.id)
 					await getActions().getCarrito()
 					console.log("Usuario logueado correctamente")
-					return { success: true};
+					return { success: true };
 				} catch (error) {
 					console.log(error);
 					return { success: false, errorMsg: "Usuario no registrado o contraseña no válida." };
@@ -50,9 +53,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					await getActions().getCarrito()
 					console.log("Usuario registrado correctamente")
 					return { success: true };
-				}catch (error) {
+				} catch (error) {
 					console.log(error);
-      				return { success: false, errorMsg: "Error al registrarse, completa todos los datos." };	
+					return { success: false, errorMsg: "Error al registrarse, completa todos los datos." };
 				}
 			},
 
@@ -81,6 +84,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					if (data.status === 200) {
 						setStore({ user: data.data, logged: true })
+						await getActions().getCarrito()
+						await getActions().getFavs()
 						return true;
 					}
 				} catch (error) {
@@ -137,6 +142,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					let data = await axios.get(`${urlBack}/api/carrito/${getStore().user.id}`)
 					setStore({ carrito: data.data.carrito })
+					setStore({ totalCarrito: data.data.total })
 					return true
 				} catch (error) {
 					console.log(error);
@@ -159,6 +165,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			eliminarDelCarrito: async (prod_id) => {
 				try {
+					console.log(getStore().user);
 					await axios.delete(`${urlBack}/api/carrito/${getStore().user.id}/${prod_id}`);
 					await getActions().getCarrito()
 					return true
@@ -185,13 +192,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let data = await axios.post(`${urlBack}/api/forgotpassword`, {
 						email: email,
 					})
-					setStore({correo_para_verificacion:data.data})
+					setStore({ correo_para_verificacion: data.data })
 
-					return { success: true, Msg:"Su nueva clave ha sido enviada al correo electrónico ingresado"};
-				}catch (error) {
+					return { success: true, Msg: "Su nueva clave ha sido enviada al correo electrónico ingresado" };
+				} catch (error) {
 					console.log(error);
 					return { success: false, errorMsg: "Error al cargar el correo." };
-					
+
 				}
 			},
 
@@ -219,10 +226,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						email: email,
 					})
 					console.log(data);
-					return true					
+					return true
 				} catch (error) {
 					console.log(error);
-					return false					
+					return false
 				}
 			},
 
@@ -267,8 +274,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} return false
 			},
 			logOut: () => {
-				setStore({ logged: false, token: null })
+				setStore({ logged: false, token: null, carrito: [], favoritos: [] })
 				localStorage.removeItem("token")
+			},
+			getStripePublicKey: async () => {
+				try {
+					const data = await axios.get(`${urlBack}/config`)
+					setStore({ stripePublicKey: data.data.publicKey });
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+			},
+			processPayment: async () => {
+				const stripe = await loadStripe(getStore().stripePublicKey)
+				try {
+					const data = await axios.post(`${urlBack}/payment`, {
+						carrito: getStore().carrito
+					})
+					console.log(data);
+					console.log(stripe.redirectToCheckout({ sessionId: data.data.sessionId }));
+				} catch (error) {
+					console.log(error);
+				}
+			},
+			eliminarCarrito: async () => {
+				const data = await axios.delete(`${urlBack}/api/carrito/${getStore().user.id}`)
 			}
 		}
 	};
