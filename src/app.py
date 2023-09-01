@@ -56,6 +56,7 @@ mail_settings = {
     "MAIL_DEFAULT_SENDER": 'sandbox.smtp.mailtrap.io'
 }
 
+
 app.config.update(mail_settings)
 mail = Mail(app)
 #agregan mail a la app y se va llamar en routes.py como current_app

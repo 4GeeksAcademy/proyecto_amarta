@@ -17,10 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favs: [],
 			user: {},
 			carrito: [],
-			totalCarrito: 0
-
-
-
+			totalCarrito: 0,
+			correo_para_verificacion: "",
 		},
 		actions: {
 			login: async (email, password) => {
@@ -194,12 +192,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let data = await axios.post(`${urlBack}/api/forgotpassword`, {
 						email: email,
 					})
-					console.log(data);
+					setStore({ correo_para_verificacion: data.data })
+
+					return { success: true, Msg: "Su nueva clave ha sido enviada al correo electrónico ingresado" };
 				} catch (error) {
 					console.log(error);
-				}
+					return { success: false, errorMsg: "Error al cargar el correo." };
 
+				}
 			},
+
 
 			enviarMensaje: async (nombre, apellido, email, mensaje) => {
 				try {

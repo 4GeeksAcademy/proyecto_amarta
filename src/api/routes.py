@@ -25,6 +25,8 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+
+
     
 @api.route("/signup", methods=["POST"])
 def signup():  
@@ -213,15 +215,15 @@ def update_from_carrito(user_id,prod_id):
 #RECUPERACION CONTRASEÑA OLVIDADA 
 @api.route("/forgotpassword", methods=["POST"])
 def forgotpassword():
-    recover_email = request.json['email']
+    recover_email = request.get_json(force=True)['email']
     recover_password = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(8)) #clave aleatoria nueva
     
-    if not recover_email:
+    if recover_email is None:
         return jsonify({"msg": "Debe ingresar el correo"}), 401
 	#busco si el correo existe en mi base de datos
     user = User.query.filter_by(email=recover_email).first()
-    if recover_email != user.email:
-        return jsonify({"msg": "El correo ingresado no existe en nuestros registros"}), 400
+    if user is None:
+        return jsonify({"msg": "El correo no se encuentra registrado"}), 200
     #si existe guardo la nueva contraseña aleatoria
     user.password = recover_password
     db.session.commit()
@@ -229,7 +231,7 @@ def forgotpassword():
     msg = Message("Hi", recipients=[recover_email])
     msg.html = f"""<h1>Su nueva contraseña es: {recover_password}</h1>"""
     current_app.mail.send(msg)
-    return jsonify({"msg": "Su nueva clave ha sido enviada al correo electrónico ingresado"}), 200
+    return jsonify({"msg": "La contraseña ha sido enviada"}), 200
 
 #ENVIAR MENSAJE A TIENDA
 @api.route("/enviarmensaje", methods=["POST"])

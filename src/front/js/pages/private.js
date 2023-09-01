@@ -31,23 +31,22 @@ export const Private = () => {
     if (status === "authorized") {
         return (
             <div className=" min-vh-100">
-                <div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50">
+                <div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50 vh-100">
                     <h1>Mi perfil</h1>
                     <hr></hr>
-                    <div className="d-flex justify-content-center align-items-center">
-                        <h3 className="mt-2 mb-2">Correo de registro: </h3>
-                        <h3 className="fst-italic fw-bolder ms-1"> {store.user.email}</h3>
-                    </div>
+                    <h3 className="d-flex justify-content-center mt-2 mb-2">
+                        <p className="d-inline-block">Correo de registro: </p>
+                        <p className="fst-italic fw-bolder ms-1 d-inline-block"> {store.user.email}</p></h3>
                     <div id="arrayFavoritos">
                         <h4 className="d-flex">Tus favoritos: ({store.favs.length}) </h4>
                         <div className="d-flex">
                             {store.favs.length === 0 ? (
-                                <h5 className="d-block ms-5 mt-2 mb-2">Aún no tienes favoritos.
 
-                                    <Link to={"/catalogo"} type="button" className="d-block w-25 btn btn btn-dark btn-lg px-4 mt-3">Ir al catálogo</Link></h5>
+                                <h5 className="d-block ms-5 mt-2 mb-2">Aún no tienes favoritos.
+                                    <Link to={"/catalogo"} type="button" className=" h-50 w-100 d-block w-25 btn btn btn-dark btn-lg px-4 mt-3">Ir al catálogo</Link></h5>
                             ) : (
                                 store.favs.map(item => (
-                                    <ProductoCatalogo key={item.id_producto} producto={item}></ProductoCatalogo>
+                                    <ProductoCatalogo className="d-flex" key={item.id_producto} producto={item}></ProductoCatalogo>
                                 ))
                             )}
                         </div>
