@@ -274,7 +274,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} return false
 			},
 			logOut: () => {
-				setStore({ logged: false, token: null })
+				setStore({ logged: false, token: null, carrito: [], favoritos: [] })
 				localStorage.removeItem("token")
 			},
 			getStripePublicKey: async () => {
