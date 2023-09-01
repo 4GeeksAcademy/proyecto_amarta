@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { DetalleProducto } from "../component/detalleProducto";
 
 
 export const Producto = () => {

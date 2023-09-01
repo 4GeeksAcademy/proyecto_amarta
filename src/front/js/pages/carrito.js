@@ -58,11 +58,9 @@ export const Carrito = () => {
                         <h5 className="text-center">El carrito está vacío</h5>
                     </div>
                 ) : (
-                    <>
-                        {store.carrito.map((item, index) => (<ProductoCarrito key={index} item={item}></ProductoCarrito>))}
-                    </>
-
-
+                    <div>
+                        {store.carrito.map((item) => (<ProductoCarrito key={item.id} item={item}></ProductoCarrito>))}
+                    </div>
                 )}
             </div>
             <div className="d-flex justify-content-end my-5 me-5 pt-4">
