@@ -6,7 +6,6 @@ import { Carrito } from "../pages/carrito";
 import { Contacto } from "../pages/contacto";
 import { Catalogo } from "../pages/catalogo";
 import amartaLogoNegro from "../../img/logoAMARTAnegro.png";
-import amartaLogoBlanco from "../../img/logoAMARTAblanco.png"
 import { Modal } from "react-bootstrap";
 import "../../styles/navbar.css"
 import Swal from 'sweetalert2'
@@ -144,7 +143,7 @@ async function handleRecuperar(e) {
           className="seleccionado col-xl-1 col-sm-2 nav-item text-dark fw-bold  border-0 bg-transparent "
           onClick={(e) => navigate("/carrito")}
         >
-          Carrito ({store.carrito.length === 0 ? "0" : store.carrito.length})
+          Carrito ({store.carrito?.length === 0 ? "0" : store.carrito.length})
         </button>
 
         <span className="col-xl-3 col-sm-1"></span>

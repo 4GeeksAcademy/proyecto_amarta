@@ -35,11 +35,11 @@ export const Private = () => {
                     <h1>Mi perfil</h1>
                     <hr></hr>
                     <h3 className="d-flex justify-content-center mt-2 mb-2">
-                        <p className="d-inline-block">Correo de registro: </p>
-                        <p className="fst-italic fw-bolder ms-1 d-inline-block"> {store.user.email}</p></h3>
+                        <p className="d-inline-block">¡Bienvenid@,</p>
+                        <p className="fst-italic fw-bolder ms-1 d-inline-block"> {store.user.nombre}!</p></h3>
                     <div id="arrayFavoritos">
                         <h4 className="d-flex">Tus favoritos: ({store.favs.length}) </h4>
-                        <div className="d-flex">
+                        <div className="d-flex mb-2">
                             {store.favs.length === 0 ? (
 
                                 <h5 className="d-block ms-5 mt-2 mb-2">Aún no tienes favoritos.
