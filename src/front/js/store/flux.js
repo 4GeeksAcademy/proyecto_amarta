@@ -300,6 +300,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			eliminarCarrito: async () => {
 				const data = await axios.delete(`${urlBack}/api/carrito/${getStore().user.id}`)
+				await getActions().getCarrito()
 			}
 		}
 	};
