@@ -5,7 +5,6 @@ import { ProductoCarrito } from "../component/productoCarrito";
 
 export const Carrito = () => {
     const { store, actions } = useContext(Context);
-    const [tota, setTotal] = useState(0)
     const navigate = useNavigate()
 
     const handleEliminarProducto = (id_prod) => {
@@ -69,7 +68,10 @@ export const Carrito = () => {
                         <h5>TOTAL</h5>
                         <p>{store.totalCarrito},00 €</p>
                     </div>
-                    <button className="btn btn-dark" onClick={() => actions.processPayment()}>Finalizar Compra</button>
+                    <button className="btn btn-dark" onClick={() => {
+                        if (store.totalCarrito !== 0) { actions.processPayment() }
+                        else { alert("El carrito está vacío") }
+                    }}>Finalizar Compra</button>
                 </div>
 
             </div>
