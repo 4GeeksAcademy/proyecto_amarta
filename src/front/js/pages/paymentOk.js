@@ -6,17 +6,26 @@ import axios from "axios";
 
 export const PaymentOk = () => {
     const { store, actions } = useContext(Context)
+    const [status, setStatus] = useState("Loading")
     const navigate = useNavigate()
 
     useEffect(() => {
-        actions.eliminarCarrito()
+        const validateToken = async () => {
+            const valid = await actions.validToken()
+            if (valid) {
+                actions.crearPedido()
+            } else {
+                navigate("/")
+            }
+        }
+        validateToken()
     }, [])
+
 
     return (
         <div className="d-flex h-100 justify-content-center text-bg-dark bg-white">
             <div className=" min-vh-100 mt-5 text-center">
                 <div className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column text-center">
-
                     <main className="px-3">
                         <h1>Pago realizado con éxito!</h1>
                         <p className="lead">Ya estamos preparando tu pedido! En breve podrás disfrutar de los productos naturales en tu casa!</p>
