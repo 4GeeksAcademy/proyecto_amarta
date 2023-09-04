@@ -5,7 +5,6 @@ import { ProductoCarrito } from "../component/productoCarrito";
 
 export const Carrito = () => {
     const { store, actions } = useContext(Context);
-    const [tota, setTotal] = useState(0)
     const navigate = useNavigate()
 
     const handleEliminarProducto = (id_prod) => {
@@ -58,11 +57,9 @@ export const Carrito = () => {
                         <h5 className="text-center">El carrito está vacío</h5>
                     </div>
                 ) : (
-                    <>
-                        {store.carrito.map((item, index) => (<ProductoCarrito key={index} item={item}></ProductoCarrito>))}
-                    </>
-
-
+                    <div>
+                        {store.carrito.map((item) => (<ProductoCarrito key={item.id} item={item}></ProductoCarrito>))}
+                    </div>
                 )}
             </div>
             <div className="d-flex justify-content-end my-5 me-5 pt-4">
@@ -71,7 +68,10 @@ export const Carrito = () => {
                         <h5>TOTAL</h5>
                         <p>{store.totalCarrito},00 €</p>
                     </div>
-                    <button className="btn btn-dark" onClick={() => actions.processPayment()}>Finalizar Compra</button>
+                    <button className="btn btn-dark" onClick={() => {
+                        if (store.totalCarrito !== 0) { actions.processPayment() }
+                        else { alert("El carrito está vacío") }
+                    }}>Finalizar Compra</button>
                 </div>
 
             </div>
