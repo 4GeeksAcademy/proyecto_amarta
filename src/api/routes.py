@@ -12,6 +12,8 @@ from flask_mail import Message
 #importamos ramdom y string para generar una clave aleatoria nueva
 import random
 import string
+from datetime import datetime
+import uuid
 
 
 api= Blueprint('api', __name__)
@@ -169,7 +171,6 @@ def add_to_carrito(user_id):
     print(inCarrito)
     if inCarrito is None:
         newCarritoItem = Carrito(id_user = user_id,id_prod=request_body["producto"],cantidad=request_body["cantidad"])
-        print(newCarritoItem)
         db.session.add(newCarritoItem)
         db.session.commit()
         return jsonify({"msg": "ok - Added To carrito"}),200
@@ -251,4 +252,39 @@ def inscribirsenewsletter():
     msg.html = f"""<h1>Nueva alta de email: {data["email"]}</h1>"""
     current_app.mail.send(msg)
     return jsonify({"msg": "Inscrito correctamente"}), 200
-    
+
+@api.route("/pedido/<int:user_id>",methods = ['POST'])
+def crear_pedido(user_id):
+    print("holi")
+    fecha = datetime.now()
+    id_pedido = uuid.uuid4()
+    request_body = request.get_json(force=True)
+    print(request_body)
+    for item in request_body["carrito"]:
+        pedido = Pedido(id = id_pedido,id_user = user_id,id_prod = item['id'],fecha=fecha,cantidad = item['cantidad'])
+        print(pedido)
+        db.session.add(pedido)
+    prevCarrito = Carrito.query.filter_by(id_user=user_id).all()
+    if prevCarrito is None:
+        print('Carrito esta vacio')
+    else:
+        for item in prevCarrito:
+            db.session.delete(item)
+    db.session.commit()
+    return jsonify({"msg":"ok - Pedido creado & Carrito eliminado"})
+
+@api.route("/pedido/<int:user_id>",methods = ['GET'])
+def get_pedidos(user_id):
+    pedidos = Pedido.query.filter_by(id_user=user_id).all()
+    print(pedidos)
+    data = []
+    for pedido in pedidos:
+        data.append(pedido.serialize())
+    if pedidos is None:
+        return jsonify({"msg":"No hay pedidos"}),200
+    response_body = {
+        "msg":"ok - pedidos",
+        "pedidos":data
+    }
+
+    return jsonify(response_body),200
