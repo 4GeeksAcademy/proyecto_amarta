@@ -17,8 +17,10 @@ export const Private = () => {
         const validate = async () => {
             let valid = await actions.validToken()
             if (valid) {
+                const gotPedidos=await actions.getPedidos()
                 const gotFavs = await actions.getFavs()
                 setStatus("authorized")
+                console.log(store.pedidos)
                 return true
             } else {
                 setStatus("un-authorized")
@@ -49,6 +51,32 @@ export const Private = () => {
                                     <ProductoCatalogo className="d-flex" key={item.id_producto} producto={item}></ProductoCatalogo>
                                 ))
                             )}
+                        </div>
+                    </div>
+                    <div id="arrayPedidos">
+                        <h4 className="d-flex">Tus pedidos: ({store.pedidos.length}) </h4>
+                        <div className="d-flex mb-2">
+                            {store.pedidos.length === 0 ? (
+
+                                <h5 className="d-block ms-5 mt-2 mb-2">Aún no tienes pedidos.</h5>
+                            ) : (
+                                <div className="container">
+                                {store.pedidos.map((item, index) => (
+                                  <div key={`${item.id_producto}-${index}`} className="row mb-4">
+                                    <div className="col-md-12">
+                                      <div className="card">
+                                        <div className="card-body">
+                                          <h5 className="card-title">Código del pedido: {item.id}</h5>
+                                          <p className="card-text">Cantidad: {item.cantidad}</p>
+                                          <p className="card-text">Fecha: {item.fecha}</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                                )
+                            }
                         </div>
                     </div>
                 </div>
