@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { loadStripe } from "@stripe/stripe-js";
-import axios from "axios";
 
 export const PaymentOk = () => {
     const { store, actions } = useContext(Context)

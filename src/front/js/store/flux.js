@@ -295,7 +295,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await axios.post(`${urlBack}/payment`, {
 						carrito: getStore().carrito
 					})
-					console.log(data);
 					console.log(stripe.redirectToCheckout({ sessionId: data.data.sessionId }));
 				} catch (error) {
 					console.log(error);
@@ -311,7 +310,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			crearPedido: async () => {
-				localStorage.getItem("id")
+
 				try {
 					const data = await axios.post(`${urlBack}/api/pedido/${localStorage.getItem("id")}`, {
 						carrito: getStore().carrito

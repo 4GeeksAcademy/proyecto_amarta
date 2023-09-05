@@ -13,41 +13,41 @@ export const Private = () => {
         console.log(store.favs);
     }
 
-      function getPedidoUnico(pedidos) {
+    function getPedidoUnico(pedidos) {
         const pedidoId = new Set();
         let contadorPedido = 0;
-      
-        for (const pedido of pedidos) {
-          if (!pedidoId.has(pedido.id)) {
-            pedidoId.add(pedido.id);
-            contadorPedido++;
-          }
-        }
-      
-        return contadorPedido;
-      }
 
-      function getPedidosPorReferencia(pedidos) {
-        const pedidosPorReferencia = {};
-      
         for (const pedido of pedidos) {
-          const referencia = pedido.id;
-      
-          if (!pedidosPorReferencia[referencia]) {
-            pedidosPorReferencia[referencia] = [pedido];
-          } else {
-            pedidosPorReferencia[referencia].push(pedido);
-          }
+            if (!pedidoId.has(pedido.id)) {
+                pedidoId.add(pedido.id);
+                contadorPedido++;
+            }
         }
-      
+
+        return contadorPedido;
+    }
+
+    function getPedidosPorReferencia(pedidos) {
+        const pedidosPorReferencia = {};
+
+        for (const pedido of pedidos) {
+            const referencia = pedido.id;
+
+            if (!pedidosPorReferencia[referencia]) {
+                pedidosPorReferencia[referencia] = [pedido];
+            } else {
+                pedidosPorReferencia[referencia].push(pedido);
+            }
+        }
+
         return Object.values(pedidosPorReferencia);
-      }
+    }
 
     useEffect(() => {
         const validate = async () => {
             let valid = await actions.validToken()
             if (valid) {
-                const gotPedidos=await actions.getPedidos()
+                const gotPedidos = await actions.getPedidos()
                 const gotFavs = await actions.getFavs()
                 setStatus("authorized")
                 console.log(store.pedidos)
@@ -83,10 +83,10 @@ export const Private = () => {
                             )}
                         </div>
                     </div>
-                    <div id="arrayPedidos">
-                    <h4 className="d-flex">
-                    Tus pedidos: ({getPedidoUnico(store.pedidos)}) 
-                    </h4>
+                    {/* <div id="arrayPedidos">
+                        <h4 className="d-flex">
+                            Tus pedidos: ({getPedidoUnico(store.pedidos)})
+                        </h4>
                         <div className="d-flex mb-2">
                             {store.pedidos.length === 0 ? (
 
@@ -116,7 +116,7 @@ export const Private = () => {
                                 )
                             }
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         )
