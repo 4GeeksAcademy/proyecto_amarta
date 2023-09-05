@@ -304,7 +304,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getPedidos: async () => {
 				try {
 					const data = await axios.get(`${urlBack}/api/pedido/${getStore().user.id}`)
-					setStore({ pedidos: data.data.pedidos });
+					await setStore({ pedidos: data.data.data });
 					return true
 				} catch (error) {
 					console.log(error);
