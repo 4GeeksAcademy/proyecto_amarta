@@ -84,39 +84,43 @@ export const Private = () => {
                             )}
                         </div>
                     </div>
-                    <div id="arrayPedidos">
+                    <div id="arrayPedidos" className="w-100 bg-transparent">
                         <h4 className="d-flex">
                             Tus pedidos: ({getPedidoUnico(store.pedidos)})
                         </h4>
-                        <div className="d-flex mb-2">
-                            {store.pedidos.length === 0 ? (
+                        <div className="accordion accodion-flush mx-0">
+                            <div className=" mb-2 accordion-item w-100">
+                                {store.pedidos.length === 0 ? (
 
-                                <h5 className="d-block ms-5 mt-2 mb-2">Aún no tienes pedidos.</h5>
-                            ) : (
-                                <div className="container">
-                                    {getPedidosPorReferencia(store.pedidos).map((groupedOrder, index) => (
-                                        <div key={`${groupedOrder[0].id_pedido}-${index}`} className="row mb-4">
-                                            <div className="col-md-12">
-                                                <div className="card">
-                                                    <div className="card-body">
-                                                        <h5 className="card-title">Referencia: {groupedOrder[0].id_pedido}</h5>
-                                                        {groupedOrder.map((item, subIndex) => (
-                                                            <div key={`${item.id_producto}-${subIndex}`}>
-                                                                <img src={`${item.img}`} className="imgPedido" />
-                                                                <p className="card-text mb-0">Producto: {item.nombre}</p>
-                                                                <p className="card-text mb-2">Cantidad: {item.cantidad}</p>
-                                                                <hr></hr>
-                                                            </div>
-                                                        ))}
-                                                        <p className="card-text">Fecha: {groupedOrder[0].fecha}</p>
+                                    <h5 className="d-block ms-5 mt-2 mb-2">Aún no tienes pedidos.</h5>
+                                ) : (
+                                    <div className="justify-content-center accordion-item" id="accordionPedidos">
+                                        {getPedidosPorReferencia(store.pedidos).map((groupedOrder, index) => (
+                                            <div key={`${groupedOrder[0].id_pedido}-${index}`} className="row mb-4 accordion-header">
+                                                <h2 className=" accordion-header w-100">
+                                                    <button type="button" className="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target={`#div${groupedOrder[0].id_pedido}`} aria-expanded="true" aria-controls="collapseOne">Referencia: {groupedOrder[0].id_pedido} ------ Fecha: {groupedOrder[0].fecha}</button>
+                                                </h2>
+                                                <div className="col-md-12 accordion-collapse collapse" id={`div${groupedOrder[0].id_pedido}`}>
+                                                    <div className="accordion-body">
+                                                        <div className="card-body">
+                                                            {/* <h5 className="card-title">Referencia: {groupedOrder[0].id_pedido}</h5> */}
+                                                            {groupedOrder.map((item, subIndex) => (
+                                                                <div key={`${item.id_producto}-${subIndex}`}>
+                                                                    <img src={`${item.img}`} className="imgPedido" />
+                                                                    <p className="card-text mb-0">Producto: {item.nombre}</p>
+                                                                    <p className="card-text mb-2">Cantidad: {item.cantidad}</p>
+                                                                    <hr></hr>
+                                                                </div>
+                                                            ))}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            )
-                            }
+                                        ))}
+                                    </div>
+                                )
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
