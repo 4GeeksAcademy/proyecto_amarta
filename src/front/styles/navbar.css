@@ -7,14 +7,36 @@
 .fondoModal {
     /* background-color: none; */
     /* background-image: url(https://res.cloudinary.com/dgykuefoq/image/upload/v1692010052/amarta/im%C3%A1genes/cuerpo/crema_juptier_etgvz8.png) */
-    background-image: url(https://res.cloudinary.com/dgykuefoq/image/upload/v1692010058/amarta/im%C3%A1genes/cara/crema_duna_vdacdd.png);
+    /* background-image: url(https://res.cloudinary.com/dgykuefoq/image/upload/v1692010058/amarta/im%C3%A1genes/cara/crema_duna_vdacdd.png); */
+    background-image: url(https://res.cloudinary.com/dgykuefoq/image/upload/v1692010051/amarta/im%C3%A1genes/cuerpo/oli_plut%C3%B3_ivckud.png);
     background-position: -50px -70px;
     
 }
 .seleccionado{
     text-decoration: none;
+
 }
 .seleccionado:active{
     text-decoration: underline;
+}
+
+.color-navbar{
+    background-color: rgb(61, 31, 10);
+   
 
 }
+
+@media (max-width: 376px) {
+    .logoAmarta{
+        display: none;
+    };
+
+}
+
+@media (min-width: 376px) {
+    .logoAmartaNav{
+        display: none;
+    };
+
+}
+
