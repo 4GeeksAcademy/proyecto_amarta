@@ -8,13 +8,7 @@ import * as Yup from 'yup';
 export const Contacto = () => {
 	const { actions } = useContext(Context);
 
-	// useEffect(() => {
-	// 	actions.getTipoProducto()
-	// 	actions.getProducts()
 
-	// }, [])
-
-	// Crear estados donde se elmazenan la info de los inputs	
 	const [email, setEmail] = useState("");
 	const [mensaje, setMensaje] = useState("");
 	const [nombre, setNombre] = useState("");
@@ -99,8 +93,8 @@ export const Contacto = () => {
 
 
 	return (
-		<div className="flex-grow-1">
-			<div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50">
+		<div className="min-vh-100">
+			<div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50 flex-grow-1">
 				<div className="container-fluid row mb-5">
 					<div className="col">
 						<p className="h1 pb-5">¿En qué te podemos ayudar?</p>
