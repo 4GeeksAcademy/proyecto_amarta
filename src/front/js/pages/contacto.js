@@ -99,14 +99,14 @@ export const Contacto = () => {
 
 
 	return (
-		<div className="min-vh-100 mt-5">
+		<div className="flex-grow-1">
 			<div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50">
 				<div className="container-fluid row mb-5">
 					<div className="col">
 						<p className="h1 pb-5">¿En qué te podemos ayudar?</p>
 						<p className="fw-bold">La belleza de tu historia es que continuará evolucionando y tu sitio evolucionará con ella.</p>
-						<p className="h5 pb-2">correoelectronico@ejemplo.com</p>
-						<p className="h5 ">555-5555</p>
+						<p className="h5 pb-2">info@amarta.com</p>
+						<p className="h5 ">555-555-555</p>
 					</div>
 					<form className="col" onSubmit={formik.handleSubmit}>
 						<div className="row">
