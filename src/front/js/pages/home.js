@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import homeImageUrl from "../../img/img293.jpg";
+import amartaLogoNegro from "../../img/logoAMARTAnegro.png";
 import img1 from "../../img/1.png"
 import img2 from "../../img/2.png"
 import img3 from "../../img/3.png"
@@ -18,7 +19,10 @@ export const Home = () => {
 	return (
 
 		<div className=" min-vh-100" >
-		<div className="img-home px-4 pt-5 my-5">
+		
+			<div className="img-home px-4 pt-5 my-5">
+
+				
 
 				<div className="col-lg-6 mx-auto">
 
@@ -31,7 +35,7 @@ export const Home = () => {
 						cada categoria
 						de belleza.
 					</h1>
-					<div className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5 btn-container">
+					<div className="d-grid gap-2 d-sm-flex justify-content-sm-center pb-5 btn-container">
 						<Link to={"/catalogo"} type="button" className="btn-shop mb-2 text-center">Shop</Link>
 					</div>
 				</div>
@@ -39,7 +43,7 @@ export const Home = () => {
 
 			{/* //MAPEO DE IMAGENES */}
 			<div className="container-fluid">
-				<div className="row img-fluid text-center m-1">
+				<div className="row img-fluid text-center m-1 imgHome">
 					{images.map((item, index) => <div key={index} className="col-sm-12 col-md-2 col-lg-2 m-0"> <img src={item} className="m-1 p-1" alt="..." style={{ width: "100%", height: "100%" }} /> </div>)}
 
 				</div>
