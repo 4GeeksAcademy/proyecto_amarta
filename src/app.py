@@ -113,8 +113,8 @@ def stripe_payment():
 
         })
     checkout_session = stripe.checkout.Session.create(
-        success_url=base_url+"/payment_ok",
-        cancel_url = base_url+"/payment_canceled",
+        success_url=base_url+"payment_ok",
+        cancel_url = base_url+"payment_canceled",
         payment_method_types=["card"],
         mode="payment",
         line_items=data
