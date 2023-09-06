@@ -64,7 +64,7 @@ export const Private = () => {
     if (status === "authorized") {
         return (
             <div className=" min-vh-100">
-                <div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50 vh-100">
+                <div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50 flex-grow-1">
                     <h1>Mi perfil</h1>
                     <hr></hr>
                     <h3 className="d-flex justify-content-center mt-2 mb-2">
