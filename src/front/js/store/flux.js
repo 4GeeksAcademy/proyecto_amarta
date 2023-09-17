@@ -355,13 +355,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			processPayment: async () => {
-				localStorage.setItem('id', getStore().user.id)
+				if (getStore().logged) {
+					localStorage.setItem('id', getStore().user.id)
+					const stripe = await loadStripe(getStore().stripePublicKey)
+					try {
+						const data = await axios.post(`${urlBack}/payment`, {
+							carrito: getStore().carrito
+						})
+						stripe.redirectToCheckout({ sessionId: data.data.sessionId });
+					} catch (error) {
+						console.log(error);
+					}
+				}
 				const stripe = await loadStripe(getStore().stripePublicKey)
 				try {
 					const data = await axios.post(`${urlBack}/payment`, {
 						carrito: getStore().carrito
 					})
-					console.log(stripe.redirectToCheckout({ sessionId: data.data.sessionId }));
+					stripe.redirectToCheckout({ sessionId: data.data.sessionId });
 				} catch (error) {
 					console.log(error);
 				}
@@ -378,14 +389,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			crearPedido: async () => {
-
+				if (getStore().logged) {
+					try {
+						const data = await axios.post(`${urlBack}/api/pedido/${localStorage.getItem("id")}`, {
+							carrito: getStore().carrito
+						})
+						console.log(data);
+						setStore({ carrito: [] })
+						localStorage.removeItem("id")
+						return true
+					} catch (error) {
+						console.log(error);
+					}
+				}
+				let dataCarrito = JSON.parse(localStorage.getItem("carritoLocal"))
 				try {
-					const data = await axios.post(`${urlBack}/api/pedido/${localStorage.getItem("id")}`, {
-						carrito: getStore().carrito
+					const data = await axios.post(`${urlBack}/api/pedido/${localStorage.getItem("localEmail")}`, {
+						carrito: dataCarrito["data"]
 					})
 					console.log(data);
 					setStore({ carrito: [] })
-					localStorage.removeItem("id")
+					localStorage.removeItem("localEmail")
+					localStorage.setItem("localPayment", false)
+					localStorage.setItem("carritoLocal", JSON.stringify({ "data": [], "total": 0 }))
 					return true
 				} catch (error) {
 					console.log(error);

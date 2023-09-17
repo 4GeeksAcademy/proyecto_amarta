@@ -43,6 +43,7 @@ class Producto(db.Model):
     favorecidos = db.relationship('Favorito',backref = 'producto',lazy=True)
     carritos = db.relationship('Carrito',backref = 'producto',lazy=True)
     pedidos = db.relationship('Pedido',backref = 'producto',lazy=True)
+    pedidosLocales = db.relationship('PedidoLocal',backref = 'producto',lazy=True)
 
     def __repr__(self):
         return f'<producto: {self.nombre}>'
@@ -59,6 +60,7 @@ class Producto(db.Model):
             "tamaño":str(self.tamanyo) + self.medicion,
             "precio":self.precio,
             "id_tipo": self.id_tipo,
+            "id_precio":self.id_precio,
             "url_img": self.url_img
         }
 
@@ -122,4 +124,21 @@ class Carrito(db.Model):
             "id_producto": self.id_prod,
             "cantidad": self.cantidad
         }
+class PedidoLocal(db.Model):
+    id = db.Column(UUID(as_uuid=True),primary_key=True)
+    email = db.Column(db.String,nullable=False)
+    id_prod = db.Column(db.Integer,db.ForeignKey('producto.id'),primary_key=True)
+    fecha = db.Column(db.DateTime)
+    cantidad = db.Column(db.Integer)
+
+    def __repr__(self):
+        return f'<id_pedido: {self.id}, email: {self.email}, id_prod: {self.id_prod}, cantidad: {self.cantidad}, fecha: {self.fecha}>'
     
+    def serialize(self):
+        return{
+            "id":self.id,
+            "email":self.email,
+            "id_prod":self.id_prod,
+            "cantidad":self.cantidad,
+            "fecha":self.fecha
+        }

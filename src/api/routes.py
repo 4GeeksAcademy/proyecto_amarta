@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, current_app
-from api.models import db, User, Producto, Tipo_prod, Favorito, Pedido, Carrito
+from api.models import db, User, Producto, Tipo_prod, Favorito, Pedido, Carrito,PedidoLocal
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -270,6 +270,20 @@ def crear_pedido(user_id):
     else:
         for item in prevCarrito:
             db.session.delete(item)
+    db.session.commit()
+    return jsonify({"msg":"ok - Pedido creado & Carrito eliminado"})
+
+@api.route("/pedido/<email>",methods = ['POST'])
+def crear_pedido_local(email):
+    print("holi")
+    fecha = datetime.now()
+    id_pedido = uuid.uuid4()
+    request_body = request.get_json(force=True)
+    print(request_body)
+    for item in request_body["carrito"]:
+        pedido = PedidoLocal(id = id_pedido,email = email,id_prod = item['id_producto'],fecha=fecha,cantidad = item['cantidad'])
+        print(pedido)
+        db.session.add(pedido)
     db.session.commit()
     return jsonify({"msg":"ok - Pedido creado & Carrito eliminado"})
 
