@@ -9,7 +9,7 @@ export const ProductoCarrito = (props) => {
     const [cantidad, setCantidad] = useState(parseInt(props.item.cantidad))
 
     function handleEliminar() {
-        actions.eliminarDelCarrito(props.item.id_producto)
+        actions.eliminarDelCarrito(props.item)
     }
     useEffect(() => {
         actions.actualizarCarrito(props.item.id_producto, cantidad)

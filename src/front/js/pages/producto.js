@@ -16,7 +16,7 @@ export const Producto = () => {
         if (added) {
             console.log("added to carrito");
         } else {
-            console.log("error");
+            // console.log("error");
         }
 
     }

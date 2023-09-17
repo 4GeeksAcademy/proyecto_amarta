@@ -198,15 +198,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			},
-			eliminarDelCarrito: async (prod_id) => {
-				try {
-					await axios.delete(`${urlBack}/api/carrito/${getStore().user.id}/${prod_id}`);
-					await getActions().getCarrito()
-					return true
-				} catch (error) {
-					console.log(error);
-					return false
+			eliminarDelCarrito: async (prod) => {
+				console.log(prod);
+				if (getStore().logged) {
+					try {
+						await axios.delete(`${urlBack}/api/carrito/${getStore().user.id}/${prod.id_producto}`);
+						await getActions().getCarrito()
+						return true
+					} catch (error) {
+						console.log(error);
+						return false
+					}
 				}
+				let dataCarrito = JSON.parse(localStorage.getItem("carritoLocal"))
+				let carrito = dataCarrito["data"]
+				let total = dataCarrito["total"]
+				for (let index in carrito) {
+					if (prod.id_producto === carrito[index].id_producto) {
+						total = total - prod.cantidad * prod.precio
+						carrito.splice(index, 1)
+					}
+				}
+				setStore({ carrito: carrito, totalCarrito: total })
+				localStorage.setItem("carritoLocal", JSON.stringify({ "data": carrito, "total": total }))
+
 			},
 			actualizarCarrito: async (prod_id, cantidad) => {
 				try {
