@@ -12,7 +12,7 @@ export const Producto = () => {
     const navigate = useNavigate()
 
     async function handleAddCarrito() {
-        const added = await actions.agregarAlCarrito(store.producto, cantidad)
+        const added = await actions.agregarAlCarrito(store.producto, parseInt(cantidad))
         if (added) {
             console.log("added to carrito");
         } else {
