@@ -183,6 +183,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						carrito[index].total = carrito[index].precio * carrito[index].cantidad
 						total += carrito[index].total
 						encontrado = true
+						break
 					}
 				}
 				if (!encontrado) {
@@ -217,24 +218,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (prod.id_producto === carrito[index].id_producto) {
 						total = total - prod.cantidad * prod.precio
 						carrito.splice(index, 1)
+						break
 					}
 				}
 				setStore({ carrito: carrito, totalCarrito: total })
 				localStorage.setItem("carritoLocal", JSON.stringify({ "data": carrito, "total": total }))
 
 			},
-			actualizarCarrito: async (prod_id, cantidad) => {
-				try {
-					const data = await axios.put(`${urlBack}/api/carrito/${getStore().user.id}/${prod_id}`, {
-						cantidad: cantidad
-					});
-					console.log(data);
-					await getActions().getCarrito()
-					return true
-				} catch (error) {
-					console.log(error);
-					return false
+			actualizarCarrito: async (prod, cantidad) => {
+				if (getStore().logged) {
+					try {
+						const data = await axios.put(`${urlBack}/api/carrito/${getStore().user.id}/${prod.id_producto}`, {
+							cantidad: cantidad
+						});
+						console.log(data);
+						await getActions().getCarrito()
+						return true
+					} catch (error) {
+						console.log(error);
+						return false
+					}
 				}
+				let dataCarrito = JSON.parse(localStorage.getItem("carritoLocal"))
+				let carrito = dataCarrito["data"]
+				let total = dataCarrito["total"]
+				for (let index in carrito) {
+					if (prod.id_producto === carrito[index].id_producto) {
+						total -= carrito[index].total
+						carrito[index].cantidad = cantidad
+						carrito[index].total = prod.precio * cantidad
+						total += carrito[index].total
+						break
+					}
+				}
+				setStore({ carrito: carrito, totalCarrito: total })
+				localStorage.setItem("carritoLocal", JSON.stringify({ "data": carrito, "total": total }))
 			},
 			getContrasenya: async (email) => {
 				try {

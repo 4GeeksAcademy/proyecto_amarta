@@ -12,7 +12,7 @@ export const ProductoCarrito = (props) => {
         actions.eliminarDelCarrito(props.item)
     }
     useEffect(() => {
-        actions.actualizarCarrito(props.item.id_producto, cantidad)
+        actions.actualizarCarrito(props.item, cantidad)
     }, [cantidad])
 
     return (
