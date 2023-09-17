@@ -9,10 +9,10 @@ export const ProductoCarrito = (props) => {
     const [cantidad, setCantidad] = useState(parseInt(props.item.cantidad))
 
     function handleEliminar() {
-        actions.eliminarDelCarrito(props.item.id)
+        actions.eliminarDelCarrito(props.item.id_producto)
     }
     useEffect(() => {
-        actions.actualizarCarrito(props.item.id, cantidad)
+        actions.actualizarCarrito(props.item.id_producto, cantidad)
     }, [cantidad])
 
     return (
@@ -20,7 +20,7 @@ export const ProductoCarrito = (props) => {
             <div className="itemCarritoDiv" >
                 <div className="prodDiv">
                     <div className="imgDiv">
-                        <img className=" prodImg" src={props.item.img} alt="..."></img>
+                        <img className=" prodImg" src={props.item.url_img} alt="..."></img>
                     </div>
                     <div className="w-50 p-3  h-100 d-flex align-items-center">
                         <p className="text-center w-100">{props.item.nombre}</p>

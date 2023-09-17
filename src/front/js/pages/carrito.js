@@ -13,8 +13,7 @@ export const Carrito = () => {
             if (store.logged) {
                 await actions.getStripePublicKey()
             } else {
-                navigate("/")
-                alert("No se ha iniciado sesión")
+
             }
         }
         setUpStripe()
@@ -50,7 +49,7 @@ export const Carrito = () => {
                     </div>
                 ) : (
                     <div>
-                        {store.carrito.map((item) => (<ProductoCarrito key={item.id} item={item}></ProductoCarrito>))}
+                        {store.carrito.map((item) => (<ProductoCarrito key={item.id_producto} item={item}></ProductoCarrito>))}
                     </div>
                 )}
             </div>

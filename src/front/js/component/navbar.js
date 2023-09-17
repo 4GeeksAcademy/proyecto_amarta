@@ -65,24 +65,25 @@ export const Navbar = () => {
       await actions.getContrasenya(email)
       Swal.fire('Revisa tu correo con la nueva contraseña')
       const comprobacion = store.correo_para_verificacion;
-        if (comprobacion.msg ===  'La contraseña ha sido enviada') {
-          Swal.fire({
-            text: 'Revisa tu correo con la nueva contraseña',
+      if (comprobacion.msg === 'La contraseña ha sido enviada') {
+        Swal.fire({
+          text: 'Revisa tu correo con la nueva contraseña',
           customClass: {
             confirmButton: 'btn bg-dark btn-secondary',
           },
-          buttonsStyling: false,});
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'El correo no se encuentra registrado',
-            text: 'Vuelve a intentarlo o regístrate.',
-            customClass: {
-              confirmButton: 'btn bg-dark btn-secondary',
-            },
-            buttonsStyling: false,
-          })
-        }
+          buttonsStyling: false,
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'El correo no se encuentra registrado',
+          text: 'Vuelve a intentarlo o regístrate.',
+          customClass: {
+            confirmButton: 'btn bg-dark btn-secondary',
+          },
+          buttonsStyling: false,
+        })
+      }
     } catch (error) {
       console.log(error);
       Swal.fire({
@@ -115,11 +116,11 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary  border-bottom border-3 sticky-top color-navbar">
       <div className="container-fluid  m-6">
-        <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button className="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <i className="fa-solid fa-bars"></i>
         </button>
         <Link className="nav-item logoAmartaNav" to={"/"}>
-              <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
+          <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
         </Link>
 
         <div className="collapse navbar-collapse  text-dark menu-burguer" id="navbarNavAltMarkup">

@@ -9,7 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: null,
 			message: "",
 			validate: false,
-			logded: false,
+			logged: false,
 			productos: [],
 			tipo_producto: [],
 			producto: {},
@@ -140,30 +140,63 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 			getCarrito: async () => {
-				console.log("en carrito");
-				try {
-					let data = await axios.get(`${urlBack}/api/carrito/${getStore().user.id}`)
-					setStore({ carrito: data.data.carrito })
-					setStore({ totalCarrito: data.data.total })
-					return true
-				} catch (error) {
-					console.log(error);
-					return false
+				if (getStore().logged) {
+					try {
+						let data = await axios.get(`${urlBack}/api/carrito/${getStore().user.id}`)
+						setStore({ carrito: data.data.carrito })
+						setStore({ totalCarrito: data.data.total })
+						return true
+					} catch (error) {
+						console.log(error);
+						return false
+					}
 				}
+				let dataCarrito = JSON.parse(localStorage.getItem("carritoLocal"))
+				setStore({ carrito: dataCarrito["data"], totalCarrito: dataCarrito["total"] })
 			},
 
-			agregarAlCarrito: async (prod_id, cantidad) => {
-				try {
-					await axios.post(`${urlBack}/api/carrito/${getStore().user.id}`, {
-						producto: prod_id,
-						cantidad: cantidad
-					});
-					await getActions().getCarrito()
-					return true
-				} catch (error) {
-					console.log(error);
-					return false
+			agregarAlCarrito: async (prod, cantidad) => {
+				if (getStore().logged) {
+					try {
+						await axios.post(`${urlBack}/api/carrito/${getStore().user.id}`, {
+							producto: prod.id_producto,
+							cantidad: cantidad
+						});
+						await getActions().getCarrito()
+						return true
+					} catch (error) {
+						console.log(error);
+						return false
+					}
 				}
+				let dataCarrito = JSON.parse(localStorage.getItem("carritoLocal"))
+				let carrito = dataCarrito["data"]
+				let total = parseInt(dataCarrito["total"])
+				let encontrado = false
+				console.log(dataCarrito, carrito, total);
+				console.log(prod);
+				for (let index in carrito) {
+					console.log(carrito[index]);
+					if (prod.id_producto === carrito[index].id_producto) {
+						total = total - prod.precio * prod.cantidad
+						carrito[index].cantidad += cantidad
+						carrito[index].total = carrito[index].precio * carrito[index].cantidad
+						total += carrito[index].total
+						encontrado = true
+					}
+				}
+				if (!encontrado) {
+					prod.cantidad = cantidad
+					prod.total = prod.precio * prod.cantidad
+					carrito.push(prod)
+					console.log(prod);
+					total += prod.total
+				}
+
+				setStore({ carrito: carrito, totalCarrito: total })
+				localStorage.setItem("carritoLocal", JSON.stringify({ "data": carrito, "total": total }))
+
+
 			},
 			eliminarDelCarrito: async (prod_id) => {
 				try {

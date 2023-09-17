@@ -147,12 +147,12 @@ def get_carrito(user_id):
     total = 0
     for item in carrito:
         producto = {
-            "id":item[1],
+            "id_producto":item[1],
             "nombre":item[2],
             "precio":item[3],
             "id_precio":item[5],
             "cantidad":item[0],
-            "img":item[4],
+            "url_img":item[4],
             "total":int(item[3])*int(item[0])
         }
         total += producto['total']
@@ -275,31 +275,7 @@ def crear_pedido(user_id):
 
 @api.route("/pedido/<int:user_id>",methods = ['GET'])
 def get_pedidos(user_id):
-    # pedidos_user = Pedido.query.filter_by(id_user=user_id).all()
-    # pedidos={}
-    # ids=[]
-    # for pedido in pedidos_user:
-    #     if pedido.id not in ids:
-    #         ids.append(pedido.id)
-    # for id in ids:
-    #     productos_id = {}
-    #     productos_pedido = db.session.query(Producto.id,Producto.nombre,Producto.precio,Producto.url_img,Pedido.cantidad).join(Producto).filter(Pedido.id==id).all()
-    #     for producto in productos_pedido:
-    #         productos_id[f"{producto[0]}"]={
-    #             "nombre":producto[1],
-    #             "precio":producto[2],
-    #             "img":producto[3],
-    #             "cantidad":producto[4]
-    #         }
-    #     pedidos[f"{id}"]=productos_id
-    # print(pedidos)
-    # response_body = {
-    #     "msg":"ok - pedidos",
-    #     "data":pedidos
-    # }
     pedidos = db.session.query(Pedido.id,Producto.id,Producto.nombre,Producto.precio,Producto.url_img,Pedido.cantidad,Pedido.fecha).join(Producto).filter(Pedido.id_user==user_id).all()
-    # pedidos = Pedido.query.filter_by(id_user=user_id).all()
-    # print(pedidos)
     if pedidos is None:
         return jsonify({"msg":"No hay pedidos"}),200
     data = []
