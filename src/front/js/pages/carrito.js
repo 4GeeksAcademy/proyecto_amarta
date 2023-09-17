@@ -7,14 +7,6 @@ export const Carrito = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate()
 
-    const handleEliminarProducto = (id_prod) => {
-        actions.eliminarDelCarrito(id_prod);
-    };
-
-    const handleDeleteProduct = id_prod => {
-        actions.eliminarDelCarrito(store.user.id, id_prod);
-    }
-
     useEffect(() => {
         async function setUpStripe() {
 
