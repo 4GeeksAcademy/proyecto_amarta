@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, current_app
-from api.models import db, User, Producto, Tipo_prod, Favorito, Pedido, Carrito
+from api.models import db, User, Producto, Tipo_prod, Favorito, Pedido, Carrito,PedidoLocal
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -147,12 +147,12 @@ def get_carrito(user_id):
     total = 0
     for item in carrito:
         producto = {
-            "id":item[1],
+            "id_producto":item[1],
             "nombre":item[2],
             "precio":item[3],
             "id_precio":item[5],
             "cantidad":item[0],
-            "img":item[4],
+            "url_img":item[4],
             "total":int(item[3])*int(item[0])
         }
         total += producto['total']
@@ -273,33 +273,23 @@ def crear_pedido(user_id):
     db.session.commit()
     return jsonify({"msg":"ok - Pedido creado & Carrito eliminado"})
 
+@api.route("/pedido/<email>",methods = ['POST'])
+def crear_pedido_local(email):
+    print("holi")
+    fecha = datetime.now()
+    id_pedido = uuid.uuid4()
+    request_body = request.get_json(force=True)
+    print(request_body)
+    for item in request_body["carrito"]:
+        pedido = PedidoLocal(id = id_pedido,email = email,id_prod = item['id_producto'],fecha=fecha,cantidad = item['cantidad'])
+        print(pedido)
+        db.session.add(pedido)
+    db.session.commit()
+    return jsonify({"msg":"ok - Pedido creado & Carrito eliminado"})
+
 @api.route("/pedido/<int:user_id>",methods = ['GET'])
 def get_pedidos(user_id):
-    # pedidos_user = Pedido.query.filter_by(id_user=user_id).all()
-    # pedidos={}
-    # ids=[]
-    # for pedido in pedidos_user:
-    #     if pedido.id not in ids:
-    #         ids.append(pedido.id)
-    # for id in ids:
-    #     productos_id = {}
-    #     productos_pedido = db.session.query(Producto.id,Producto.nombre,Producto.precio,Producto.url_img,Pedido.cantidad).join(Producto).filter(Pedido.id==id).all()
-    #     for producto in productos_pedido:
-    #         productos_id[f"{producto[0]}"]={
-    #             "nombre":producto[1],
-    #             "precio":producto[2],
-    #             "img":producto[3],
-    #             "cantidad":producto[4]
-    #         }
-    #     pedidos[f"{id}"]=productos_id
-    # print(pedidos)
-    # response_body = {
-    #     "msg":"ok - pedidos",
-    #     "data":pedidos
-    # }
     pedidos = db.session.query(Pedido.id,Producto.id,Producto.nombre,Producto.precio,Producto.url_img,Pedido.cantidad,Pedido.fecha).join(Producto).filter(Pedido.id_user==user_id).all()
-    # pedidos = Pedido.query.filter_by(id_user=user_id).all()
-    # print(pedidos)
     if pedidos is None:
         return jsonify({"msg":"No hay pedidos"}),200
     data = []

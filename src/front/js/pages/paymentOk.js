@@ -16,7 +16,12 @@ export const PaymentOk = () => {
                 navigate("/")
             }
         }
-        validateToken()
+        if (localStorage.getItem("localPayment")) {
+            actions.crearPedido()
+        } else {
+            validateToken()
+        }
+
     }, [])
 
 

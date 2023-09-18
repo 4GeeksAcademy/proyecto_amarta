@@ -29,6 +29,11 @@ const injectContext = PassedComponent => {
 			 * store, instead use actions, like this:
 			 **/
 			state.actions.validToken();
+			if (localStorage.getItem("carritoLocal") === null) {
+				localStorage.setItem("carritoLocal", JSON.stringify({ "data": [], "total": 0 }))
+			} else {
+				state.actions.getCarrito()
+			}
 			state.actions.getMessage(); // <---- calling this function from the flux.js actions
 		}, []);
 
