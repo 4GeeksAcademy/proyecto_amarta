@@ -12,15 +12,11 @@ export const Producto = () => {
     const navigate = useNavigate()
 
     async function handleAddCarrito() {
-        if (store.logged) {
-            const added = await actions.agregarAlCarrito(params.id_producto, cantidad)
-            if (added) {
-                console.log("added to carrito");
-            } else {
-                console.log("error");
-            }
+        const added = await actions.agregarAlCarrito(store.producto, parseInt(cantidad))
+        if (added) {
+            console.log("added to carrito");
         } else {
-            alert("No se ha iniciado sesión aún")
+            // console.log("error");
         }
 
     }

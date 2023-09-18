@@ -2,34 +2,39 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { ProductoCarrito } from "../component/productoCarrito";
+import { Modal, ModalHeader, ModalTitle, ModalBody, ModalDialog, ModalFooter } from "react-bootstrap";
+
 
 export const Carrito = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate()
+    const [show, setShow] = useState("")
+    const [email, setEmail] = useState()
 
-    const handleEliminarProducto = (id_prod) => {
-        actions.eliminarDelCarrito(id_prod);
-    };
+    function handlePayment() {
+        if (store.logged && store.totalCarrito !== 0) { actions.processPayment() }
+        else if (!store.logged && store.totalCarrito !== 0) {
+            setShow("show")
+        }
+        else { alert("El carrito está vacío") }
+    }
 
-    const handleDeleteProduct = id_prod => {
-        actions.eliminarDelCarrito(store.user.id, id_prod);
+    function handleHide() {
+        setShow("")
+    }
+    function finalizePayment() {
+        localStorage.setItem("localPayment", true)
+        localStorage.setItem("localEmail", email)
+        actions.processPayment()
     }
 
     useEffect(() => {
         async function setUpStripe() {
-
-            if (store.logged) {
-                await actions.getStripePublicKey()
-            } else {
-                navigate("/")
-                alert("No se ha iniciado sesión")
-            }
+            await actions.getStripePublicKey()
         }
         setUpStripe()
     }, [])
-
     useEffect(() => {
-
     }, [])
 
     return (
@@ -58,7 +63,7 @@ export const Carrito = () => {
                     </div>
                 ) : (
                     <div>
-                        {store.carrito.map((item) => (<ProductoCarrito key={item.id} item={item}></ProductoCarrito>))}
+                        {store.carrito.map((item) => (<ProductoCarrito key={item.id_producto} item={item}></ProductoCarrito>))}
                     </div>
                 )}
             </div>
@@ -68,15 +73,24 @@ export const Carrito = () => {
                         <h5>TOTAL</h5>
                         <p>{store.totalCarrito},00 €</p>
                     </div>
-                    <button className="btn btn-dark" onClick={() => {
-                        if (store.totalCarrito !== 0) { actions.processPayment() }
-                        else { alert("El carrito está vacío") }
-                    }}>Finalizar Compra</button>
+                    <button className="btn btn-dark" onClick={handlePayment}>Finalizar Compra</button>
                 </div>
 
             </div>
 
-
+            <Modal className="text-center" show={show} onHide={handleHide}>
+                <ModalHeader className="bg-light" closeButton>
+                    <ModalTitle>Introduce un correo</ModalTitle>
+                </ModalHeader>
+                <ModalBody className="bg-light">
+                    <ModalDialog>Para poder finalizar tu compra, necesitamos un email para enviarte los detalles de tu pedido.</ModalDialog>
+                    <label className="me-3" htmlFor="#email">Email</label>
+                    <input id="email" placeholder="Email" onChange={e => { setEmail(e.target.value) }} />
+                </ModalBody>
+                <ModalFooter className="bg-light flex justify-content-center">
+                    <button onClick={finalizePayment} className="btn text-white bg-dark">Finalizar Pago</button>
+                </ModalFooter>
+            </Modal>
         </div>
     );
 }
