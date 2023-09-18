@@ -45,15 +45,17 @@ const Layout = () => {
         <ScrollToTop>
           <Navbar />
           <Routes>
-            <Route element={<Home />} path="/" />
+            {/* <Route element={<Home />} path="/" /> */}
+            <Route element={<Catalogo />} path="/" />
             <Route element={<Demo />} path="/demo" />
             {/* <Route element={<LoginyRegistro />} path="/login" /> */}
             <Route element={<Recuperar />} path="/recuperar" />
             <Route element={<Carrito />} path="/carrito" />
             <Route element={<Single />} path="/single/:theid" />
-            <Route element={<Home />} path='*' />
+            {/* <Route element={<Home />} path='*' /> */}
             <Route element={<Private />} path="/private" />
             <Route element={<Catalogo />} path="/catalogo" />
+            <Route element={<Catalogo />} path='*' />
             <Route element={<Producto />} path="/producto/:id_producto" />
             <Route element={<Contacto />} path="/contacto" />
             <Route element={<h1>Not found!</h1>} />

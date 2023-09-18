@@ -49,14 +49,14 @@ export const Contacto = () => {
 		validationSchema: Yup.object({
 			nombre: Yup.string()
 				.max(20, 'Debe tener máximo 20 caracteres o menos')
-				.required('(Campo obligatorio)'),
+				.required('Campo obligatorio'),
 			apellido: Yup.string()
 				.max(20, 'Debe tener máximo 15 caracteres o menos')
-				.required('(Campo obligatorio)'),
-			email: Yup.string().email('Correo electronico no valido').required('(Campo obligatorio)'),
+				.required('Campo obligatorio'),
+			email: Yup.string().email('Correo electronico no válido').required('Campo obligatorio'),
 			mensaje: Yup.string()
 				.max(500, 'Máximo 500 caracteres')
-				.required('(Campo obligatorio)'),
+				.required('Campo obligatorio'),
 		}),
 		onSubmit: values => {
 				enviarMsg(values.nombre, values.apellido, values.email, values.mensaje)
@@ -76,7 +76,7 @@ export const Contacto = () => {
 			emailNL: ''
 		},
 		validationSchema: Yup.object({
-			emailNL: Yup.string().email('Correo electronico no valido').required('(Campo obligatorio)'),
+			emailNL: Yup.string().email('Correo electronico no válido').required('Campo obligatorio'),
 		}),
 		onSubmit: values => {
 				enviarEmailNL(values.emailNL)
@@ -93,12 +93,12 @@ export const Contacto = () => {
 
 
 	return (
-		<div className="min-vh-100">
-			<div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50 flex-grow-1">
+		<div className="">
+			<div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50 flex-grow-1 min-vh-100">
 				<div className="container-fluid row mb-5">
 					<div className="col">
-						<p className="h1 pb-5">¿En qué te podemos ayudar?</p>
-						<p className="fw-bold">La belleza de tu historia es que continuará evolucionando y tu sitio evolucionará con ella.</p>
+						<p className="h1 pb-4">¿En qué te podemos ayudar?</p>
+						<p className="fw-bold fs-4">La belleza de tu historia es que continuará evolucionando y tu sitio evolucionará con ella.</p>
 						<p className="h5 pb-2">info@amarta.com</p>
 						<p className="h5 ">555-555-555</p>
 					</div>
@@ -107,22 +107,22 @@ export const Contacto = () => {
 							<div className="col pb-2">
 								<input className="form-control" placeholder="Escribe tu nombre" id="nombre"
 									name="nombre" onChange={formik.handleChange} value={formik.values.nombre} />
-								{formik.errors.nombre ? <div>{formik.errors.nombre}</div> : null}
+								{formik.errors.nombre ? <div className="text-danger fw-bold">{formik.errors.nombre}</div> : null}
 							</div>
 							<div className="col">
 								<input className="form-control" placeholder="Escribe tus apellidos" id="apellidos" name="apellido" onChange={formik.handleChange} value={formik.values.apellido} />
-								{formik.errors.apellido ? <div>{formik.errors.apellido}</div> : null}
+								{formik.errors.apellido ? <div className="text-danger fw-bold">{formik.errors.apellido}</div> : null}
 							</div>
 						</div>
 						<div className="row">
 							<div className="col pb-2">
 								<input className="form-control" id="email" placeholder="Dejanos un correo electrónico" name="email" onChange={formik.handleChange} value={formik.values.email} />
-								{formik.errors.email ? <div>{formik.errors.email}</div> : null}
+								{formik.errors.email ? <div className="text-danger fw-bold">{formik.errors.email}</div> : null}
 							</div>
 						</div>
 						<div className="mb-3">
 							<textarea className="form-control" id="textArea" rows="3" placeholder="Te escuchamos! ¿Qué nos quieres contar?" name="mensaje" onChange={formik.handleChange} value={formik.values.mensaje} ></textarea>
-							{formik.errors.mensaje ? <div>{formik.errors.mensaje}</div> : null}
+							{formik.errors.mensaje ? <div className="text-danger fw-bold">{formik.errors.mensaje}</div> : null}
 						</div>
 
 						<button type="submit" className="btn btn-dark me-md-2 mb-3">Enviar</button>
@@ -134,16 +134,16 @@ export const Contacto = () => {
 						)}
 					</form>
 				</div>
-				<div className="container-fluid row ">
+				<div className="container-fluid row">
 					<div className="col">
-						<p className="h3">¡Especialmente para ti!</p>
+						<p className="h3 pb-4">¡Especialmente para ti!</p>
 						<p className="fs-6 mb-0 fw-bold">Regístrate y sé la primera persona en enterarte de los descuentos!</p>
 						<p className="fs-6 fw-bold">Recibe los consejos y todo lo que ofrece AMARTA.</p>
 					</div>
 					<form className="col "  onSubmit={formikNL.handleSubmit}>
-						<input name="emailNL" className="form-control mb-3" placeholder="Correo electrónico" onChange={formikNL.handleChange} value={formikNL.values.emailNL}  />
-						{formikNL.errors.emailNL ? <div>{formikNL.errors.emailNL}</div> : null}
-						<button type="submit" className="btn btn-dark  me-md-2">Subscribirse</button>
+						<input name="emailNL" className="form-control " placeholder="Correo electrónico" onChange={formikNL.handleChange} value={formikNL.values.emailNL}  />
+						{formikNL.errors.emailNL ? <div className="text-danger fw-bold">{formikNL.errors.emailNL}</div> : null}
+						<button type="submit" className="btn btn-dark  me-md-2 mt-3">Subscribirse</button>
 					</form>
 				</div>
 				<div className="container-fluid row">

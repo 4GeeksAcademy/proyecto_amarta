@@ -53,6 +53,9 @@ export const ProductoCatalogo = props => {
                     <h5 className="card-title me-5 ">{props.producto.nombre}</h5>
                     <p className="text-end fw-lighter text-end">{props.producto.precio} €</p>
                 </div>
+                <div className="d-flex flex-start">
+                <p className="text-end fw-lighter text-end">{props.producto.ingredientes_principales}</p>
+                </div>
                
                 <Link to={`/producto/${props.producto.id_producto}`} type="button"  className="btn btn-dark me-md-2 mb-2">Más información</Link>
           

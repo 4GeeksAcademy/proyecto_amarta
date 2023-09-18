@@ -65,24 +65,25 @@ export const Navbar = () => {
       await actions.getContrasenya(email)
       Swal.fire('Revisa tu correo con la nueva contraseña')
       const comprobacion = store.correo_para_verificacion;
-        if (comprobacion.msg ===  'La contraseña ha sido enviada') {
-          Swal.fire({
-            text: 'Revisa tu correo con la nueva contraseña',
+      if (comprobacion.msg === 'La contraseña ha sido enviada') {
+        Swal.fire({
+          text: 'Revisa tu correo con la nueva contraseña',
           customClass: {
             confirmButton: 'btn bg-dark btn-secondary',
           },
-          buttonsStyling: false,});
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'El correo no se encuentra registrado',
-            text: 'Vuelve a intentarlo o regístrate.',
-            customClass: {
-              confirmButton: 'btn bg-dark btn-secondary',
-            },
-            buttonsStyling: false,
-          })
-        }
+          buttonsStyling: false,
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'El correo no se encuentra registrado',
+          text: 'Vuelve a intentarlo o regístrate.',
+          customClass: {
+            confirmButton: 'btn bg-dark btn-secondary',
+          },
+          buttonsStyling: false,
+        })
+      }
     } catch (error) {
       console.log(error);
       Swal.fire({
@@ -118,26 +119,26 @@ export const Navbar = () => {
         <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <i className="fa-solid fa-bars"></i>
         </button>
-        <Link className="nav-item logoAmartaNav" to={"/"}>
-              <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
+        <Link className="nav-item logoAmartaNav" to={"/catalogo"}>
+          <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
         </Link>
 
         <div className="collapse navbar-collapse  text-dark menu-burguer" id="navbarNavAltMarkup">
-          <ul className="navbar-nav container-fluid justify-content-around">
+          <ul className="navbar-nav container-fluid justify-content-around ">
             <li >
-              <Link to={"/catalogo"} type="button" className="seleccionado bg-transparent rounded nav-item text-white fw-bold">Catálogo</Link>
+              <Link to={"/catalogo"} type="button" className="seleccionado bg-transparent rounded nav-item text-white fw-bold" id="catalogo">Catálogo</Link>
             </li>
-            <li className="nav-item">
-              <Link to={"/contacto"} type="button" className="seleccionado bg-transparent rounded nav-item text-white fw-bold ">Contacto</Link>
+            <li className="nav-item ">
+              <Link to={"/contacto"} type="button" className="seleccionado bg-transparent rounded nav-item text-white fw-bold font ">Contacto</Link>
             </li>
 
-            <Link className="nav-item logoAmarta " to={"/"}>
+            <Link className="nav-item logoAmarta" to={"/catalogo"}>
               <img src={amartaLogoNegro} alt="AMARTA" width="175" height="35"></img>
             </Link>
 
-            <li className="nav-item">
+            <li className="nav-item font">
               {store.logged ? <div className="dropdown dropdown-center ">
-                <a className=" text-white dropdown-toggle fw-bold active border-0 " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a className="text-media text-white dropdown-toggle fw-bold active border-0 " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Cuenta
                 </a>
                 <ul className="dropdown-menu list-unstyled dropdown-menu-start">
@@ -145,7 +146,7 @@ export const Navbar = () => {
                   <li><button className="btn dropdown-item" onClick={() => {
                     actions.logOut()
                     navigate("/")
-                  }}><i className="d-flex float-start align-items-end fa-solid fa-arrow-right-from-bracket pt-1"></i><p className="d-flex ps-3 mt-0 mb-1 ">Log Out</p></button></li>
+                  }}><i className="d-flex float-start align-items-end fa-solid fa-arrow-right-from-bracket pt-1"></i><p className="d-flex ps-3 mt-0 mb-1 ">Cerrar sesión</p></button></li>
                 </ul>
               </div>
                 : <button
@@ -157,7 +158,7 @@ export const Navbar = () => {
                 </button>
               }
             </li>
-            <li className="nav-item">
+            <li className="nav-item font">
               <button
                 type="button"
                 className="seleccionado text-white fw-bold  border-0 bg-transparent p-0 "
@@ -192,7 +193,7 @@ export const Navbar = () => {
                   aria-selected="true"
 
                 >
-                  Iniciar Sesión
+                  Iniciar sesión
                 </button>
                 <button
                   type="button"
@@ -246,7 +247,7 @@ export const Navbar = () => {
                 </div>
                 <button className="btn btn-dark mt-2 me-2">
 
-                  Iniciar Sesión
+                  Iniciar sesión
                 </button>
 
                 <button
