@@ -52,7 +52,6 @@ export const Producto = () => {
                     <p>{store.producto.propiedes}</p>
                     <p className="lead">{store.producto.descripcion}</p>
                     <p>{store.producto.metodo_utilizacion}</p>
-                    <p><strong>Tamaño: </strong>{store.producto.tamaño}</p>
 
                     <hr />
 
@@ -64,6 +63,7 @@ export const Producto = () => {
                         <label className="form-check-label" htmlFor="flexRadioDefault1">
                             unidad {store.producto.tamaño}
                         </label>
+                        <div className="ms-auto fw-bold">{store.producto.precio} €</div>
                     </div>
                     <hr />
 
@@ -71,7 +71,7 @@ export const Producto = () => {
 
                         <button onClick={handleAddCarrito} type="button" className="btn btn-dark btn-lg px-4 me-md-2">Añadir al
                             carrito</button>
-                        <Link to={"/catalogo"} type="button" className="btn btn-outline-secondary btn-lg px-4">Completar la rutina</Link>
+                        <Link to={"/catalogo"} type="button" className="btn btn-outline-secondary btn-lg px-4">Seguir comprando</Link>
                     </div>
                 </div>
             </div>

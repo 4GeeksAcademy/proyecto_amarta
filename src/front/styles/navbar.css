@@ -26,17 +26,26 @@
 
 }
 
-@media (max-width: 376px) {
+@media (max-width: 993px) {
     .logoAmarta{
         display: none;
     };
+    #catalogo{
+        font-size: 20px;
+        color: red
+    }
+   
 
 }
 
-@media (min-width: 376px) {
+@media (min-width: 993px) {
     .logoAmartaNav{
         display: none;
     };
+    .font{
+        height: 40px;
+    }
+   
 
 }
 
