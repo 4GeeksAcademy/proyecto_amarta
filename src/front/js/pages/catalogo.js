@@ -30,24 +30,24 @@ export const Catalogo = () => {
         <h4 className="title-catalogo pb-2 d-flex justify-content-center">
           Todo lo que necesitas
         </h4>
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center ">
           <ul className="bg-dark list-group list-group-horizontal p-2 d-inline-flex justify-content-center">
             <li
-              className={`list-group-item bg-dark text-white ${filter === "" ? "active border-0" : ""}`}
+              className={`list-group-item  text-white ${filter === "" ? "active border-0" : ""}`}
               onClick={() => handleFilterChange("")}
             >
               Todos
             </li>
             {store.tipo_producto?.map((item) => (
               <li
-                className={`list-group-item bg-dark text-white ${filter === item.id_tipo ? "active border-0" : ""}`}
+                className={`list-group-item  text-white ${filter === item.id_tipo ? "active border-0" : ""}`}
                 key={item.id_tipo}
                 onClick={() => handleFilterChange(item.id_tipo)}
               >
                 {item.nombre}
               </li>
             ))}
-            <li className="list-group-item bg-dark text-white">
+            <li className="list-group-item text-white">
               <form className="d-inline-flex justify-content-center ms-2" role="search">
                 <input
                   className="form-control me-2 w-auto"
@@ -58,7 +58,7 @@ export const Catalogo = () => {
                   onChange={(e) => setBusquedaProducto(e.target.value)}
                 ></input>
                 <button
-                  className="btn btn-outline-light bg-dark border-0"
+                  className="btn btn-outline-light  border-0"
                   type="submit"
                 >
                   <i className="fa-solid fa-magnifying-glass"></i>

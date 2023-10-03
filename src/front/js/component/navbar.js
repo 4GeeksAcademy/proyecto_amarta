@@ -126,7 +126,7 @@ export const Navbar = () => {
         <div className="collapse navbar-collapse  text-dark menu-burguer" id="navbarNavAltMarkup">
           <ul className="navbar-nav container-fluid justify-content-around ">
             <li >
-              <Link to={"/catalogo"} type="button" className="seleccionado bg-transparent rounded nav-item text-white fw-bold" id="catalogo">Catálogo</Link>
+              <Link to={"/catalogo"} type="button" className=" seleccionado bg-transparent rounded nav-item fw-bold" id="catalogo">Catálogo</Link>
             </li>
             <li className="nav-item ">
               <Link to={"/contacto"} type="button" className="seleccionado bg-transparent rounded nav-item text-white fw-bold font ">Contacto</Link>
@@ -151,7 +151,7 @@ export const Navbar = () => {
               </div>
                 : <button
                   type="button"
-                  className="seleccionado text-white fw-bold border-0 bg-transparent p-0"
+                  className="seleccionado text-white fw-bold border-0 bg-transparent "
                   data-bs-toggle="modal"
                   onClick={handleMostrarLoginyRegistro}>
                   Cuenta
@@ -161,7 +161,7 @@ export const Navbar = () => {
             <li className="nav-item font">
               <button
                 type="button"
-                className="seleccionado text-white fw-bold  border-0 bg-transparent p-0 "
+                className="seleccionado text-white fw-bold  border-0 bg-transparent  "
                 onClick={(e) => navigate("/carrito")}>
                 Carrito ({store.carrito?.length === 0 ? "0" : store.carrito.length})
               </button>

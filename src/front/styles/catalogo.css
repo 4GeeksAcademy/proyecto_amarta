@@ -1,4 +1,31 @@
-li{
+/* REPO BERTA */
+
+.list-group-horizontal>.list-group-item:first-child {
     cursor: pointer;
+}
+
+.list-group-horizontal>.list-group-item+.list-group-item {
+    cursor: pointer;
+}
+
+.bg-dark:hover{
+    background-color: red;
+}
+
+.list-group-item{
+    background-color: black;
+}
+
+.list-group-item:hover{
+    background-color: red;
+
+}
+
+.list-group-item.active{
+    background-color: black;
+}
+
+.list-group-item.active:hover{
+    background-color: red;
 }
 
