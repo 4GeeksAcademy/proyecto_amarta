@@ -1,5 +1,11 @@
 /* REPO BERTA */
 
+
+.title-catalogo{
+    font-family: 'Libre Caslon Text', serif;
+
+} 
+
 .list-group-horizontal>.list-group-item:first-child {
     cursor: pointer;
 }
