@@ -20,7 +20,7 @@ export const Catalogo = () => {
 
   return (
     <div className="min-vh-100">
-      <div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-75">
+      <div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-75 text-center">
         <h4 className="title-catalogo pb-2 d-flex justify-content-center">
           Belleza simplificada
         </h4>
@@ -31,7 +31,7 @@ export const Catalogo = () => {
           Todo lo que necesitas
         </h4>
         <div className="d-flex justify-content-center ">
-          <ul className="bg-dark list-group list-group-horizontal p-2 d-inline-flex justify-content-center">
+          <ul className=" list-group list-group-horizontal p-2 d-inline-flex justify-content-center">
             <li
               className={`list-group-item  text-white ${filter === "" ? "active border-0" : ""}`}
               onClick={() => handleFilterChange("")}

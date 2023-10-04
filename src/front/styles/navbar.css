@@ -1,5 +1,5 @@
 :root {
-    --color-nabar: rgb(61, 31, 10);
+    --color-nabar:#6D5B4F;
 }
 
 .modal-content {
@@ -36,22 +36,15 @@
         display: none;
     }
 
-    ;
-
-    #catalogo {
-        font-size: 20px;
-        color: red
-    }
-
     ul.navbar-nav li a {
         color: white;
-        padding: 12px 0;
+        padding: 4px 0;
         font-size: 20px;
     }
 
     li.font button {
         color: white;
-        padding: 12px 0;
+        padding: 4px 0;
         font-size: 20px;
     }
 }
@@ -69,7 +62,6 @@
     li.font button {
         color: white;
         padding: 0;
-      
     }
 
    

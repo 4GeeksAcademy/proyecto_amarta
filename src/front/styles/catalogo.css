@@ -8,24 +8,16 @@
     cursor: pointer;
 }
 
-.bg-dark:hover{
-    background-color: red;
-}
 
-.list-group-item{
+.list-group-item {
     background-color: black;
 }
 
-.list-group-item:hover{
-    background-color: red;
 
-}
-
-.list-group-item.active{
+.list-group-item.active {
     background-color: black;
 }
 
-.list-group-item.active:hover{
-    background-color: red;
+.list-group-item.active:hover {
+    background-color:#6D5B4F;
 }
-
