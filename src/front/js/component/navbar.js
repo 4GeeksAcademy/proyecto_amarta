@@ -179,13 +179,13 @@ export const Navbar = () => {
           <div className="modal-content fondoModal">
             <nav>
               <div
-                className="modal-header nav nav-tabs justify-content-center border-0"
+                className="modal-header nav nav-tabs justify-content-between border-0"
                 id="nav-tab"
                 role="tablist"
               >
                 <button
                   type="button"
-                  className="nav-link justify-content-center border-0 ms-5 me-5 bg-transparent"
+                  className="nav-link justify-content-center border-0 ms-5 me-5 bg-transparent text-white"
                   id="nav-iniciarID-tab"
                   data-bs-toggle="tab"
                   data-bs-target="#nav-inicioSesion"
@@ -197,7 +197,7 @@ export const Navbar = () => {
                 </button>
                 <button
                   type="button"
-                  className="nav-link justify-content-center border-0 ms-5 bg-transparent"
+                  className="text-white nav-link justify-content-center border-0 ms-5 bg-transparent"
                   id="nav-crearID-tab"
                   data-bs-toggle="tab"
                   data-bs-target="#nav-crearCuenta"
@@ -206,13 +206,14 @@ export const Navbar = () => {
                 >
                   Registrarse
                 </button>
+
+
                 <button
-                  type="button"
-                  className="btn-close"
-                  // data-bs-dismiss="modal"
-                  aria-label="Close"
+                  type="button" class="btn-close btn-close-white" aria-label="Close"
                   onClick={() => { setMostrarLoginyRegistro(false) }}
                 ></button>
+
+
               </div>
             </nav>
             <div className="modal-body tab-content" id="nav-tabContent">
@@ -225,8 +226,8 @@ export const Navbar = () => {
                 role="tabpanel"
                 aria-labelledby="nav-iniciarID-tab"
               >
-                <div className="form-group">
-                  <label className="fw-bold">Email</label>
+                <div className="form-group pb-2">
+                  {/* <label className="fw-bold text-white">Email</label> */}
                   <input
                     type="email"
                     onChange={(e) => setEmail(e.target.value)}
@@ -236,7 +237,7 @@ export const Navbar = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label className="fw-bold">Contraseña</label>
+                  {/* <label className="fw-bold text-white">Contraseña</label> */}
                   <input
                     type="password"
                     onChange={(e) => setPassword(e.target.value)}
@@ -267,8 +268,8 @@ export const Navbar = () => {
                 role="tabpanel"
                 aria-labelledby="nav-crearID-tab"
               >
-                <div className="form-group">
-                  <label className="fw-bold">Nombre</label>
+                <div className="form-group pb-2">
+                  {/* <label className="fw-bold">Nombre</label> */}
                   <input
                     type="string"
                     onChange={(e) => setName(e.target.value)}
@@ -277,8 +278,8 @@ export const Navbar = () => {
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label className="fw-bold">Apellidos</label>
+                <div className="form-group pb-2">
+                  {/* <label className="fw-bold">Apellidos</label> */}
                   <input
                     type="string"
                     onChange={(e) => setApellidos(e.target.value)}
@@ -287,8 +288,8 @@ export const Navbar = () => {
                     required
                   />
                 </div>
-                <div className="form-group ">
-                  <label className="fw-bold">Email</label>
+                <div className="form-group pb-2">
+                  {/* <label className="fw-bold">Email</label> */}
                   <input
                     type="email"
                     onChange={(e) => setEmail(e.target.value)}
@@ -298,7 +299,7 @@ export const Navbar = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label className="fw-bold">Contraseña</label>
+                  {/* <label className="fw-bold">Contraseña</label> */}
                   <input
                     type="password"
                     onChange={(e) => setPassword(e.target.value)}
