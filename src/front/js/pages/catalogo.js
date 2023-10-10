@@ -47,7 +47,7 @@ export const Catalogo = () => {
                 {item.nombre}
               </li>
             ))}
-            <li className="list-group-item text-white">
+            <li className="list-group-item bg-black text-white">
               <form className="d-inline-flex justify-content-center ms-2" role="search">
                 <input
                   className="form-control me-2 w-auto"
