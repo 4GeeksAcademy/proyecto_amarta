@@ -20,8 +20,8 @@ export const Catalogo = () => {
 
   return (
     <div className="min-vh-100">
-      <div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50 text-center">
-        <h4 className="title-catalogo pb-2 d-flex justify-content-center">
+      <div className="container-fluid bg-secondary-subtle p-4 bg-white bg-opacity-50 text-center">
+        <h4 className="title-catalogo pt-2 pb-2 d-flex justify-content-center">
           Belleza simplificada
         </h4>
         <h4 className="title-catalogo pb-2 d-flex justify-content-center">
