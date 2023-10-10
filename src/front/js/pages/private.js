@@ -63,18 +63,61 @@ export const Private = () => {
 
     if (status === "authorized") {
         return (
-            <div className=" min-vh-100">
-                <div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50 flex-grow-1">
-                    <h1>Mi perfil</h1>
+            <div className="container-fluid bg-secondary-subtle p-5 bg-white bg-opacity-50 flex-grow-1 min-vh-100 text-center">
+                <div className="container text-center">
+                    <h1 className="title">Hola, {store.user.nombre}!</h1>
+
+                    <div className="container text-center">
+                        <div className="row">
+                            <div className="col">
+                                <div className="mt-2 mb-2">
+                                    <p className="h4">Información del cliente</p>
+                                    <div className="input-group mb-2">
+                                        <span className="input-group-text bg-white" id="inputGroup-sizing-default">Nombre</span>
+                                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.nombre} />
+                                    </div>
+                                    <div className="input-group mb-2">
+                                        <span className="input-group-text bg-white" id="inputGroup-sizing-default">Apellidos</span>
+                                        <input type="text" className="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.apellido} />
+                                    </div>
+                                    <div className="input-group mb-2 ">
+                                        <span className="input-group-text bg-white" id="inputGroup-sizing-default">Email</span>
+                                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.email} />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col">
+                                <div className="mt-2 mb-2">
+                                    <p className="h4">Dirección de envío</p>
+                                    <div className="input-group mb-2">
+                                        <span className="input-group-text bg-white" id="inputGroup-sizing-default">Dirección</span>
+                                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.nombre} />
+                                    </div>
+                                    <div className="input-group mb-2">
+                                        <span className="input-group-text bg-white" id="inputGroup-sizing-default">Ciudad / Pueblo</span>
+                                        <input type="text" className="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.apellido} />
+                                    </div>
+                                    <div className="input-group mb-2">
+                                        <span className="input-group-text bg-white" id="inputGroup-sizing-default">Codigo Postal</span>
+                                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.email} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button className="btn btn-dark btn-lg px-4 mt-3">Actualizar Datos</button>
+
                     <hr></hr>
-                    <h3 className="d-flex justify-content-center mt-2 mb-2">
-                        <p className="d-inline-block">¡Bienvenid@,</p>
-                        <p className="fst-italic fw-bolder ms-1 d-inline-block"> {store.user.nombre}!</p></h3>
+
+
+
+
+                    {/* FAVORITOS */}
                     <div id="arrayFavoritos">
-                        <h4 className="d-flex">Tus favoritos: ({store.favs.length}) </h4>
+                        <h4 className="d-flex justify-content-center mt-5">Tus favoritos {store.favs.length}</h4>
                         <div className="d-flex mb-2">
                             {store.favs.length === 0 ? (
-
                                 <h5 className="d-block ms-5 mt-2 mb-2">Aún no tienes favoritos.
                                     <Link to={"/catalogo"} type="button" className=" h-50 w-100 d-block w-25 btn btn btn-dark btn-lg px-4 mt-3">Ir al catálogo</Link></h5>
                             ) : (
@@ -84,15 +127,17 @@ export const Private = () => {
                             )}
                         </div>
                     </div>
+
+                    <hr className=""></hr>
                     <div id="arrayPedidos" className="w-100 bg-transparent">
-                        <h4 className="d-flex">
-                            Tus pedidos: ({getPedidoUnico(store.pedidos)})
+                        <h4 className="d-flex justify-content-center">
+                            Tus pedidos {getPedidoUnico(store.pedidos)}
                         </h4>
                         <div className="accordion accodion-flush mx-0">
                             <div className=" mb-2 accordion-item w-100">
                                 {store.pedidos.length === 0 ? (
 
-                                    <h5 className="d-block ms-5 mt-2 mb-2">Aún no tienes pedidos.</h5>
+                                    <h5 className=" ms-5 mt-2 mb-2">Aún no tienes pedidos.</h5>
                                 ) : (
                                     <div className="justify-content-center accordion-item" id="accordionPedidos">
                                         {getPedidosPorReferencia(store.pedidos).map((groupedOrder, index) => (
@@ -137,7 +182,7 @@ export const Private = () => {
     return (
         <>
             <div className="mt-3 text-center min-vh-100">
-                <h1>Verificando su cuenta...</h1>
+                <h1 className="title">Verificando su cuenta...</h1>
                 <div className="spinner-border text-dark" role="status">
                 </div>
             </div>
