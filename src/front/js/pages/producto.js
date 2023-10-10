@@ -56,7 +56,7 @@ export const Producto = () => {
 
                     <hr />
 
-                    <div className="d-flex justify-content-around">
+                    <div className="d-flex justify-content-around align-items-center">
                         <input value={cantidad} min={1} max={99} className="form-control w-auto me-2" type="number" onChange={(e) => {
                             setCantidad(e.target.value)
                         }} />

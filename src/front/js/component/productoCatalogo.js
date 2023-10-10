@@ -49,7 +49,7 @@ export const ProductoCatalogo = props => {
         <div className="card col-12 col-md-6 col-lg-3 mx-3 border-0 m-2 p-0 position-relative" style={{ width: "18rem" }}>
             <img src={props.producto.url_img} className="card-img-top max" alt="..." />
             <div className="card-body container">
-                <div className="d-flex justify-content-between">
+                <div className="d-flex justify-content-between align-items-center">
                     <h5 className="card-title me-5 ">{props.producto.nombre}</h5>
                     <p className="fw-lighter">{props.producto.precio} €</p>
                 </div>
