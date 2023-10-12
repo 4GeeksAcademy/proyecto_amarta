@@ -26,4 +26,23 @@
 
 .list-group-item:hover {
     background-color:#6D5B4F;
-}
+    
+}/* Estilos generales para dispositivos móviles */
+@media (max-width: 768px) {
+    .list-group-horizontal {
+      flex-direction: column; /* Cambia la dirección de flexbox a columna */
+      align-items: center; /* Centra los elementos verticalmente */
+      margin-top: 10px; /* Espacio superior para separar del contenido superior */
+    }
+  
+    /* Estilos específicos para los elementos que deseas ocultar en dispositivos móviles */
+    li:not(.search-li) {
+      display: none; /* Oculta todos los elementos <li> excepto los que tienen la clase .search-li */
+    }
+  
+    .list-group-item {
+      margin: 5px 0; /* Espacio entre elementos de la lista */
+      width: auto; /* Ancho automático para adaptarse al contenido */
+      text-align: center; /* Centra el texto en cada elemento */
+    }
+  }

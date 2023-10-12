@@ -47,24 +47,24 @@ export const Catalogo = () => {
                 {item.nombre}
               </li>
             ))}
-            <li className="list-group-item bg-black text-white">
-              <form className="d-inline-flex justify-content-center ms-2" role="search">
-                <input
-                  className="form-control me-2 w-auto"
-                  type="search"
-                  placeholder="Busca tu producto"
-                  aria-label="Search"
-                  value={busquedaProducto}
-                  onChange={(e) => setBusquedaProducto(e.target.value)}
-                ></input>
-                <button
-                  className="btn btn-outline-light  border-0"
-                  type="submit"
-                >
-                  <i className="fa-solid fa-magnifying-glass"></i>
-                </button>
-              </form>
-            </li>
+            <li className="list-group-item bg-black text-white search-li">
+  <form className="d-inline-flex justify-content-center ms-2" role="search">
+    <input
+      className="form-control me-2 w-auto"
+      type="search"
+      placeholder="Busca tu producto"
+      aria-label="Search"
+      value={busquedaProducto}
+      onChange={(e) => setBusquedaProducto(e.target.value)}
+    ></input>
+    <button
+      className="btn btn-outline-light  border-0"
+      type="submit"
+    >
+      <i className="fa-solid fa-magnifying-glass"></i>
+    </button>
+  </form>
+</li>
           </ul>
         </div>
       </div>
