@@ -142,11 +142,11 @@ export const Navbar = () => {
                   Cuenta
                 </a>
                 <ul className="dropdown-menu list-unstyled dropdown-menu-start">
-                  <li><Link className="btn dropdown-item " to={"/private"}><i className="d-flex float-start  align-items-end fa-solid fa-user pt-1 mb-1"></i><p className="d-flex ps-3 mt-0 ">Perfil</p></Link></li>
-                  <li><button className="btn dropdown-item" onClick={() => {
+                  <li><Link className="btn dropdown-item text-black" to={"/private"}><i className="d-flex float-start  align-items-end fa-solid fa-user pt-1 mb-1"></i><p className="d-flex ps-3 mt-0 mb-1 ">Perfil</p></Link></li>
+                  <li><button className="btn dropdown-item text-black" onClick={() => {
                     actions.logOut()
                     navigate("/")
-                  }}><i className="d-flex float-start align-items-end fa-solid fa-arrow-right-from-bracket pt-1"></i><p className="d-flex ps-3 mt-0 mb-1 ">Cerrar sesión</p></button></li>
+                  }}><i className="d-flex float-start align-items-end fa-solid fa-arrow-right-from-bracket pt-1 ms-3"></i><p className="d-flex ps-3 mt-0 mb-1 ">Cerrar sesión</p></button></li>
                 </ul>
               </div>
                 : <button
