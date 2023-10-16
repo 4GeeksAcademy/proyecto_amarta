@@ -11,11 +11,15 @@ export const Private = () => {
     const { store, actions } = useContext(Context)
     const [status, setStatus] = useState("checking")
     const navigate = useNavigate()
-    const [direccion, setDireccion] = useState(store.user.direccion)
-    const [ciudad, setCiudad] = useState(store.user.ciudad)
-    const [codigo_postal, setCodigoPostal] = useState(store.user.codigo_postal)
+    const [direccion, setDireccion] = useState(store.user.direccion || null)
+    const [ciudad, setCiudad] = useState(store.user.ciudad || null)
+    const [codigo_postal, setCodigoPostal] = useState(store.user.codigo_postal || null)
     const [cambio, setCambio] = useState(false)
     const ref = useRef(null);
+
+    console.log(direccion);
+    console.log(ciudad);
+
 
     function logFavs() {
         console.log(store.favs);
@@ -51,7 +55,8 @@ export const Private = () => {
         return Object.values(pedidosPorReferencia);
     }
 
-    function handleActualizarDatos() {
+    function handleActualizarDatos(e) {
+        e.preventDefault()
         actions.actualizarDatos(direccion, ciudad, codigo_postal)
         // if (cambio === true) {            
         Swal.fire({
@@ -243,6 +248,5 @@ export const Private = () => {
 
         </>
     )
-
 
 }
