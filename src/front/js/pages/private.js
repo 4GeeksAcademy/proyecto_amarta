@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
@@ -15,6 +15,7 @@ export const Private = () => {
     const [ciudad, setCiudad] = useState(store.user.ciudad)
     const [codigo_postal, setCodigoPostal] = useState(store.user.codigo_postal)
     const [cambio, setCambio] = useState(false)
+    const ref = useRef(null);
 
     function logFavs() {
         console.log(store.favs);
@@ -129,26 +130,28 @@ export const Private = () => {
                                         <div className="input-group mb-2">
                                             <span className="input-group-text bg-white" id="inputGroup-sizing-default">Dirección</span>
                                             <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                                                placeholder={store.user.direccion}
+                                                defaultValue={store.user.direccion}
                                                 onChange={(e) => {
                                                     setDireccion(e.target.value)
-                                                }} />
+                                                }}
+                                                ref={ref} />
                                         </div>
                                         <div className="input-group mb-2">
                                             <span className="input-group-text bg-white" id="inputGroup-sizing-default">Municipio</span>
-                                            <input type="text" className="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder={store.user.ciudad}
+                                            <input type="text" className="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" defaultValue={store.user.ciudad}
                                                 onChange={(e) => {
                                                     setCiudad(e.target.value)
-
                                                 }}
+                                                ref={ref}
                                             />
                                         </div>
                                         <div className="input-group mb-2">
                                             <span className="input-group-text bg-white" id="inputGroup-sizing-default">Codigo Postal</span>
-                                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder={store.user.codigo_postal}
+                                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" defaultValue={store.user.codigo_postal}
                                                 onChange={(e) => {
                                                     setCodigoPostal(e.target.value)
-                                                }} />
+                                                }} 
+                                                ref={ref} />
                                         </div>
                                     </div>
                                 </div>
