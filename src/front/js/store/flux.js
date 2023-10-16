@@ -417,6 +417,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				}
 			},
+
+			actualizarDatos: async (direccion, ciudad, codigo_postal) => {
+				console.log(direccion, ciudad, codigo_postal);
+				try {
+					const data = await axios.put(`${urlBack}/api/private`, {
+						id: getStore().user.id,
+						direccion: direccion,
+						ciudad: ciudad,
+						codigo_postal: codigo_postal
+					})
+				} catch (error) {
+					console.log(error);
+				}
+			},
 		}
 	};
 }

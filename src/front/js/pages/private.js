@@ -3,12 +3,18 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { ProductoCatalogo } from "../component/productoCatalogo";
-import "../../styles/pedido.css"
+import "../../styles/pedido.css";
+import Swal from 'sweetalert2'
+
 
 export const Private = () => {
     const { store, actions } = useContext(Context)
     const [status, setStatus] = useState("checking")
     const navigate = useNavigate()
+    const [direccion, setDireccion] = useState(store.user.direccion)
+    const [ciudad, setCiudad] = useState(store.user.ciudad)
+    const [codigo_postal, setCodigoPostal] = useState(store.user.codigo_postal)
+    const [cambio, setCambio] = useState(false)
 
     function logFavs() {
         console.log(store.favs);
@@ -44,6 +50,30 @@ export const Private = () => {
         return Object.values(pedidosPorReferencia);
     }
 
+    function handleActualizarDatos() {
+        actions.actualizarDatos(direccion, ciudad, codigo_postal)
+        // if (cambio === true) {            
+        Swal.fire({
+            text: 'Datos actualizados',
+            customClass: {
+                confirmButton: 'btn bg-dark btn-secondary',
+            },
+            buttonsStyling: false,
+        });
+        // } else {
+        //     Swal.fire({
+        //         text: 'No se han modificado los datos',
+        //         icon: 'error',
+        //         title: 'Oops...',
+        //         customClass: {
+        //           confirmButton: 'btn bg-dark btn-secondary',
+        //         },
+        //         buttonsStyling: false,
+        //       });
+        // }
+
+    }
+
     useEffect(() => {
         const validate = async () => {
             let valid = await actions.validToken()
@@ -59,6 +89,7 @@ export const Private = () => {
             }
         }
         validate()
+        console.log(ciudad)
     }, [])
 
     if (status === "authorized") {
@@ -67,46 +98,66 @@ export const Private = () => {
                 <div className="container text-center">
                     <h1 className="title">Hola, {store.user.nombre}!</h1>
 
-                    <div className="container text-center">
-                        <div className="row">
-                            <div className="col">
-                                <div className="mt-2 mb-2">
-                                    <p className="h4">Información del cliente</p>
-                                    <div className="input-group mb-2">
-                                        <span className="input-group-text bg-white" id="inputGroup-sizing-default">Nombre</span>
-                                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.nombre} />
-                                    </div>
-                                    <div className="input-group mb-2">
-                                        <span className="input-group-text bg-white" id="inputGroup-sizing-default">Apellidos</span>
-                                        <input type="text" className="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.apellido} />
-                                    </div>
-                                    <div className="input-group mb-2 ">
-                                        <span className="input-group-text bg-white" id="inputGroup-sizing-default">Email</span>
-                                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.email} />
+                    <form onSubmit={handleActualizarDatos}>
+                        <div className="container text-center">
+                            <div className="row">
+                                <div className="col">
+                                    <div className="mt-2 mb-2">
+                                        <p className="h4">Información del cliente</p>
+                                        <div className="input-group mb-2">
+                                            <span className="input-group-text bg-white" id="inputGroup-sizing-default">Nombre</span>
+                                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.nombre}
+                                                readOnly />
+                                        </div>
+                                        <div className="input-group mb-2">
+                                            <span className="input-group-text bg-white" id="inputGroup-sizing-default">Apellidos</span>
+                                            <input type="text" className="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.apellido}
+                                                readOnly />
+                                        </div>
+                                        <div className="input-group mb-2 ">
+                                            <span className="input-group-text bg-white" id="inputGroup-sizing-default">Email</span>
+                                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.email}
+                                                readOnly
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="col">
-                                <div className="mt-2 mb-2">
-                                    <p className="h4">Dirección de envío</p>
-                                    <div className="input-group mb-2">
-                                        <span className="input-group-text bg-white" id="inputGroup-sizing-default">Dirección</span>
-                                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.nombre} />
-                                    </div>
-                                    <div className="input-group mb-2">
-                                        <span className="input-group-text bg-white" id="inputGroup-sizing-default">Ciudad / Pueblo</span>
-                                        <input type="text" className="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.apellido} />
-                                    </div>
-                                    <div className="input-group mb-2">
-                                        <span className="input-group-text bg-white" id="inputGroup-sizing-default">Codigo Postal</span>
-                                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={store.user.email} />
+                                <div className="col">
+                                    <div className="mt-2 mb-2">
+                                        <p className="h4">Dirección de envío</p>
+                                        <div className="input-group mb-2">
+                                            <span className="input-group-text bg-white" id="inputGroup-sizing-default">Dirección</span>
+                                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                                                placeholder={store.user.direccion}
+                                                onChange={(e) => {
+                                                    setDireccion(e.target.value)
+                                                }} />
+                                        </div>
+                                        <div className="input-group mb-2">
+                                            <span className="input-group-text bg-white" id="inputGroup-sizing-default">Municipio</span>
+                                            <input type="text" className="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder={store.user.ciudad}
+                                                onChange={(e) => {
+                                                    setCiudad(e.target.value)
+
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="input-group mb-2">
+                                            <span className="input-group-text bg-white" id="inputGroup-sizing-default">Codigo Postal</span>
+                                            <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder={store.user.codigo_postal}
+                                                onChange={(e) => {
+                                                    setCodigoPostal(e.target.value)
+                                                }} />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <button className="btn btn-dark btn-lg px-4 mt-3">Actualizar Datos</button>
+                        <button className="btn btn-dark btn-lg px-4 mt-3" type="submit">Actualizar Datos</button>
+                    </form>
+
+                    {/* FIN FORM */}
 
                     <hr></hr>
 
