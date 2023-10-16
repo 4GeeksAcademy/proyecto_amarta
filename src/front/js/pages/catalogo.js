@@ -30,25 +30,27 @@ export const Catalogo = () => {
         <h4 className="title-catalogo pb-2 d-flex justify-content-center">
           Todo lo que necesitas
         </h4>
-        <div className="d-flex justify-content-center ">
-          <ul className=" list-group list-group-horizontal p-2 d-inline-flex justify-content-center">
+        {/* <div className="d-flex justify-content-center h-25"> */}
+          <ul className=" list-group list-group-horizontal justify-content-center p-0 ">
+            
             <li
-              className={`list-group-item  text-white ${filter === "" ? "active border-0" : ""}`}
+              className={`list-group-item d-inline-flex text-white ${filter === "" ? "active border-0" : ""}`}
               onClick={() => handleFilterChange("")}
             >
               Todos
             </li>
             {store.tipo_producto?.map((item) => (
               <li
-                className={`list-group-item  text-white ${filter === item.id_tipo ? "active border-0" : ""}`}
+                className={`list-group-item  d-inline-flex text-white ${filter === item.id_tipo ? "active border-0" : ""}`}
                 key={item.id_tipo}
                 onClick={() => handleFilterChange(item.id_tipo)}
               >
                 {item.nombre}
               </li>
             ))}
-            <li className="list-group-item bg-black text-white search-li">
-  <form className="d-inline-flex justify-content-center ms-2" role="search">
+             </ul>
+          
+  <form className="rounded d-flex h-25 list-group-item bg-black text-white search-li d-inline-flex justify-content-center  mt-2" role="search">
     <input
       className="form-control me-2 w-auto"
       type="search"
@@ -64,9 +66,12 @@ export const Catalogo = () => {
       <i className="fa-solid fa-magnifying-glass"></i>
     </button>
   </form>
-</li>
-          </ul>
-        </div>
+
+         
+
+
+
+        {/* </div> */}
       </div>
 
       <div className="row justify-content-center">
