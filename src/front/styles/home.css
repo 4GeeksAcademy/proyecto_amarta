@@ -5,8 +5,13 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+.title{
+    font-family: 'Libre Caslon Text', serif;
+
+} 
+
 .footer {
-    background-color: rgb(61, 31, 10);
+    background-color: #6D5B4F;
     color: white
 }
 
@@ -34,7 +39,7 @@
 }
 
 .title-home {
-    font-family: 'Libre Bodoni', serif;
+    font-family: 'Libre Caslon Text', serif;
 
 }
 

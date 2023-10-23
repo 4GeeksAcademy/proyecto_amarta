@@ -49,18 +49,20 @@ export const ProductoCatalogo = props => {
         <div className="card col-12 col-md-6 col-lg-3 mx-3 border-0 m-2 p-0 position-relative" style={{ width: "18rem" }}>
             <img src={props.producto.url_img} className="card-img-top max" alt="..." />
             <div className="card-body container">
-                <div className="d-flex ">
-                    <h5 className="card-title me-5 ">{props.producto.nombre}</h5>
-                    <p className="text-end fw-lighter text-end">{props.producto.precio} €</p>
+                <div className="d-flex justify-content-between align-items-center">
+                    <h5 className="card-title mb-0 ">{props.producto.nombre}</h5>
+                    <p className="fw-lighter mb-0">{props.producto.precio} €</p>
                 </div>
                 <div className="d-flex flex-start">
-                <p className="text-end fw-lighter text-end">{props.producto.ingredientes_principales}</p>
+                    <p className="text-end fw-lighter">{props.producto.ingredientes_principales}</p>
                 </div>
-               
-                <Link to={`/producto/${props.producto.id_producto}`} type="button"  className="btn btn-dark me-md-2 mb-2">Más información</Link>
-          
-               
-                <a href="#" className="btn btn-white me-md-2 mb-2" onClick={handleComprar}><i className="fa-solid fa-cart-shopping"></i></a>
+
+                <div className="d-flex justify-content-between">
+                    <Link to={`/producto/${props.producto.id_producto}`} type="button" className="btn btn-dark ">Más información</Link>
+                    <a href="#" className="btn btn-white pe-1" onClick={handleComprar}><i className="fa-solid fa-cart-shopping"></i></a>
+
+                </div>
+
                 <div className="d-flex justify-content-end">
                     {faved ?
                         <button className="  bg-transparent border-0 position-absolute top-0" type="button" onClick={handleOnClickFav}>
