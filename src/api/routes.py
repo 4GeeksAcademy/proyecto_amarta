@@ -96,9 +96,12 @@ def update_profile():
     print(request_body)
     user = User.query.filter_by(id = request_body["id"]).first()
     print(user)
-    user.direccion = request_body["direccion"]
-    user.ciudad = request_body["ciudad"]
-    user.codigo_postal = request_body["codigo_postal"]
+    if request_body["direccion"] != None: 
+        user.direccion = request_body["direccion"]
+    if request_body["ciudad"] != None:
+        user.ciudad = request_body["ciudad"]
+    if request_body["codigo_postal"] != None:
+        user.codigo_postal = request_body["codigo_postal"]
     
     db.session.commit()
 
